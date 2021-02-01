@@ -11,9 +11,11 @@ public class KeyboardController implements MouseListener, KeyListener {
 
 	private Etat etat ;
 
-	public KeyboardController(Etat etat) {
-		this.etat = etat;
+
+	public Etat getEtat() {
+		return etat;
 	}
+
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if(e.getKeyChar()=='d') {
@@ -65,6 +67,10 @@ public class KeyboardController implements MouseListener, KeyListener {
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
 
+	}
+
+	public void setEtat(Etat etat) {
+		this.etat = etat;
 	}
 
 }
