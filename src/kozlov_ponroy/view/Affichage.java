@@ -5,10 +5,13 @@ import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
+import kozlov_ponroy.model.Etat;
+
 public class Affichage extends JPanel{
 
 	private final int HAUTEUR = 400;
     private final int LARGEUR = 800;
+    private Etat etat;
     
     public Affichage(){
         /** Initialise la taille de la fenetre au lancement*/
@@ -23,8 +26,13 @@ public class Affichage extends JPanel{
         return LARGEUR;
     }
     
+    public void setEtat(Etat etat) {
+    	this.etat = etat;
+    }
+    
     @Override
     public void paint(Graphics g){
         super.paint(g);
+        g.drawLine(0, etat.getHorizon(), LARGEUR, etat.getHorizon());
     }
 }
