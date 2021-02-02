@@ -7,24 +7,29 @@ import java.awt.event.MouseListener;
 
 import kozlov_ponroy.model.Etat;
 
-public class KeyboardController implements MouseListener, KeyListener {
+public class KeyboardController implements KeyListener {
 
-	private Etat etat ;
-
-
-	public Etat getEtat() {
-		return etat;
+	private Etat etat;
+	
+	public void setEtat(Etat etat) {
+		this.etat = etat;
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
+		System.out.println("key");
 		if(e.getKeyChar()=='d') {
-			etat.setPlayerX(etat.getPlayerX()+1);
+			etat.goRight();
 		}
 		if(e.getKeyChar()=='q') {
-			etat.setPlayerX(etat.getPlayerX()-1);
+			etat.goLeft();
 		}
-
+		if(e.getKeyChar()=='z') {
+			etat.goUp();
+		}
+		if(e.getKeyChar()=='s') {
+			etat.goDown();
+		}
 	}
 
 	@Override
@@ -37,40 +42,6 @@ public class KeyboardController implements MouseListener, KeyListener {
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void setEtat(Etat etat) {
-		this.etat = etat;
 	}
 
 }

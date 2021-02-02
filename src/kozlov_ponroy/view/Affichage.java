@@ -2,6 +2,7 @@ package kozlov_ponroy.view;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.KeyListener;
 
 import javax.swing.JPanel;
 
@@ -13,17 +14,11 @@ public class Affichage extends JPanel{
     private final int LARGEUR = 800;
     private Etat etat;
     
-    public Affichage(){
+    public Affichage(KeyListener listener){
         /** Initialise la taille de la fenetre au lancement*/
         setPreferredSize(new Dimension(LARGEUR, HAUTEUR));
-    }
-    
-    public int getHAUTEUR() {
-        return HAUTEUR;
-    }
-
-    public int getLARGEUR() {
-        return LARGEUR;
+        addKeyListener(listener);
+        setFocusable(true);
     }
     
     public void setEtat(Etat etat) {
