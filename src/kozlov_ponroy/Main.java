@@ -12,13 +12,14 @@ public class Main {
 	public static void main(String[] args) {
 		JFrame fenetre = new JFrame("Exo 6");
 		fenetre.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		
+
 		KeyboardController controller = new KeyboardController();
 		Affichage aff = new Affichage(controller);
 		Etat etat = new Etat(aff);
+
 		controller.setEtat(etat);
 		aff.setEtat(etat);
-		
+
 		fenetre.add(aff);
 		fenetre.pack();
 		fenetre.setLocationRelativeTo(null);
