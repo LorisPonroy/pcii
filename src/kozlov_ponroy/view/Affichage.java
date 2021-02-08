@@ -17,7 +17,7 @@ import kozlov_ponroy.model.Etat;
  */
 public class Affichage extends JPanel{
 
-	public final int HAUTEUR = 400;
+	public final int HAUTEUR = 800;
 	public final int LARGEUR = 800;
 	private Etat etat;
 	private Point p1, p2;

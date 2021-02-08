@@ -32,7 +32,7 @@ public class Etat {
 	public Etat(Affichage affichage) {
 		this.affichage = affichage;
 		playerPosition = new Point(affichage.LARGEUR / 2, affichage.HAUTEUR / 2);
-		route = new Route(affichage.LARGEUR, affichage.HAUTEUR);
+		route = new Route(affichage.LARGEUR, affichage.HAUTEUR, LARGEUR_ROUTE);
 		(new MouvementVehicule(this)).start();
 		(new MouvementRoute(this)).start();
 	}

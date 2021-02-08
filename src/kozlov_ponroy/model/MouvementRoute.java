@@ -13,7 +13,7 @@ public class MouvementRoute extends Thread {
 		while(true) {
 			etat.avancerRoute();
 			try {
-				Thread.sleep(50);
+				Thread.sleep(30);
 			} catch(Exception e) {
 				e.printStackTrace();
 			}
