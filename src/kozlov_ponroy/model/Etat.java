@@ -1,34 +1,52 @@
 package kozlov_ponroy.model;
 
 import java.awt.Point;
+import java.util.ArrayList;
 
 import kozlov_ponroy.view.Affichage;
 
+/**
+ * Gère l'état de notre MVC
+ * 
+ * @author Asey
+ *
+ */
+
 public class Etat {
 
-	public static final int HORIZON = 100;
-
-	public static final int moveDown = 5;
-	public static final int moveRight = 5;
-	public static final int moveLeft = -5;
-	public static final int moveUp = -5;
+	public final int HORIZON = 100;
+	public final int moveDown = 5;
+	public final int moveRight = 5;
+	public final int moveLeft = -5;
+	public final int moveUp = -5;
+	public final int TAILLE_JOUEUR = 20;
 
 	private Point playerPosition;
 	private Affichage affichage;
+	private Route route;
 
 	public Etat(Affichage affichage) {
 		this.affichage = affichage;
-		playerPosition = new Point(this.affichage.getWidth() / 2, this.affichage.getHeight() / 2);
+		playerPosition = new Point(affichage.LARGEUR / 2, affichage.HAUTEUR / 2);
+		route = new Route();
 	}
 
+	/**
+	 * Vérifie la position du joueur sur l'axe horizontal et ajoute deltaX à sa position X
+	 * @param deltaX
+	 */
 	private void addPositionX(int deltaX) {
-		if(playerPosition.x + deltaX<affichage.getWidth() && playerPosition.x + deltaX > 0) {
+		if(playerPosition.x + deltaX < affichage.getWidth() && playerPosition.x + deltaX > - TAILLE_JOUEUR / 2) {
 			playerPosition.x += deltaX;
 		}
 	}
 
+	/**
+	 * Vérifie la position du joueur sur l'axe vertical et ajoute deltaY à sa position Y
+	 * @param deltaY
+	 */
 	private void addPositionY(int deltaY) {
-		if(playerPosition.y + deltaY<affichage.getHeight() && playerPosition.y + deltaY > 0) {
+		if(playerPosition.y + deltaY < affichage.getHeight() && playerPosition.y + deltaY > HORIZON - TAILLE_JOUEUR / 2) {
 			playerPosition.y += deltaY;
 		}
 	}
@@ -68,5 +86,26 @@ public class Etat {
 
 	public void setAffichage(Affichage affichage) {
 		this.affichage = affichage;
+	}
+	
+	/**
+	 * Renvoie les points de la route dans le sens inversé
+	 * @return
+	 */
+	public ArrayList<Point> getRoute(){
+		ArrayList<Point> temp = new ArrayList<>();
+		for(Point p : route.getRoute())
+		{
+			temp.add(new Point(p.x, affichage.HAUTEUR - p.y));
+		}
+		return temp;
+	}
+	
+	public int getHorizon() {
+		return HORIZON;
+	}
+	
+	public int getTailleJoueur() {
+		return TAILLE_JOUEUR;
 	}
 }
