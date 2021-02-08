@@ -11,23 +11,22 @@ public class KeyboardController implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if(e.getKeyChar()=='d') {
+		char key = e.getKeyChar();
+		switch(key)
+		{
+		case 'd':
 			etat.goRight();
-			System.out.println("KEY");
-		}
-		if(e.getKeyChar()=='q') {
+			break;
+		case 'q':
 			etat.goLeft();
-			System.out.println("KEY");
-		}
-		if(e.getKeyChar()=='z') {
+			break;
+		case 'z':
 			etat.goUp();
-			System.out.println("KEY");
-		}
-		if(e.getKeyChar()=='s') {
+			break;
+		case 's':
 			etat.goDown();
-			System.out.println("KEY");
+			break;
 		}
-		etat.getAffichage().repaint();
 	}
 
 	@Override
