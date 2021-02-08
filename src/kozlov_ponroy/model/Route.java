@@ -13,6 +13,7 @@ public class Route {
 	
 	private ArrayList<Point> points;
 	private final int ESPACEMENT = 150;
+	private final int MARGE_RANDOM = 300;
 	private int position;
 	private final int X_MAX, Y_MAX;
 	private final int PX_PAS = 5;
@@ -31,9 +32,20 @@ public class Route {
 	}
 	
 	private void ajouterPoint() {
-		Point p = new Point(random.nextInt(X_MAX), lastY() + ESPACEMENT);
+		int x = lastX() + random.nextInt(MARGE_RANDOM) - MARGE_RANDOM / 2;
+		if(x < 0){
+			x = random.nextInt(MARGE_RANDOM);
+		}
+		else if(x > X_MAX) {
+			x = X_MAX - random.nextInt(MARGE_RANDOM);
+		}
+		Point p = new Point(x, lastY() + ESPACEMENT);
 		System.out.println(p.toString());
 		points.add(p);
+	}
+	
+	private int lastX() {
+		return points.get(points.size() - 1).x;
 	}
 	
 	private int lastY() {
