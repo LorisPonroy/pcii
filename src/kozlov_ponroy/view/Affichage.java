@@ -59,6 +59,10 @@ public class Affichage extends JPanel{
 		
 		/**Suppresion de la route au dessus de l'horizon*/
 		g.clearRect(0, 0, LARGEUR, etat.getHorizon());
+		
+		g.setColor(Color.black);
+		g.drawString("Score", 20, 20);
+		g.drawString(etat.getScore(), 20, 40);
 	}
 
 	public void setEtat(Etat etat) {

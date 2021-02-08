@@ -145,4 +145,8 @@ public class Etat {
 	public int getLargeurRoute() {
 		return LARGEUR_ROUTE;
 	}
+	
+	public String getScore() {
+		return "" + route.getPosition();
+	}
 }

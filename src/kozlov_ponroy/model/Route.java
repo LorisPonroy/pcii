@@ -61,6 +61,10 @@ public class Route {
 		position += PX_PAS;
 	}
 	
+	public int getPosition() {
+		return position;
+	}
+	
 	/**
 	 * Renvoie tous les points qui constitue la route
 	 * @return
