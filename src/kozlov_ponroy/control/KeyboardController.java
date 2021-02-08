@@ -5,10 +5,19 @@ import java.awt.event.KeyListener;
 
 import kozlov_ponroy.model.Etat;
 
+/**
+ * Le controleur qui gère le clavier et les actions liées aux touches
+ * @author Asey
+ *
+ */
+
 public class KeyboardController implements KeyListener {
 
 	private Etat etat;
 
+	/**
+	 * Modifie l'état de notre jeu en fonction de la touche appuyée
+	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
 		char key = e.getKeyChar();
