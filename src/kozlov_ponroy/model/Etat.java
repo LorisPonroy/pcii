@@ -14,12 +14,15 @@ import kozlov_ponroy.view.Affichage;
 
 public class Etat {
 
-	public final int HORIZON = 100;
-	public final int moveDown = 5;
-	public final int moveRight = 5;
-	public final int moveLeft = -5;
-	public final int moveUp = -5;
-	public final int TAILLE_JOUEUR = 20;
+	private final int HORIZON = 100;
+	private final int TAILLE_JOUEUR = 20;
+	
+	private final int moveDown = 5;
+	private final int moveRight = 5;
+	private final int moveLeft = -5;
+	private final int moveUp = -5;
+	
+	private boolean up = false, down = false, right = false, left = false;
 
 	private Point playerPosition;
 	private Affichage affichage;
@@ -29,6 +32,7 @@ public class Etat {
 		this.affichage = affichage;
 		playerPosition = new Point(affichage.LARGEUR / 2, affichage.HAUTEUR / 2);
 		route = new Route();
+		(new Mouvement(this)).start();
 	}
 
 	/**
@@ -63,27 +67,6 @@ public class Etat {
 		return playerPosition.y;
 	}
 	
-	public void goUp() {
-		addPositionY(moveUp);
-		affichage.repaint();
-	}
-
-	public void goDown() {
-		addPositionY(moveDown);
-		affichage.repaint();
-	}
-
-	public void goLeft() {
-		addPositionX(moveLeft);
-		affichage.repaint();
-	}
-
-	public void goRight() {
-		addPositionX(moveRight);
-		affichage.repaint();
-	}
-
-
 	public void setAffichage(Affichage affichage) {
 		this.affichage = affichage;
 	}
@@ -107,5 +90,53 @@ public class Etat {
 	
 	public int getTailleJoueur() {
 		return TAILLE_JOUEUR;
+	}
+
+	public boolean isUp() {
+		return up;
+	}
+
+	public void setUp(boolean up) {
+		this.up = up;
+	}
+
+	public boolean isDown() {
+		return down;
+	}
+
+	public void setDown(boolean down) {
+		this.down = down;
+	}
+
+	public boolean isRight() {
+		return right;
+	}
+
+	public void setRight(boolean right) {
+		this.right = right;
+	}
+
+	public boolean isLeft() {
+		return left;
+	}
+
+	public void setLeft(boolean left) {
+		this.left = left;
+	}
+	
+	public void move() {
+		if(left && !right) {
+			addPositionX(moveLeft);
+		}
+		else if(right) {
+			addPositionX(moveRight);
+		}
+		if(up && !down) {
+			addPositionY(moveUp);
+		}
+		else if(down) {
+			addPositionY(moveDown);
+		}
+		affichage.repaint();
 	}
 }

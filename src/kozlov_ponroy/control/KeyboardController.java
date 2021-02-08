@@ -24,31 +24,42 @@ public class KeyboardController implements KeyListener {
 		switch(key)
 		{
 		case 'd':
-			etat.goRight();
+			etat.setRight(true);
 			break;
 		case 'q':
-			etat.goLeft();
+			etat.setLeft(true);
 			break;
 		case 'z':
-			etat.goUp();
+			etat.setUp(true);
 			break;
 		case 's':
-			etat.goDown();
+			etat.setDown(true);
 			break;
 		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-
+		char key = e.getKeyChar();
+		switch(key)
+		{
+		case 'd':
+			etat.setRight(false);
+			break;
+		case 'q':
+			etat.setLeft(false);
+			break;
+		case 'z':
+			etat.setUp(false);
+			break;
+		case 's':
+			etat.setDown(false);
+			break;
+		}
 	}
 
 	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-
-	}
+	public void keyTyped(KeyEvent e) {}
 
 	public void setEtat(Etat etat) {
 		this.etat = etat;
