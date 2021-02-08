@@ -15,6 +15,7 @@ import kozlov_ponroy.view.Affichage;
 public class Main {
 
 	public static void main(String[] args) {
+
 		JFrame fenetre = new JFrame("Course planétaire");
 		fenetre.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
