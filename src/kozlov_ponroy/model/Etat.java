@@ -125,17 +125,13 @@ public class Etat {
 	}
 	
 	public void move() {
-		if(left && !right) {
-			addPositionX(moveLeft);
+		if(left ^ right) {
+			if(left) addPositionX(moveLeft);
+			else addPositionX(moveRight);
 		}
-		else if(right) {
-			addPositionX(moveRight);
-		}
-		if(up && !down) {
-			addPositionY(moveUp);
-		}
-		else if(down) {
-			addPositionY(moveDown);
+		if(up ^ down) {
+			if(up) addPositionY(moveUp);
+			else addPositionY(moveDown);
 		}
 		affichage.repaint();
 	}
