@@ -51,17 +51,21 @@ public class Etat {
 
 	public void goUp() {
 		setPositionY(moveUp);
+		affichage.repaint();
 	}
 
 	public void goDown() {
 		setPositionY(moveDown);
+		affichage.repaint();
 	}
 	
 	public void goLeft() {
 		setPositionX(moveLeft);
+		affichage.repaint();
 	}
 	
 	public void goRight() {
 		setPositionX(moveRight);
+		affichage.repaint();
 	}
 }

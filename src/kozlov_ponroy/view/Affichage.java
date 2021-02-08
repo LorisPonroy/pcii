@@ -29,5 +29,6 @@ public class Affichage extends JPanel{
     public void paint(Graphics g){
         super.paint(g);
         g.drawLine(0, etat.getHorizon(), LARGEUR, etat.getHorizon());
+        g.drawRect(etat.getPlayerX(), etat.getPlayerY(), 20, 20);
     }
 }
