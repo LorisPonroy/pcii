@@ -10,25 +10,25 @@ import kozlov_ponroy.model.Etat;
 
 public class Affichage extends JPanel{
 
-	private final int HAUTEUR = 400;
-    private final int LARGEUR = 800;
-    private Etat etat;
-    
-    public Affichage(KeyListener listener){
-        /** Initialise la taille de la fenetre au lancement*/
-        setPreferredSize(new Dimension(LARGEUR, HAUTEUR));
-        addKeyListener(listener);
-        setFocusable(true);
-    }
-    
-    public void setEtat(Etat etat) {
-    	this.etat = etat;
-    }
-    
-    @Override
-    public void paint(Graphics g){
-        super.paint(g);
-        g.drawLine(0, etat.getHorizon(), LARGEUR, etat.getHorizon());
-        g.drawRect(etat.getPlayerX(), etat.getPlayerY(), 20, 20);
-    }
+	public final int HAUTEUR = 400;
+	public final int LARGEUR = 800;
+	private Etat etat;
+
+	public Affichage(KeyListener listener){
+		/** Initialise la taille de la fenetre au lancement*/
+		setPreferredSize(new Dimension(LARGEUR, HAUTEUR));
+		addKeyListener(listener);
+		setFocusable(true);
+	}
+
+	@Override
+	public void paint(Graphics g){
+		super.paint(g);
+		g.drawLine(0, Etat.HORIZON, LARGEUR, Etat.HORIZON);
+		g.fillOval(etat.getPlayerX(), etat.getPlayerY(), 10, 10);
+	}
+
+	public void setEtat(Etat etat) {
+		this.etat = etat;
+	}
 }

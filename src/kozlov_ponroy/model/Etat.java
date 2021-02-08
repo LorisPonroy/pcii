@@ -6,66 +6,67 @@ import kozlov_ponroy.view.Affichage;
 
 public class Etat {
 
-	public static final int PLAYER_Y = 0;
+	public static final int HORIZON = 100;
+
+	public static final int moveDown = 5;
+	public static final int moveRight = 5;
+	public static final int moveLeft = -5;
+	public static final int moveUp = -5;
 
 	private Point playerPosition;
-	private final int HORIZON = 100;
 	private Affichage affichage;
-	private final int moveDown = 5;
-	private final int moveRight = 5;
-	private final int moveLeft = -5;
-	private final int moveUp = -5;
 
 	public Etat(Affichage affichage) {
 		this.affichage = affichage;
 		playerPosition = new Point(this.affichage.getWidth() / 2, this.affichage.getHeight() / 2);
 	}
 
-	public int getHorizon() {
-		return HORIZON;
-	}
-
-	public int getPlayerX() {
-		System.out.println("X = " + playerPosition.x);
-		return playerPosition.x;
-	}
-	
-	public int getPlayerY() {
-		System.out.println("Y = " + playerPosition.y);
-		return playerPosition.y;
-	}
-	
-	private void setPositionX(int deltaX) {
-		int x = getPlayerX();
-		if(x + deltaX >= 0 || x + deltaX <= affichage.getWidth()) {
+	private void addPositionX(int deltaX) {
+		if(playerPosition.x + deltaX<affichage.getWidth() && playerPosition.x + deltaX > 0) {
 			playerPosition.x += deltaX;
 		}
 	}
-	
-	private void setPositionY(int deltaY) {
-		int y = getPlayerY();
-		if(y + deltaY >= 0 || y + deltaY <= affichage.getHeight()) {
+
+	private void addPositionY(int deltaY) {
+		if(playerPosition.y + deltaY<affichage.getHeight() && playerPosition.y + deltaY > 0) {
 			playerPosition.y += deltaY;
 		}
 	}
+	
+	public Affichage getAffichage() {
+		return affichage;
+	}
 
+	public int getPlayerX() {
+		return playerPosition.x;
+	}
+
+	public int getPlayerY() {
+		return playerPosition.y;
+	}
+	
 	public void goUp() {
-		setPositionY(moveUp);
+		addPositionY(moveUp);
 		affichage.repaint();
 	}
 
 	public void goDown() {
-		setPositionY(moveDown);
+		addPositionY(moveDown);
 		affichage.repaint();
 	}
-	
+
 	public void goLeft() {
-		setPositionX(moveLeft);
+		addPositionX(moveLeft);
 		affichage.repaint();
 	}
-	
+
 	public void goRight() {
-		setPositionX(moveRight);
+		addPositionX(moveRight);
 		affichage.repaint();
+	}
+
+
+	public void setAffichage(Affichage affichage) {
+		this.affichage = affichage;
 	}
 }
