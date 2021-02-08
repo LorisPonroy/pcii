@@ -1,19 +1,19 @@
 package kozlov_ponroy.model;
 
-public class Mouvement extends Thread {
+public class MouvementRoute extends Thread {
 	
-	private Etat etat;
+	private final Etat etat;
 	
-	public Mouvement(Etat etat) {
+	public MouvementRoute(Etat etat) {
 		this.etat = etat;
 	}
 	
 	@Override
 	public void run() {
 		while(true) {
-			etat.move();
+			etat.avancerRoute();
 			try {
-				Thread.sleep(20);
+				Thread.sleep(50);
 			} catch(Exception e) {
 				e.printStackTrace();
 			}

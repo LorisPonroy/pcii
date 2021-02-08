@@ -16,6 +16,7 @@ public class Etat {
 
 	private final int HORIZON = 100;
 	private final int TAILLE_JOUEUR = 20;
+	private final int LARGEUR_ROUTE = 120;
 	
 	private final int moveDown = 5;
 	private final int moveRight = 5;
@@ -31,8 +32,9 @@ public class Etat {
 	public Etat(Affichage affichage) {
 		this.affichage = affichage;
 		playerPosition = new Point(affichage.LARGEUR / 2, affichage.HAUTEUR / 2);
-		route = new Route();
-		(new Mouvement(this)).start();
+		route = new Route(affichage.LARGEUR, affichage.HAUTEUR);
+		(new MouvementVehicule(this)).start();
+		(new MouvementRoute(this)).start();
 	}
 
 	/**
@@ -134,5 +136,13 @@ public class Etat {
 			else addPositionY(moveDown);
 		}
 		affichage.repaint();
+	}
+	
+	public void avancerRoute() {
+		route.setPosition();
+	}
+	
+	public int getLargeurRoute() {
+		return LARGEUR_ROUTE;
 	}
 }
