@@ -10,7 +10,7 @@ import kozlov_ponroy.view.Affichage;
 public class Main {
 
 	public static void main(String[] args) {
-		JFrame fenetre = new JFrame("Exo 6");
+		JFrame fenetre = new JFrame("Projet voiture");
 		fenetre.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 		KeyboardController controller = new KeyboardController();
