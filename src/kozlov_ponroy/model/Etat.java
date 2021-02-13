@@ -70,7 +70,7 @@ public class Etat {
 	}
 
 	public int getLargeurRoute(Point p) {
-		return (int) (100.0/799.0*p.y - 100.0/799.0);
+		return (int) (HORIZON/799.0*p.y - HORIZON/799.0);
 	}
 
 	public int getPlayerX() {
