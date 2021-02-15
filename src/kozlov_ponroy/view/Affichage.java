@@ -12,6 +12,7 @@ import java.awt.Toolkit;
 import java.awt.event.KeyListener;
 import java.awt.geom.Point2D;
 import java.awt.geom.QuadCurve2D;
+import java.util.List;
 
 import javax.swing.JPanel;
 
@@ -71,11 +72,15 @@ public class Affichage extends JPanel{
 		graphics2D.setRenderingHint(
 				RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
-		for(int i = 0 ; i < etat.getRoute().size() - 1 ; i++)
+		List<Point> route = etat.getRoute();
+		for(Point p : route) {
+			p.y+=etat.getHorizon();
+		}
+		for(int i = 0 ; i < route.size() - 1 ; i++)
 		{
 			g.setColor(Color.gray);
-			p1 = etat.getRoute().get(i);
-			p2 = etat.getRoute().get(i+1);
+			p1 = route.get(i);
+			p2 = route.get(i+1);
 
 			x[0] = p1.x - etat.getLargeurRoute(p1) / 2; y[0] = p1.y;
 			x[1] = p2.x - etat.getLargeurRoute(p2) / 2; y[1] = p2.y;
@@ -95,7 +100,7 @@ public class Affichage extends JPanel{
 				fin = new Point2D.Double(x[1] + (x[4]- x[1]) / 2, y[1] + (y[4]- y[1]) / 2);
 				courbe.setCurve(debut,ctrl,fin);
 				graphics2D.draw(courbe);
-				
+
 				x[4] = p3.x + etat.getLargeurRoute(p3) / 2;	y[4] = p3.y;
 				debut = new Point2D.Double(x[3] + (x[2]- x[3]) / 2, y[3] + (y[2]- y[3]) / 2);
 				ctrl = new Point2D.Double(x[2], y[2]);
@@ -115,7 +120,8 @@ public class Affichage extends JPanel{
 		}
 
 		//Affichage point de fuite (temp)
-		g.drawOval(etat.getPOINT_DE_FUITE().x, etat.getPOINT_DE_FUITE().y, 5, 5);
+		g.setColor(Color.RED);
+		g.fillOval(etat.getPOINT_DE_FUITE().x, etat.getPOINT_DE_FUITE().y, 5, 5);
 
 		g.setColor(C_VAISSEAU);
 		g.fillOval(etat.getPlayerX(), etat.getHauteurJoueur()+etat.getTailleJoueur(), etat.getTailleJoueur(), 20);
@@ -128,11 +134,11 @@ public class Affichage extends JPanel{
 		}
 
 		//Suppresion de la route au dessus de l'horizon
-		g.clearRect(0, 0, LARGEUR, etat.getHorizon());
+		//g.clearRect(0, 0, LARGEUR, etat.getHorizon());
 
-		graphics2D.drawImage(montagneImage, LARGEUR / 2 + etat.getPositionDecor(), etat.getHorizon() - 130, 500, 130, null);
-		graphics2D.drawImage(montagneImage, LARGEUR + etat.getPositionDecor(), etat.getHorizon() - 130, 500, 130, null);
-		graphics2D.drawImage(montagneImage, -50 + etat.getPositionDecor(), etat.getHorizon() - 130, 500, 130, null);
+		//graphics2D.drawImage(montagneImage, LARGEUR / 2 + etat.getPositionDecor(), etat.getHorizon() - 130, 500, 130, null);
+		//graphics2D.drawImage(montagneImage, LARGEUR + etat.getPositionDecor(), etat.getHorizon() - 130, 500, 130, null);
+		//graphics2D.drawImage(montagneImage, -50 + etat.getPositionDecor(), etat.getHorizon() - 130, 500, 130, null);
 
 
 		g.setColor(Color.black);

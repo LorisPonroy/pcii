@@ -19,6 +19,7 @@ public class Route {
 	private final int X_MAX, Y_MAX, LARGEUR_ROUTE;
 	public final int PX_PAS = 5;
 	private Random random;
+	int horizon = 0;
 
 	public Route(int x_max, int y_max, int largeurRoute){
 		X_MAX = x_max;
@@ -27,7 +28,8 @@ public class Route {
 		points = new ArrayList<>();
 		random = new Random();
 		position = 0;
-		points.add(new Point(random.nextInt(x_max), 0));
+		horizon = horizon;
+		points.add(new Point(random.nextInt(x_max), horizon));
 		while(lastY() <= Y_MAX) {
 			ajouterPoint();
 		}
