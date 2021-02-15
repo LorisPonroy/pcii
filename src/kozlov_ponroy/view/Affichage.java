@@ -86,17 +86,24 @@ public class Affichage extends JPanel{
 
 
 			if(i < etat.getRoute().size() - 2) {
-				g.setColor(Color.RED);
-				graphics2D.setStroke(new BasicStroke(10));
+				g.setColor(Color.BLACK);
+				graphics2D.setStroke(new BasicStroke(5));
 				p3 = etat.getRoute().get(i+2);
-				x[2] = p3.x - etat.getLargeurRoute(p3) / 2;	y[2] = p3.y;
+				x[4] = p3.x - etat.getLargeurRoute(p3) / 2;	y[4] = p3.y;
 				debut = new Point2D.Double(x[0] + (x[1]- x[0]) / 2, y[0] + (y[1]- y[0]) / 2);
 				ctrl = new Point2D.Double(x[1], y[1]);
-				fin = new Point2D.Double(x[1] + (x[2]- x[1]) / 2, y[1] + (y[2]- y[1]) / 2);
+				fin = new Point2D.Double(x[1] + (x[4]- x[1]) / 2, y[1] + (y[4]- y[1]) / 2);
+				courbe.setCurve(debut,ctrl,fin);
+				graphics2D.draw(courbe);
+				
+				x[4] = p3.x + etat.getLargeurRoute(p3) / 2;	y[4] = p3.y;
+				debut = new Point2D.Double(x[3] + (x[2]- x[3]) / 2, y[3] + (y[2]- y[3]) / 2);
+				ctrl = new Point2D.Double(x[2], y[2]);
+				fin = new Point2D.Double(x[2] + (x[4]- x[2]) / 2, y[2] + (y[4]- y[2]) / 2);
 				courbe.setCurve(debut,ctrl,fin);
 				graphics2D.draw(courbe);
 			}
-			g.setColor(Color.yellow);
+			/*g.setColor(Color.yellow);
 			for(float j = 0 ; j < NB_BANDE ; j+=2) {
 				x[0] = (int)(- 5 + p1.x + (p2.x - p1.x) / NB_BANDE * j); 		y[0] = (int)(p1.y + (p2.y - p1.y) / NB_BANDE * j);
 				x[1] = (int)(- 5 + p1.x + (p2.x - p1.x) / NB_BANDE * (j+1));	y[1] = (int)(p1.y + (p2.y - p1.y) / NB_BANDE * (j+1));
@@ -104,7 +111,7 @@ public class Affichage extends JPanel{
 				x[3] = (int)(+ 5 + p1.x + (p2.x - p1.x) / NB_BANDE * j); 	 	y[3] = (int)(p1.y + (p2.y - p1.y) / NB_BANDE * j);
 				x[4] = (int)(- 5 + p1.x + (p2.x - p1.x) / NB_BANDE * j); 		y[4] = (int)(p1.y + (p2.y - p1.y) / NB_BANDE * j);
 				graphics2D.fillPolygon(x, y, x.length);
-			}
+			}*/
 		}
 
 		//Affichage point de fuite (temp)
