@@ -39,7 +39,7 @@ public class Affichage extends JPanel{
 	final private Image playerCenterImage;
 	final private Image treeImage;
 	final private Image montagneImage;
-	final float NB_BANDE = 4;
+	final float NB_BANDE = 40;
 	final Color C_VAISSEAU;
 	QuadCurve2D courbeGauche = new QuadCurve2D.Double();
 	QuadCurve2D courbeDroite = new QuadCurve2D.Double();
@@ -121,11 +121,16 @@ public class Affichage extends JPanel{
 			}
 			g.setColor(Color.gray);
 			for(float j = 0 ; j < NB_BANDE ; j+=2) {
-				x[0] = (int)(- 5 + p1.x + (p2.x - p1.x) / NB_BANDE * j); 		y[0] = (int)(p1.y + (p2.y - p1.y) / NB_BANDE * j);
-				x[1] = (int)(- 5 + p1.x + (p2.x - p1.x) / NB_BANDE * (j+1));	y[1] = (int)(p1.y + (p2.y - p1.y) / NB_BANDE * (j+1));
-				x[2] = (int)(+ 5 + p1.x + (p2.x - p1.x) / NB_BANDE * (j+1)); 	y[2] = (int)(p1.y + (p2.y - p1.y) / NB_BANDE * (j+1));
-				x[3] = (int)(+ 5 + p1.x + (p2.x - p1.x) / NB_BANDE * j); 	 	y[3] = (int)(p1.y + (p2.y - p1.y) / NB_BANDE * j);
-				x[4] = (int)(- 5 + p1.x + (p2.x - p1.x) / NB_BANDE * j); 		y[4] = (int)(p1.y + (p2.y - p1.y) / NB_BANDE * j);
+				y[0] = (int)(p1.y + (p2.y - p1.y) / NB_BANDE * j);
+				x[0] = (int)(- etat.getFacteurElargissement(y[0])/50.0 + p1.x + (p2.x - p1.x) / NB_BANDE * j);
+				y[1] = (int)(p1.y + (p2.y - p1.y) / NB_BANDE * (j+1));
+				x[1] = (int)(- etat.getFacteurElargissement(y[1])/50.0 + p1.x + (p2.x - p1.x) / NB_BANDE * (j+1));
+				y[2] = (int)(p1.y + (p2.y - p1.y) / NB_BANDE * (j+1));
+				x[2] = (int)(+ etat.getFacteurElargissement(y[2])/50.0 + p1.x + (p2.x - p1.x) / NB_BANDE * (j+1));
+				y[3] = (int)(p1.y + (p2.y - p1.y) / NB_BANDE * j);
+				x[3] = (int)(+ etat.getFacteurElargissement(y[3])/50.0 + p1.x + (p2.x - p1.x) / NB_BANDE * j);
+				y[4] = (int)(p1.y + (p2.y - p1.y) / NB_BANDE * j);
+				x[4] = (int)(- etat.getFacteurElargissement(y[4])/50.0 + p1.x + (p2.x - p1.x) / NB_BANDE * j);
 				graphics2D.fillPolygon(x, y, x.length);
 			}
 		}
