@@ -15,6 +15,7 @@ import kozlov_ponroy.view.Affichage;
 public class Etat {
 
 	private final int HORIZON = 250;
+	private final Point POINT_DE_FUITE = new Point(400,HORIZON);
 	private final int TAILLE_JOUEUR = 100;
 	private final int LARGEUR_ROUTE = 100;
 	private final int HAUTEUR_JOUEUR = 550;
@@ -69,6 +70,7 @@ public class Etat {
 		return affichage;
 	}
 
+
 	public int getHauteurJoueur() {
 		return HAUTEUR_JOUEUR;
 	}
@@ -76,16 +78,20 @@ public class Etat {
 	public int getHorizon() {
 		return HORIZON;
 	}
+
 	public int getLargeurRoute(Point p) {
 		return (int) (HORIZON/799.0*p.y - HORIZON/799.0);
 	}
-
 	public int getPlayerX() {
 		return playerPosition.x;
 	}
 
 	public int getPlayerY() {
 		return playerPosition.y;
+	}
+
+	public Point getPOINT_DE_FUITE() {
+		return POINT_DE_FUITE;
 	}
 
 	public int getPositionDecor() {

@@ -76,15 +76,15 @@ public class Affichage extends JPanel{
 			g.setColor(Color.gray);
 			p1 = etat.getRoute().get(i);
 			p2 = etat.getRoute().get(i+1);
-			
+
 			x[0] = p1.x - etat.getLargeurRoute(p1) / 2; y[0] = p1.y;
 			x[1] = p2.x - etat.getLargeurRoute(p2) / 2; y[1] = p2.y;
 			x[2] = p2.x + etat.getLargeurRoute(p2) / 2; y[2] = p2.y;
 			x[3] = p1.x + etat.getLargeurRoute(p1) / 2; y[3] = p1.y;
 			x[4] = p1.x; y[4] = p1.y;
 			//graphics2D.fillPolygon(x, y, x.length);
-			
-			
+
+
 			if(i < etat.getRoute().size() - 2) {
 				g.setColor(Color.RED);
 				graphics2D.setStroke(new BasicStroke(10));
@@ -106,9 +106,9 @@ public class Affichage extends JPanel{
 				graphics2D.fillPolygon(x, y, x.length);
 			}
 		}
-		//Affichage joueur
-		//g.setColor(Color.green);
-		//g.fillOval(etat.getPlayerX(), etat.getPlayerY(), etat.getTailleJoueur(), etat.getTailleJoueur());
+
+		//Affichage point de fuite (temp)
+		g.drawOval(etat.getPOINT_DE_FUITE().x, etat.getPOINT_DE_FUITE().y, 5, 5);
 
 		g.setColor(C_VAISSEAU);
 		g.fillOval(etat.getPlayerX(), etat.getHauteurJoueur()+etat.getTailleJoueur(), etat.getTailleJoueur(), 20);
