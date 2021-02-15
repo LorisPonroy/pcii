@@ -28,6 +28,8 @@ public class Affichage extends JPanel{
 	private int[] x;
 	private int[] y;
 	Graphics2D graphics2D;
+	final private Image playerImage;
+	final private Image treeImage;
 
 	public Affichage(KeyListener listener){
 		// Initialise la taille de la fenetre au lancement
@@ -36,6 +38,8 @@ public class Affichage extends JPanel{
 		setFocusable(true);
 		x = new int[5];
 		y = new int[5];
+		playerImage = Toolkit.getDefaultToolkit().getImage("./ressources/player.png");
+		treeImage = Toolkit.getDefaultToolkit().getImage("./ressources/tree.png");
 	}
 
 	@Override
@@ -65,11 +69,13 @@ public class Affichage extends JPanel{
 		//Affichage joueur
 		//g.setColor(Color.green);
 		//g.fillOval(etat.getPlayerX(), etat.getPlayerY(), etat.getTailleJoueur(), etat.getTailleJoueur());
-		final Image img = Toolkit.getDefaultToolkit().getImage("./ressources/player.png");
-		g.drawImage(img, etat.getPlayerX(), etat.getPlayerY(), 100, 100, null);
+		
+		graphics2D.drawImage(playerImage, etat.getPlayerX(), etat.getPlayerY(), 100, 100, null);
 
 		//Suppresion de la route au dessus de l'horizon
 		g.clearRect(0, 0, LARGEUR, etat.getHorizon());
+		
+		graphics2D.drawImage(treeImage, this.LARGEUR / 2 + etat.getPositionDecor(), etat.getHorizon() - 70, 70, 70, null);
 
 		g.setColor(Color.black);
 		g.drawString("Score", 20, 20);
