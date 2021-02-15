@@ -79,6 +79,8 @@ public class Affichage extends JPanel{
 		
 		//graphics2D.drawImage(treeImage, this.LARGEUR / 2 + etat.getPositionDecor(), etat.getHorizon() - 120, 120, 120, null);
 		graphics2D.drawImage(montagneImage, this.LARGEUR / 2 + etat.getPositionDecor(), etat.getHorizon() - 130, 500, 130, null);
+		graphics2D.drawImage(montagneImage, this.LARGEUR + etat.getPositionDecor(), etat.getHorizon() - 130, 500, 130, null);
+		graphics2D.drawImage(montagneImage, -50 + etat.getPositionDecor(), etat.getHorizon() - 130, 500, 130, null);
 
 		g.setColor(Color.black);
 		g.drawString("Score", 20, 20);
