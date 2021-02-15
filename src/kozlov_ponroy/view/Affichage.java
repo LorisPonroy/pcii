@@ -3,8 +3,10 @@ package kozlov_ponroy.view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.event.KeyListener;
 
@@ -25,6 +27,7 @@ public class Affichage extends JPanel{
 	private Point p1, p2;
 	private int[] x;
 	private int[] y;
+	Graphics2D graphics2D;
 
 	public Affichage(KeyListener listener){
 		// Initialise la taille de la fenetre au lancement
@@ -44,6 +47,10 @@ public class Affichage extends JPanel{
 
 		//Affichage de la route
 		g.setColor(Color.gray);
+		graphics2D = (Graphics2D) g;
+		graphics2D.setRenderingHint(
+                RenderingHints.KEY_ANTIALIASING, 
+                RenderingHints.VALUE_ANTIALIAS_ON);
 		for(int i = 0 ; i < etat.getRoute().size() - 1 ; i++)
 		{
 			p1 = etat.getRoute().get(i);
@@ -53,7 +60,7 @@ public class Affichage extends JPanel{
 			x[2] = p2.x + etat.getLargeurRoute(p2) / 2; y[2] = p2.y;
 			x[3] = p1.x + etat.getLargeurRoute(p1) / 2; y[3] = p1.y;
 			x[4] = p1.x; y[4] = p1.y;
-			g.fillPolygon(x, y, x.length);
+			graphics2D.fillPolygon(x, y, x.length);
 		}
 		//Affichage joueur
 		//g.setColor(Color.green);
