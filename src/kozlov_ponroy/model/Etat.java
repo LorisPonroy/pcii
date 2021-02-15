@@ -46,7 +46,7 @@ public class Etat {
 	private void addPositionX(int deltaX) {
 		if(playerPosition.x + deltaX < affichage.getWidth() && playerPosition.x + deltaX > - TAILLE_JOUEUR / 2) {
 			playerPosition.x += deltaX;
-			positionDecor -= deltaX;
+			positionDecor -= deltaX / 4;
 		}
 	}
 
