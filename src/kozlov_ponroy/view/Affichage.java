@@ -28,7 +28,9 @@ public class Affichage extends JPanel{
 	private int[] x;
 	private int[] y;
 	Graphics2D graphics2D;
-	final private Image playerImage;
+	final private Image playerLeftImage;
+	final private Image playerRightImage;
+	final private Image playerCenterImage;
 	final private Image treeImage;
 	final private Image montagneImage;
 
@@ -39,7 +41,9 @@ public class Affichage extends JPanel{
 		setFocusable(true);
 		x = new int[5];
 		y = new int[5];
-		playerImage = Toolkit.getDefaultToolkit().getImage("./ressources/player_left.png");
+		playerLeftImage = Toolkit.getDefaultToolkit().getImage("./ressources/player_left.png");
+		playerCenterImage = Toolkit.getDefaultToolkit().getImage("./ressources/player_center.png");
+		playerRightImage = Toolkit.getDefaultToolkit().getImage("./ressources/player_right.png");
 		treeImage = Toolkit.getDefaultToolkit().getImage("./ressources/tree.png");
 		montagneImage = Toolkit.getDefaultToolkit().getImage("./ressources/montagne.png");
 	}
@@ -72,7 +76,13 @@ public class Affichage extends JPanel{
 		//g.setColor(Color.green);
 		//g.fillOval(etat.getPlayerX(), etat.getPlayerY(), etat.getTailleJoueur(), etat.getTailleJoueur());
 
-		graphics2D.drawImage(playerImage, etat.getPlayerX(), etat.getPlayerY(), 100, 100, null);
+		if(etat.isRight()) {
+			graphics2D.drawImage(playerRightImage, etat.getPlayerX(), etat.getPlayerY(), 100, 100, null);
+		} else if(etat.isLeft()) {
+			graphics2D.drawImage(playerLeftImage, etat.getPlayerX(), etat.getPlayerY(), 100, 100, null);
+		} else {
+			graphics2D.drawImage(playerCenterImage, etat.getPlayerX(), etat.getPlayerY(), 100, 100, null);
+		}
 
 		//Suppresion de la route au dessus de l'horizon
 		g.clearRect(0, 0, LARGEUR, etat.getHorizon());
