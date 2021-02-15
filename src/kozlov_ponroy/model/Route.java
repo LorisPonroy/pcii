@@ -19,7 +19,6 @@ public class Route {
 	private final int X_MAX, Y_MAX, LARGEUR_ROUTE;
 	public final int PX_PAS = 5;
 	private Random random;
-	int horizon = 0;
 
 	public Route(int x_max, int y_max, int largeurRoute){
 		X_MAX = x_max;
@@ -28,8 +27,7 @@ public class Route {
 		points = new ArrayList<>();
 		random = new Random();
 		position = 0;
-		horizon = horizon;
-		points.add(new Point(random.nextInt(x_max), horizon));
+		points.add(new Point(random.nextInt(x_max), 0));
 		while(lastY() <= Y_MAX) {
 			ajouterPoint();
 		}
@@ -44,7 +42,6 @@ public class Route {
 			x = X_MAX - random.nextInt(MARGE_RANDOM) - LARGEUR_ROUTE;
 		}
 		Point p = new Point(x, lastY() + ESPACEMENT);
-		System.out.println(p.toString());
 		points.add(p);
 	}
 
@@ -74,8 +71,12 @@ public class Route {
 
 	public void setPosition() {
 		if(position > 0 && position % ESPACEMENT == 0) {
+			System.out.println("position =" + position);
 			ajouterPoint();
-			points.remove(0);
+			if(points.get(0).y - position < -ESPACEMENT) {
+				points.remove(0);
+				System.out.println("Point supprimé");
+			}
 		}
 		position += PX_PAS;
 	}
