@@ -30,6 +30,7 @@ public class Affichage extends JPanel{
 	Graphics2D graphics2D;
 	final private Image playerImage;
 	final private Image treeImage;
+	final private Image montagneImage;
 
 	public Affichage(KeyListener listener){
 		// Initialise la taille de la fenetre au lancement
@@ -40,6 +41,7 @@ public class Affichage extends JPanel{
 		y = new int[5];
 		playerImage = Toolkit.getDefaultToolkit().getImage("./ressources/player.png");
 		treeImage = Toolkit.getDefaultToolkit().getImage("./ressources/tree.png");
+		montagneImage = Toolkit.getDefaultToolkit().getImage("./ressources/montagne.png");
 	}
 
 	@Override
@@ -75,7 +77,8 @@ public class Affichage extends JPanel{
 		//Suppresion de la route au dessus de l'horizon
 		g.clearRect(0, 0, LARGEUR, etat.getHorizon());
 		
-		graphics2D.drawImage(treeImage, this.LARGEUR / 2 + etat.getPositionDecor(), etat.getHorizon() - 70, 70, 70, null);
+		//graphics2D.drawImage(treeImage, this.LARGEUR / 2 + etat.getPositionDecor(), etat.getHorizon() - 120, 120, 120, null);
+		graphics2D.drawImage(montagneImage, this.LARGEUR / 2 + etat.getPositionDecor(), etat.getHorizon() - 130, 500, 130, null);
 
 		g.setColor(Color.black);
 		g.drawString("Score", 20, 20);
