@@ -119,9 +119,14 @@ public class Affichage extends JPanel{
 			}*/
 		}
 
-		//Affichage point de fuite (temp)
-		g.setColor(Color.RED);
+		//Suppresion de la route au dessus de l'horizon
+		g.clearRect(0, 0, LARGEUR, etat.getHorizon());
 
+		graphics2D.drawImage(montagneImage, LARGEUR / 2 + etat.getPositionDecor(), etat.getHorizon() - 130, 500, 130, null);
+		graphics2D.drawImage(montagneImage, LARGEUR + etat.getPositionDecor(), etat.getHorizon() - 130, 500, 130, null);
+		graphics2D.drawImage(montagneImage, -50 + etat.getPositionDecor(), etat.getHorizon() - 130, 500, 130, null);
+
+		//Affichage du joueur
 		g.setColor(C_VAISSEAU);
 		g.fillOval(etat.getPlayerX(), etat.getHauteurJoueur()+etat.getTailleJoueur(), etat.getTailleJoueur(), 20);
 		if(etat.isRight()) {
@@ -131,14 +136,6 @@ public class Affichage extends JPanel{
 		} else {
 			graphics2D.drawImage(playerCenterImage, etat.getPlayerX(), etat.getPlayerY(), etat.getTailleJoueur(), etat.getTailleJoueur(), null);
 		}
-
-		//Suppresion de la route au dessus de l'horizon
-		g.clearRect(0, 0, LARGEUR, etat.getHorizon());
-
-		graphics2D.drawImage(montagneImage, LARGEUR / 2 + etat.getPositionDecor(), etat.getHorizon() - 130, 500, 130, null);
-		graphics2D.drawImage(montagneImage, LARGEUR + etat.getPositionDecor(), etat.getHorizon() - 130, 500, 130, null);
-		graphics2D.drawImage(montagneImage, -50 + etat.getPositionDecor(), etat.getHorizon() - 130, 500, 130, null);
-
 
 		g.setColor(Color.black);
 		g.drawString("Score", 20, 20);
