@@ -137,12 +137,10 @@ public class Etat {
 				addPositionX(moveRight);
 			}
 		}
-		if(up ^ down) {
-			if(up) {
-				addPositionY(moveUp);
-			} else {
-				addPositionY(moveDown);
-			}
+		if(up) {
+			addPositionY(moveUp);
+		} else {
+			addPositionY(moveDown);
 		}
 		affichage.repaint();
 	}

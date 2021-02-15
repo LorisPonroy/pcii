@@ -75,11 +75,11 @@ public class Affichage extends JPanel{
 			graphics2D.fillPolygon(x, y, x.length);
 			g.setColor(Color.yellow);
 			for(int j = 0 ; j < NB_BANDE ; j+=2) {
-				x[0] = - 5 + p1.x + ((p2.x - p1.x) / NB_BANDE) * j; 		y[0] = p1.y + ((p2.y - p1.y) / NB_BANDE) * j;
-				x[1] = - 5 + p1.x + ((p2.x - p1.x) / NB_BANDE) * (j+1);		y[1] = p1.y + ((p2.y - p1.y) / NB_BANDE) * (j+1);
-				x[2] = + 5 + p1.x + ((p2.x - p1.x) / NB_BANDE) * (j+1); 	y[2] = p1.y + ((p2.y - p1.y) / NB_BANDE) * (j+1);
-				x[3] = + 5 + p1.x + ((p2.x - p1.x) / NB_BANDE) * j; 	 	y[3] = p1.y + ((p2.y - p1.y) / NB_BANDE) * j;
-				x[4] = - 5 + p1.x + ((p2.x - p1.x) / NB_BANDE) * j; 		y[4] = p1.y + ((p2.y - p1.y) / NB_BANDE) * j;
+				x[0] = - 5 + p1.x + (p2.x - p1.x) / NB_BANDE * j; 		y[0] = p1.y + (p2.y - p1.y) / NB_BANDE * j;
+				x[1] = - 5 + p1.x + (p2.x - p1.x) / NB_BANDE * (j+1);		y[1] = p1.y + (p2.y - p1.y) / NB_BANDE * (j+1);
+				x[2] = + 5 + p1.x + (p2.x - p1.x) / NB_BANDE * (j+1); 	y[2] = p1.y + (p2.y - p1.y) / NB_BANDE * (j+1);
+				x[3] = + 5 + p1.x + (p2.x - p1.x) / NB_BANDE * j; 	 	y[3] = p1.y + (p2.y - p1.y) / NB_BANDE * j;
+				x[4] = - 5 + p1.x + (p2.x - p1.x) / NB_BANDE * j; 		y[4] = p1.y + (p2.y - p1.y) / NB_BANDE * j;
 				graphics2D.fillPolygon(x, y, x.length);
 			}
 		}
@@ -99,9 +99,9 @@ public class Affichage extends JPanel{
 
 		//Suppresion de la route au dessus de l'horizon
 		g.clearRect(0, 0, LARGEUR, etat.getHorizon());
-		
-		graphics2D.drawImage(montagneImage, this.LARGEUR / 2 + etat.getPositionDecor(), etat.getHorizon() - 130, 500, 130, null);
-		graphics2D.drawImage(montagneImage, this.LARGEUR + etat.getPositionDecor(), etat.getHorizon() - 130, 500, 130, null);
+
+		graphics2D.drawImage(montagneImage, LARGEUR / 2 + etat.getPositionDecor(), etat.getHorizon() - 130, 500, 130, null);
+		graphics2D.drawImage(montagneImage, LARGEUR + etat.getPositionDecor(), etat.getHorizon() - 130, 500, 130, null);
 		graphics2D.drawImage(montagneImage, -50 + etat.getPositionDecor(), etat.getHorizon() - 130, 500, 130, null);
 
 

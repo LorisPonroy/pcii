@@ -33,7 +33,7 @@ public class KeyboardController implements KeyListener {
 			etat.setUp(true);
 			break;
 		case 's':
-			etat.setDown(true);
+			//etat.setDown(true);
 			break;
 		}
 	}
@@ -50,10 +50,11 @@ public class KeyboardController implements KeyListener {
 			etat.setLeft(false);
 			break;
 		case 'z':
+		case ' ':
 			etat.setUp(false);
 			break;
 		case 's':
-			etat.setDown(false);
+			//etat.setDown(false);
 			break;
 		}
 	}
