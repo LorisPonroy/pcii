@@ -70,6 +70,11 @@ public class Etat {
 		return affichage;
 	}
 
+
+	public int getFacteurElargissement(int y) {
+		return (int) ((HORIZON-y) * 0.4);
+	}
+
 	public int getHauteurJoueur() {
 		return HAUTEUR_JOUEUR;
 	}
@@ -77,10 +82,6 @@ public class Etat {
 	public int getHorizon() {
 		return HORIZON;
 	}
-	public int getLargeurRoute(Point p) {
-		return (int) (HORIZON/799.0*p.y - HORIZON/799.0);
-	}
-
 	public int getPlayerX() {
 		return playerPosition.x;
 	}

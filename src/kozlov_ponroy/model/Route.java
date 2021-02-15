@@ -42,7 +42,6 @@ public class Route {
 			x = X_MAX - random.nextInt(MARGE_RANDOM) - LARGEUR_ROUTE;
 		}
 		Point p = new Point(x, lastY() + ESPACEMENT);
-		System.out.println(p.toString());
 		points.add(p);
 	}
 
@@ -74,7 +73,7 @@ public class Route {
 		if(position > 0 && position % ESPACEMENT == 0) {
 			System.out.println("position =" + position);
 			ajouterPoint();
-			if(((points.get(0).y - position) < -ESPACEMENT)) {
+			if(points.get(0).y - position < -ESPACEMENT) {
 				points.remove(0);
 				System.out.println("Point supprimé");
 			}

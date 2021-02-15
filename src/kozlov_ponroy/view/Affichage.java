@@ -12,6 +12,7 @@ import java.awt.Toolkit;
 import java.awt.event.KeyListener;
 import java.awt.geom.Point2D;
 import java.awt.geom.QuadCurve2D;
+import java.util.List;
 
 import javax.swing.JPanel;
 
@@ -72,32 +73,36 @@ public class Affichage extends JPanel{
 		graphics2D.setRenderingHint(
 				RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
-		for(int i = 0 ; i < etat.getRoute().size() - 1 ; i++)
+		List<Point> route = etat.getRoute();
+		for(Point p : route) {
+			//p.y+=etat.getHorizon();
+		}
+		for(int i = 0 ; i < route.size() - 1 ; i++)
 		{
 			g.setColor(Color.gray);
-			p1 = etat.getRoute().get(i);
-			p2 = etat.getRoute().get(i+1);
-			
-			x[0] = p1.x - etat.getLargeurRoute(p1) / 2; y[0] = p1.y;
-			x[1] = p2.x - etat.getLargeurRoute(p2) / 2; y[1] = p2.y;
-			x[2] = p2.x + etat.getLargeurRoute(p2) / 2; y[2] = p2.y;
-			x[3] = p1.x + etat.getLargeurRoute(p1) / 2; y[3] = p1.y;
+			p1 = route.get(i);
+			p2 = route.get(i+1);
+
+			x[0] = p1.x - etat.getFacteurElargissement(p1.y) / 2; y[0] = p1.y;
+			x[1] = p2.x - etat.getFacteurElargissement(p2.y) / 2; y[1] = p2.y;
+			x[2] = p2.x + etat.getFacteurElargissement(p2.y) / 2; y[2] = p2.y;
+			x[3] = p1.x + etat.getFacteurElargissement(p1.y) / 2; y[3] = p1.y;
 			x[4] = p1.x; y[4] = p1.y;
 			//graphics2D.fillPolygon(x, y, x.length);
-			
-			
-			if(i < etat.getRoute().size() - 2) {
+
+
+			if(i < route.size() - 2) {
 				g.setColor(Color.BLACK);
 				graphics2D.setStroke(new BasicStroke(5));
-				p3 = etat.getRoute().get(i+2);
-				x[4] = p3.x - etat.getLargeurRoute(p3) / 2;	y[4] = p3.y;
+				p3 = route.get(i+2);
+				x[4] = p3.x - etat.getFacteurElargissement(p3.y) / 2;	y[4] = p3.y;
 				debut = new Point2D.Double(x[0] + (x[1]- x[0]) / 2, y[0] + (y[1]- y[0]) / 2);
 				ctrl = new Point2D.Double(x[1], y[1]);
 				fin = new Point2D.Double(x[1] + (x[4]- x[1]) / 2, y[1] + (y[4]- y[1]) / 2);
 				courbe.setCurve(debut,ctrl,fin);
 				graphics2D.draw(courbe);
-				
-				x[4] = p3.x + etat.getLargeurRoute(p3) / 2;	y[4] = p3.y;
+
+				x[4] = p3.x + etat.getFacteurElargissement(p3.y) / 2;	y[4] = p3.y;
 				debut = new Point2D.Double(x[3] + (x[2]- x[3]) / 2, y[3] + (y[2]- y[3]) / 2);
 				ctrl = new Point2D.Double(x[2], y[2]);
 				fin = new Point2D.Double(x[2] + (x[4]- x[2]) / 2, y[2] + (y[4]- y[2]) / 2);
@@ -114,9 +119,9 @@ public class Affichage extends JPanel{
 				graphics2D.fillPolygon(x, y, x.length);
 			}*/
 		}
-		//Affichage joueur
-		//g.setColor(Color.green);
-		//g.fillOval(etat.getPlayerX(), etat.getPlayerY(), etat.getTailleJoueur(), etat.getTailleJoueur());
+
+		//Affichage point de fuite (temp)
+		g.setColor(Color.RED);
 
 		g.setColor(C_VAISSEAU);
 		g.fillOval(etat.getPlayerX(), etat.getHauteurJoueur()+etat.getTailleJoueur(), etat.getTailleJoueur(), 20);
