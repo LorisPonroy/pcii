@@ -63,6 +63,7 @@ public class Affichage extends JPanel{
 				RenderingHints.VALUE_ANTIALIAS_ON);
 		for(int i = 0 ; i < etat.getRoute().size() - 1 ; i++)
 		{
+			g.setColor(Color.gray);
 			p1 = etat.getRoute().get(i);
 			p2 = etat.getRoute().get(i+1);
 			x[0] = p1.x - etat.getLargeurRoute(p1) / 2; y[0] = p1.y;
@@ -72,12 +73,12 @@ public class Affichage extends JPanel{
 			x[4] = p1.x; y[4] = p1.y;
 			graphics2D.fillPolygon(x, y, x.length);
 			g.setColor(Color.yellow);
-			for(int j = 1 ; j < 4 ; j+=2) {
-				x[0] = p1.x - 5; y[0] = p1.y;
-				x[1] = p2.x - etat.getLargeurRoute(p2) / 2; y[1] = p2.y;
-				x[2] = p2.x + etat.getLargeurRoute(p2) / 2; y[2] = p2.y;
-				x[3] = p1.x + etat.getLargeurRoute(p1) / 2; y[3] = p1.y;
-				x[4] = p1.x; y[4] = p1.y;
+			for(int j = 0 ; j < 4 ; j+=2) {
+				x[0] = - 5 + p1.x + ((p2.x - p1.x) / 4) * j; 		y[0] = p1.y + ((p2.y - p1.y) / 4) * j;
+				x[1] = - 5 + p1.x + ((p2.x - p1.x) / 4) * (j+1);	y[1] = p1.y + ((p2.y - p1.y) / 4) * (j+1);
+				x[2] = + 5 + p1.x + ((p2.x - p1.x) / 4) * (j+1); 	y[2] = p1.y + ((p2.y - p1.y) / 4) * (j+1);
+				x[3] = + 5 + p1.x + ((p2.x - p1.x) / 4) * j; 	 	y[3] = p1.y + ((p2.y - p1.y) / 4) * j;
+				x[4] = - 5 + p1.x + ((p2.x - p1.x) / 4) * j; 		y[4] = p1.y + ((p2.y - p1.y) / 4) * j;
 				graphics2D.fillPolygon(x, y, x.length);
 			}
 		}

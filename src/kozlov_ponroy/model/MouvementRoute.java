@@ -15,7 +15,7 @@ public class MouvementRoute extends Thread {
 		while(true) {
 			etat.avancerRoute();
 			try {
-				Thread.sleep(500/vitesseDefilement);
+				Thread.sleep(2000/vitesseDefilement);
 			} catch(Exception e) {
 				e.printStackTrace();
 			}
