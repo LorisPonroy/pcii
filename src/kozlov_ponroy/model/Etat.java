@@ -14,7 +14,7 @@ import kozlov_ponroy.view.Affichage;
 
 public class Etat {
 
-	private final int HORIZON = 100;
+	private final int HORIZON = 250;
 	private final int TAILLE_JOUEUR = 20;
 	private final int LARGEUR_ROUTE = 120;
 
