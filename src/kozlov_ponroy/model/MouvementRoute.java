@@ -4,8 +4,6 @@ public class MouvementRoute extends Thread {
 
 	private final Etat etat;
 
-	private int vitesseDefilement = 100;
-
 	public MouvementRoute(Etat etat) {
 		this.etat = etat;
 	}
@@ -15,7 +13,7 @@ public class MouvementRoute extends Thread {
 		while(true) {
 			etat.avancerRoute();
 			try {
-				Thread.sleep(2000/vitesseDefilement);
+				Thread.sleep((long)(30 * etat.getFacteurVitesse()));
 			} catch(Exception e) {
 				e.printStackTrace();
 			}

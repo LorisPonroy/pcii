@@ -16,13 +16,14 @@ public class Etat {
 
 	private final int HORIZON = 250;
 	private final int TAILLE_JOUEUR = 100;
-	private final int LARGEUR_ROUTE = 100;
+	public final int LARGEUR_ROUTE = 100;
 	private final int HAUTEUR_JOUEUR = 550;
 
 	private final int moveDown = 5;
 	private final int moveRight = 5;
 	private final int moveLeft = -5;
 	private final int moveUp = -5;
+	private double facteurVitesse = 1.0;
 
 	private boolean up = false, down = false, right = false, left = false;
 
@@ -143,6 +144,19 @@ public class Etat {
 		} else {
 			addPositionY(moveDown);
 		}
+		
+		int positionRelative = getPosition() % Route.ESPACEMENT;
+		Point p1 = getRoute().get(1);
+		Point p2 = getRoute().get(2);
+		Point mid = new Point((int)(p1.x + ((p2.x - p1.x) / (Route.ESPACEMENT * 1.0)) * positionRelative), 700);
+		if(getPlayerX() + getTailleJoueur() / 2< mid.x - LARGEUR_ROUTE || getPlayerX() + getTailleJoueur() / 2 > mid.x + LARGEUR_ROUTE) {
+			//ralentissement
+			this.facteurVitesse *= 1.02;
+		}
+		else { //acceleration
+			if(facteurVitesse > 1)
+				this.facteurVitesse *= 0.97;
+		}
 		affichage.repaint();
 	}
 
@@ -164,5 +178,13 @@ public class Etat {
 
 	public void setUp(boolean up) {
 		this.up = up;
+	}
+	
+	public double getFacteurVitesse() {
+		return facteurVitesse;
+	}
+	
+	public int getPosition() {
+		return route.getPosition();
 	}
 }
