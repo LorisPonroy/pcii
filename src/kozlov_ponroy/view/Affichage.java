@@ -76,12 +76,14 @@ public class Affichage extends JPanel{
 		//g.setColor(Color.green);
 		//g.fillOval(etat.getPlayerX(), etat.getPlayerY(), etat.getTailleJoueur(), etat.getTailleJoueur());
 
+		g.setColor(Color.black);
+		g.fillOval(etat.getPlayerX(), etat.getHauteurJoueur()+etat.getTailleJoueur(), etat.getTailleJoueur(), 20);
 		if(etat.isRight()) {
-			graphics2D.drawImage(playerRightImage, etat.getPlayerX(), etat.getPlayerY(), 100, 100, null);
+			graphics2D.drawImage(playerRightImage, etat.getPlayerX(), etat.getPlayerY(), etat.getTailleJoueur(), etat.getTailleJoueur(), null);
 		} else if(etat.isLeft()) {
-			graphics2D.drawImage(playerLeftImage, etat.getPlayerX(), etat.getPlayerY(), 100, 100, null);
+			graphics2D.drawImage(playerLeftImage, etat.getPlayerX(), etat.getPlayerY(), etat.getTailleJoueur(), etat.getTailleJoueur(), null);
 		} else {
-			graphics2D.drawImage(playerCenterImage, etat.getPlayerX(), etat.getPlayerY(), 100, 100, null);
+			graphics2D.drawImage(playerCenterImage, etat.getPlayerX(), etat.getPlayerY(), etat.getTailleJoueur(), etat.getTailleJoueur(), null);
 		}
 
 		//Suppresion de la route au dessus de l'horizon

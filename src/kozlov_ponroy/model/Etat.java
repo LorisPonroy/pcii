@@ -15,8 +15,9 @@ import kozlov_ponroy.view.Affichage;
 public class Etat {
 
 	private final int HORIZON = 250;
-	private final int TAILLE_JOUEUR = 20;
+	private final int TAILLE_JOUEUR = 100;
 	private final int LARGEUR_ROUTE = 100;
+	private final int HAUTEUR_JOUEUR = 550;
 
 	private final int moveDown = 5;
 	private final int moveRight = 5;
@@ -36,7 +37,7 @@ public class Etat {
 		route = new Route(affichage.LARGEUR, affichage.HAUTEUR, LARGEUR_ROUTE);
 		new MouvementVehicule(this).start();
 		new MouvementRoute(this).start();
-		this.positionDecor = 0;
+		positionDecor = 0;
 	}
 
 	/**
@@ -55,7 +56,7 @@ public class Etat {
 	 * @param deltaY
 	 */
 	private void addPositionY(int deltaY) {
-		if(playerPosition.y + deltaY < affichage.getHeight() && playerPosition.y + deltaY > HORIZON - TAILLE_JOUEUR / 2) {
+		if(playerPosition.y + deltaY < HAUTEUR_JOUEUR && playerPosition.y + deltaY > HORIZON - TAILLE_JOUEUR / 2) {
 			playerPosition.y += deltaY;
 		}
 	}
@@ -68,10 +69,13 @@ public class Etat {
 		return affichage;
 	}
 
+	public int getHauteurJoueur() {
+		return HAUTEUR_JOUEUR;
+	}
+
 	public int getHorizon() {
 		return HORIZON;
 	}
-
 	public int getLargeurRoute(Point p) {
 		return (int) (HORIZON/799.0*p.y - HORIZON/799.0);
 	}
@@ -82,6 +86,10 @@ public class Etat {
 
 	public int getPlayerY() {
 		return playerPosition.y;
+	}
+
+	public int getPositionDecor() {
+		return positionDecor;
 	}
 
 	/**
@@ -157,9 +165,5 @@ public class Etat {
 
 	public void setUp(boolean up) {
 		this.up = up;
-	}
-	
-	public int getPositionDecor() {
-		return positionDecor;
 	}
 }
