@@ -33,7 +33,7 @@ public class Affichage extends JPanel{
 	final private Image playerCenterImage;
 	final private Image treeImage;
 	final private Image montagneImage;
-	final int NB_BANDE = 6;
+	final float NB_BANDE = 200;
 
 	public Affichage(KeyListener listener){
 		// Initialise la taille de la fenetre au lancement
@@ -74,12 +74,12 @@ public class Affichage extends JPanel{
 			x[4] = p1.x; y[4] = p1.y;
 			graphics2D.fillPolygon(x, y, x.length);
 			g.setColor(Color.yellow);
-			for(int j = 0 ; j < NB_BANDE ; j+=2) {
-				x[0] = - 5 + p1.x + ((p2.x - p1.x) / NB_BANDE) * j; 		y[0] = p1.y + ((p2.y - p1.y) / NB_BANDE) * j;
-				x[1] = - 5 + p1.x + ((p2.x - p1.x) / NB_BANDE) * (j+1);		y[1] = p1.y + ((p2.y - p1.y) / NB_BANDE) * (j+1);
-				x[2] = + 5 + p1.x + ((p2.x - p1.x) / NB_BANDE) * (j+1); 	y[2] = p1.y + ((p2.y - p1.y) / NB_BANDE) * (j+1);
-				x[3] = + 5 + p1.x + ((p2.x - p1.x) / NB_BANDE) * j; 	 	y[3] = p1.y + ((p2.y - p1.y) / NB_BANDE) * j;
-				x[4] = - 5 + p1.x + ((p2.x - p1.x) / NB_BANDE) * j; 		y[4] = p1.y + ((p2.y - p1.y) / NB_BANDE) * j;
+			for(float j = 0 ; j < NB_BANDE ; j+=2) {
+				x[0] = (int)(- 5 + p1.x + ((p2.x - p1.x) / NB_BANDE) * j); 		y[0] = (int)(p1.y + ((p2.y - p1.y) / NB_BANDE) * j);
+				x[1] = (int)(- 5 + p1.x + ((p2.x - p1.x) / NB_BANDE) * (j+1));	y[1] = (int)(p1.y + ((p2.y - p1.y) / NB_BANDE) * (j+1));
+				x[2] = (int)(+ 5 + p1.x + ((p2.x - p1.x) / NB_BANDE) * (j+1)); 	y[2] = (int)(p1.y + ((p2.y - p1.y) / NB_BANDE) * (j+1));
+				x[3] = (int)(+ 5 + p1.x + ((p2.x - p1.x) / NB_BANDE) * j); 	 	y[3] = (int)(p1.y + ((p2.y - p1.y) / NB_BANDE) * j);
+				x[4] = (int)(- 5 + p1.x + ((p2.x - p1.x) / NB_BANDE) * j); 		y[4] = (int)(p1.y + ((p2.y - p1.y) / NB_BANDE) * j);
 				graphics2D.fillPolygon(x, y, x.length);
 			}
 		}
