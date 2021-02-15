@@ -16,6 +16,7 @@ import java.awt.geom.QuadCurve2D;
 import javax.swing.JPanel;
 
 import kozlov_ponroy.model.Etat;
+import kozlov_ponroy.model.Route;
 
 /**
  * Gère l'affichage dans le MVC
@@ -138,6 +139,8 @@ public class Affichage extends JPanel{
 		g.setColor(Color.black);
 		g.drawString("Score", 20, 20);
 		g.drawString(etat.getScore(), 20, 40);
+		
+		g.drawString("Vitesse : " + (int)(700 / etat.getFacteurVitesse()) + " km/h", 20, 60);
 	}
 
 	public void setEtat(Etat etat) {
