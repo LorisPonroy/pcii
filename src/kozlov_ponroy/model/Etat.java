@@ -156,6 +156,8 @@ public class Etat {
 		else { //acceleration
 			if(facteurVitesse > 1)
 				this.facteurVitesse *= 0.97;
+			else if(facteurVitesse < 1)
+				this.facteurVitesse = 1.0;
 		}
 		affichage.repaint();
 	}
