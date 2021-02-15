@@ -34,6 +34,7 @@ public class Affichage extends JPanel{
 	final private Image treeImage;
 	final private Image montagneImage;
 	final float NB_BANDE = 6;
+	final Color C_VAISSEAU;
 
 	public Affichage(KeyListener listener){
 		// Initialise la taille de la fenetre au lancement
@@ -47,6 +48,7 @@ public class Affichage extends JPanel{
 		playerRightImage = Toolkit.getDefaultToolkit().getImage("./ressources/player_right.png");
 		treeImage = Toolkit.getDefaultToolkit().getImage("./ressources/tree.png");
 		montagneImage = Toolkit.getDefaultToolkit().getImage("./ressources/montagne.png");
+		C_VAISSEAU = new Color(0,0,0,170);
 	}
 
 	@Override
@@ -87,7 +89,7 @@ public class Affichage extends JPanel{
 		//g.setColor(Color.green);
 		//g.fillOval(etat.getPlayerX(), etat.getPlayerY(), etat.getTailleJoueur(), etat.getTailleJoueur());
 
-		g.setColor(new Color(0,0,0,170));
+		g.setColor(C_VAISSEAU);
 		g.fillOval(etat.getPlayerX(), etat.getHauteurJoueur()+etat.getTailleJoueur(), etat.getTailleJoueur(), 20);
 		if(etat.isRight()) {
 			graphics2D.drawImage(playerRightImage, etat.getPlayerX(), etat.getPlayerY(), etat.getTailleJoueur(), etat.getTailleJoueur(), null);
