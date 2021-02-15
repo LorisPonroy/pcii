@@ -48,10 +48,10 @@ public class Affichage extends JPanel{
 		{
 			p1 = etat.getRoute().get(i);
 			p2 = etat.getRoute().get(i+1);
-			x[0] = p1.x; y[0] = p1.y;
-			x[1] = p2.x; y[1] = p2.y;
-			x[2] = p2.x + etat.getLargeurRoute(p2); y[2] = p2.y;
-			x[3] = p1.x + etat.getLargeurRoute(p1); y[3] = p1.y;
+			x[0] = p1.x - etat.getLargeurRoute(p1) / 2; y[0] = p1.y;
+			x[1] = p2.x - etat.getLargeurRoute(p2) / 2; y[1] = p2.y;
+			x[2] = p2.x + etat.getLargeurRoute(p2) / 2; y[2] = p2.y;
+			x[3] = p1.x + etat.getLargeurRoute(p1) / 2; y[3] = p1.y;
 			x[4] = p1.x; y[4] = p1.y;
 			g.fillPolygon(x, y, x.length);
 		}
