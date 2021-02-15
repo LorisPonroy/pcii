@@ -12,7 +12,8 @@ import java.util.Random;
 public class Route {
 
 	private ArrayList<Point> points;
-	private final int ESPACEMENT = 300;
+
+	private final int ESPACEMENT = 400;
 	private final int MARGE_RANDOM = 300;
 	private int position;
 	private final int X_MAX, Y_MAX, LARGEUR_ROUTE;

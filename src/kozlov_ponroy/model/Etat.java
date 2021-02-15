@@ -16,7 +16,7 @@ public class Etat {
 
 	private final int HORIZON = 250;
 	private final int TAILLE_JOUEUR = 20;
-	private final int LARGEUR_ROUTE = 120;
+	private final int LARGEUR_ROUTE = 100;
 
 	private final int moveDown = 5;
 	private final int moveRight = 5;
