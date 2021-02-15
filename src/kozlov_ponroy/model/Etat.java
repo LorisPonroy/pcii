@@ -28,6 +28,7 @@ public class Etat {
 	private Point playerPosition;
 	private Affichage affichage;
 	private Route route;
+	private int positionDecor;
 
 	public Etat(Affichage affichage) {
 		this.affichage = affichage;
@@ -35,6 +36,7 @@ public class Etat {
 		route = new Route(affichage.LARGEUR, affichage.HAUTEUR, LARGEUR_ROUTE);
 		new MouvementVehicule(this).start();
 		new MouvementRoute(this).start();
+		this.positionDecor = 0;
 	}
 
 	/**
@@ -44,6 +46,7 @@ public class Etat {
 	private void addPositionX(int deltaX) {
 		if(playerPosition.x + deltaX < affichage.getWidth() && playerPosition.x + deltaX > - TAILLE_JOUEUR / 2) {
 			playerPosition.x += deltaX;
+			positionDecor -= deltaX;
 		}
 	}
 
@@ -154,5 +157,9 @@ public class Etat {
 
 	public void setUp(boolean up) {
 		this.up = up;
+	}
+	
+	public int getPositionDecor() {
+		return positionDecor;
 	}
 }
