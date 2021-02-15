@@ -10,6 +10,7 @@ import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.event.KeyListener;
+import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
 import java.awt.geom.QuadCurve2D;
 import java.util.List;
@@ -38,12 +39,14 @@ public class Affichage extends JPanel{
 	final private Image playerCenterImage;
 	final private Image treeImage;
 	final private Image montagneImage;
-	final float NB_BANDE = 6;
+	final float NB_BANDE = 4;
 	final Color C_VAISSEAU;
-	QuadCurve2D courbe = new QuadCurve2D.Double();
+	QuadCurve2D courbeGauche = new QuadCurve2D.Double();
+	QuadCurve2D courbeDroite = new QuadCurve2D.Double();
 	Point2D debut;
 	Point2D ctrl;
 	Point2D fin;
+	GeneralPath closedCurve;
 
 	public Affichage(KeyListener listener){
 		// Initialise la taille de la fenetre au lancement
@@ -58,21 +61,23 @@ public class Affichage extends JPanel{
 		treeImage = Toolkit.getDefaultToolkit().getImage("./ressources/tree.png");
 		montagneImage = Toolkit.getDefaultToolkit().getImage("./ressources/montagne.png");
 		C_VAISSEAU = new Color(0,0,0,170);
+		closedCurve = new GeneralPath();
 	}
 
 	@Override
 	public void paint(Graphics g){
 		super.paint(g);
+		graphics2D = (Graphics2D) g;
+		graphics2D.setRenderingHint(
+				RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
+		graphics2D.clearRect(0, 0, LARGEUR, HAUTEUR);
 		g.setColor(Color.BLACK);
 		//Affichage de la ligne d'horizon
 		g.drawLine(0, etat.getHorizon(), LARGEUR, etat.getHorizon());
 
 		//Affichage de la route
 		g.setColor(Color.gray);
-		graphics2D = (Graphics2D) g;
-		graphics2D.setRenderingHint(
-				RenderingHints.KEY_ANTIALIASING,
-				RenderingHints.VALUE_ANTIALIAS_ON);
 		List<Point> route = etat.getRoute();
 		for(Point p : route) {
 			//p.y+=etat.getHorizon();
@@ -99,17 +104,22 @@ public class Affichage extends JPanel{
 				debut = new Point2D.Double(x[0] + (x[1]- x[0]) / 2, y[0] + (y[1]- y[0]) / 2);
 				ctrl = new Point2D.Double(x[1], y[1]);
 				fin = new Point2D.Double(x[1] + (x[4]- x[1]) / 2, y[1] + (y[4]- y[1]) / 2);
-				courbe.setCurve(debut,ctrl,fin);
-				graphics2D.draw(courbe);
+				courbeGauche.setCurve(debut,ctrl,fin);
+				graphics2D.draw(courbeGauche);
 
 				x[4] = p3.x + etat.getFacteurElargissement(p3.y) / 2;	y[4] = p3.y;
-				debut = new Point2D.Double(x[3] + (x[2]- x[3]) / 2, y[3] + (y[2]- y[3]) / 2);
+				fin = new Point2D.Double(x[3] + (x[2]- x[3]) / 2, y[3] + (y[2]- y[3]) / 2);
 				ctrl = new Point2D.Double(x[2], y[2]);
-				fin = new Point2D.Double(x[2] + (x[4]- x[2]) / 2, y[2] + (y[4]- y[2]) / 2);
-				courbe.setCurve(debut,ctrl,fin);
-				graphics2D.draw(courbe);
+				debut = new Point2D.Double(x[2] + (x[4]- x[2]) / 2, y[2] + (y[4]- y[2]) / 2);
+				courbeDroite.setCurve(debut,ctrl,fin);
+				graphics2D.draw(courbeDroite);
+				//closedCurve.append(courbeGauche, true);
+				//closedCurve.append(courbeDroite, true);
+				//closedCurve.lineTo(x[0] + (x[1]- x[0]) / 2, y[0] + (y[1]- y[0]) / 2);
+				//closedCurve.closePath();
+				//graphics2D.fill(closedCurve);
 			}
-			/*g.setColor(Color.yellow);
+			g.setColor(Color.gray);
 			for(float j = 0 ; j < NB_BANDE ; j+=2) {
 				x[0] = (int)(- 5 + p1.x + (p2.x - p1.x) / NB_BANDE * j); 		y[0] = (int)(p1.y + (p2.y - p1.y) / NB_BANDE * j);
 				x[1] = (int)(- 5 + p1.x + (p2.x - p1.x) / NB_BANDE * (j+1));	y[1] = (int)(p1.y + (p2.y - p1.y) / NB_BANDE * (j+1));
@@ -117,7 +127,7 @@ public class Affichage extends JPanel{
 				x[3] = (int)(+ 5 + p1.x + (p2.x - p1.x) / NB_BANDE * j); 	 	y[3] = (int)(p1.y + (p2.y - p1.y) / NB_BANDE * j);
 				x[4] = (int)(- 5 + p1.x + (p2.x - p1.x) / NB_BANDE * j); 		y[4] = (int)(p1.y + (p2.y - p1.y) / NB_BANDE * j);
 				graphics2D.fillPolygon(x, y, x.length);
-			}*/
+			}
 		}
 
 		//Suppresion de la route au dessus de l'horizon
