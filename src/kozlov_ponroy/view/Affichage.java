@@ -33,7 +33,7 @@ public class Affichage extends JPanel{
 	final private Image playerCenterImage;
 	final private Image treeImage;
 	final private Image montagneImage;
-	final float NB_BANDE = 200;
+	final float NB_BANDE = 6;
 
 	public Affichage(KeyListener listener){
 		// Initialise la taille de la fenetre au lancement
@@ -87,7 +87,7 @@ public class Affichage extends JPanel{
 		//g.setColor(Color.green);
 		//g.fillOval(etat.getPlayerX(), etat.getPlayerY(), etat.getTailleJoueur(), etat.getTailleJoueur());
 
-		g.setColor(Color.black);
+		g.setColor(new Color(0,0,0,170));
 		g.fillOval(etat.getPlayerX(), etat.getHauteurJoueur()+etat.getTailleJoueur(), etat.getTailleJoueur(), 20);
 		if(etat.isRight()) {
 			graphics2D.drawImage(playerRightImage, etat.getPlayerX(), etat.getPlayerY(), etat.getTailleJoueur(), etat.getTailleJoueur(), null);
