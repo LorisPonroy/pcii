@@ -3,7 +3,9 @@ package kozlov_ponroy.view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.KeyListener;
 
 import javax.swing.JPanel;
@@ -54,8 +56,10 @@ public class Affichage extends JPanel{
 			g.fillPolygon(x, y, x.length);
 		}
 		//Affichage joueur
-		g.setColor(Color.green);
-		g.fillOval(etat.getPlayerX(), etat.getPlayerY(), etat.getTailleJoueur(), etat.getTailleJoueur());
+		//g.setColor(Color.green);
+		//g.fillOval(etat.getPlayerX(), etat.getPlayerY(), etat.getTailleJoueur(), etat.getTailleJoueur());
+		final Image img = Toolkit.getDefaultToolkit().getImage("./ressources/player.png");
+		g.drawImage(img, etat.getPlayerX(), etat.getPlayerY(), 100, 100, null);
 
 		//Suppresion de la route au dessus de l'horizon
 		g.clearRect(0, 0, LARGEUR, etat.getHorizon());
