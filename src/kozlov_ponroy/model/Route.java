@@ -10,19 +10,20 @@ import java.util.Random;
  *
  */
 public class Route {
-	
+
 	private ArrayList<Point> points;
+
 	private final int ESPACEMENT = 400;
 	private final int MARGE_RANDOM = 300;
 	private int position;
 	private final int X_MAX, Y_MAX, LARGEUR_ROUTE;
-	private final int PX_PAS = 5;
+	public final int PX_PAS = 5;
 	private Random random;
 
 	public Route(int x_max, int y_max, int largeurRoute){
-		this.X_MAX = x_max;
-		this.Y_MAX = y_max;
-		this.LARGEUR_ROUTE = largeurRoute;
+		X_MAX = x_max;
+		Y_MAX = y_max;
+		LARGEUR_ROUTE = largeurRoute;
 		points = new ArrayList<>();
 		random = new Random();
 		position = 0;
@@ -31,7 +32,7 @@ public class Route {
 			ajouterPoint();
 		}
 	}
-	
+
 	private void ajouterPoint() {
 		int x = lastX() + random.nextInt(MARGE_RANDOM) - MARGE_RANDOM / 2;
 		if(x < 0){
@@ -44,27 +45,11 @@ public class Route {
 		System.out.println(p.toString());
 		points.add(p);
 	}
-	
-	private int lastX() {
-		return points.get(points.size() - 1).x;
-	}
-	
-	private int lastY() {
-		return points.get(points.size() - 1).y;
-	}
-	
-	public void setPosition() {
-		if(position > 0 && position % ESPACEMENT == 0) {
-			ajouterPoint();
-			points.remove(0);
-		}
-		position += PX_PAS;
-	}
-	
+
 	public int getPosition() {
 		return position;
 	}
-	
+
 	/**
 	 * Renvoie tous les points qui constitue la route
 	 * @return
@@ -75,5 +60,21 @@ public class Route {
 			temp.add(new Point(p.x, p.y - position));
 		}
 		return temp;
+	}
+
+	private int lastX() {
+		return points.get(points.size() - 1).x;
+	}
+
+	private int lastY() {
+		return points.get(points.size() - 1).y;
+	}
+
+	public void setPosition() {
+		if(position > 0 && position % ESPACEMENT == 0) {
+			ajouterPoint();
+			points.remove(0);
+		}
+		position += PX_PAS;
 	}
 }
