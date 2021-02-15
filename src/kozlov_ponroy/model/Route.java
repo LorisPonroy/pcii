@@ -72,8 +72,12 @@ public class Route {
 
 	public void setPosition() {
 		if(position > 0 && position % ESPACEMENT == 0) {
+			System.out.println("position =" + position);
 			ajouterPoint();
-			points.remove(0);
+			if(((points.get(0).y - position) < -ESPACEMENT)) {
+				points.remove(0);
+				System.out.println("Point supprimé");
+			}
 		}
 		position += PX_PAS;
 	}
