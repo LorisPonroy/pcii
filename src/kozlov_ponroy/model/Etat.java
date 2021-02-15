@@ -151,7 +151,8 @@ public class Etat {
 		Point mid = new Point((int)(p1.x + ((p2.x - p1.x) / (Route.ESPACEMENT * 1.0)) * positionRelative), 700);
 		if(getPlayerX() + getTailleJoueur() / 2< mid.x - LARGEUR_ROUTE || getPlayerX() + getTailleJoueur() / 2 > mid.x + LARGEUR_ROUTE) {
 			//ralentissement
-			this.facteurVitesse *= 1.02;
+			if(this.facteurVitesse <= 10.0)
+				this.facteurVitesse *= 1.02;
 		}
 		else { //acceleration
 			if(facteurVitesse > 1)
