@@ -48,7 +48,7 @@ public class Etat {
 	private void addPositionX(int deltaX) {
 		if(playerPosition.x + deltaX < affichage.getWidth() && playerPosition.x + deltaX > - TAILLE_JOUEUR / 2) {
 			playerPosition.x += deltaX;
-			positionDecor -= deltaX / 4;
+			//positionDecor -= deltaX / 4;
 		}
 	}
 
@@ -75,19 +75,27 @@ public class Etat {
 		return (int) ((HORIZON-y) * 0.4);
 	}
 
+	public double getFacteurVitesse() {
+		return facteurVitesse;
+	}
+
 	public int getHauteurJoueur() {
 		return HAUTEUR_JOUEUR;
 	}
-
 	public int getHorizon() {
 		return HORIZON;
 	}
+
 	public int getPlayerX() {
 		return playerPosition.x;
 	}
 
 	public int getPlayerY() {
 		return playerPosition.y;
+	}
+
+	public int getPosition() {
+		return route.getPosition();
 	}
 
 	public int getPositionDecor() {
@@ -144,21 +152,23 @@ public class Etat {
 		} else {
 			addPositionY(moveDown);
 		}
-		
+
 		int positionRelative = getPosition() % Route.ESPACEMENT;
 		Point p1 = getRoute().get(1);
 		Point p2 = getRoute().get(2);
-		Point mid = new Point((int)(p1.x + ((p2.x - p1.x) / (Route.ESPACEMENT * 1.0)) * positionRelative), 700);
+		Point mid = new Point((int)(p1.x + (p2.x - p1.x) / (Route.ESPACEMENT * 1.0) * positionRelative), 700);
 		if(getPlayerX() + getTailleJoueur() / 2< mid.x - LARGEUR_ROUTE || getPlayerX() + getTailleJoueur() / 2 > mid.x + LARGEUR_ROUTE) {
 			//ralentissement
-			if(this.facteurVitesse <= 10.0)
-				this.facteurVitesse *= 1.02;
+			if(facteurVitesse <= 10.0) {
+				facteurVitesse *= 1.02;
+			}
 		}
 		else { //acceleration
-			if(facteurVitesse > 1)
-				this.facteurVitesse *= 0.97;
-			else if(facteurVitesse < 1)
-				this.facteurVitesse = 1.0;
+			if(facteurVitesse > 1) {
+				facteurVitesse *= 0.97;
+			} else if(facteurVitesse < 1) {
+				facteurVitesse = 1.0;
+			}
 		}
 		affichage.repaint();
 	}
@@ -181,13 +191,5 @@ public class Etat {
 
 	public void setUp(boolean up) {
 		this.up = up;
-	}
-	
-	public double getFacteurVitesse() {
-		return facteurVitesse;
-	}
-	
-	public int getPosition() {
-		return route.getPosition();
 	}
 }
