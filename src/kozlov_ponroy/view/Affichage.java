@@ -39,6 +39,10 @@ public class Affichage extends JPanel{
 	final private Image playerCenterImage;
 	final private Image treeImage;
 	final private Image montagneImage;
+	final private Image nuage1;
+	final private Image nuage2;
+	final private Image grass;
+	final private Image grass2;
 	final float NB_BANDE = 40;
 	final Color C_VAISSEAU;
 	final Color C_ROUTE;
@@ -76,12 +80,15 @@ public class Affichage extends JPanel{
 		playerRightImage = Toolkit.getDefaultToolkit().getImage("./ressources/player_right.png");
 		treeImage = Toolkit.getDefaultToolkit().getImage("./ressources/tree.png");
 		montagneImage = Toolkit.getDefaultToolkit().getImage("./ressources/montagne.png");
-		
+		nuage1 = Toolkit.getDefaultToolkit().getImage("./ressources/nuage_1.png");
+		nuage2 = Toolkit.getDefaultToolkit().getImage("./ressources/nuage_2.png");
+		grass = Toolkit.getDefaultToolkit().getImage("./ressources/Grass_Texture.jpg");
+		grass2 = Toolkit.getDefaultToolkit().getImage("./ressources/Grass_Texture_2.jpg");
 		/**
 		 * Initialisation couleurs et stroke
 		 */
 		C_VAISSEAU = new Color(0,0,0,170);
-		C_ROUTE = new Color(0,0,0,150);
+		C_ROUTE = new Color(100,100,100,255);
 		dashed = new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash1, 0.0f);
 	}
 
@@ -106,7 +113,13 @@ public class Affichage extends JPanel{
 		 */
 		g.setColor(Color.BLACK);
 		g.drawLine(0, etat.getHorizon(), LARGEUR, etat.getHorizon());
-
+		graphics2D.drawImage(grass, 0, (etat.getPosition() % (HAUTEUR + HAUTEUR / 2)) - HAUTEUR / 2, LARGEUR, HAUTEUR / 2 + etat.getHorizon(), null);
+		/**
+		 * TODO: Roulement image pour decor
+		 */
+		//graphics2D.drawImage(grass, 0, (etat.getPosition()% (HAUTEUR + HAUTEUR / 2)) - HAUTEUR / 2, LARGEUR, HAUTEUR / 2 + etat.getHorizon(), null);
+		//graphics2D.drawImage(grass, 0, etat.getHorizon() * 2 + HAUTEUR / 2 + etat.getPosition() % HAUTEUR, LARGEUR, HAUTEUR / 2  + etat.getHorizon(), null);
+		graphics2D.drawLine(0, HAUTEUR, LARGEUR, HAUTEUR);
 		/**
 		 * Affichage de la route
 		 */
@@ -181,7 +194,7 @@ public class Affichage extends JPanel{
 		}
 		
 		/**
-		 * Affichage de la route
+		 * Affichage du joueur
 		 */
 		g.setColor(C_VAISSEAU);
 		g.fillOval(etat.getPlayerX(), etat.getHauteurJoueur() + etat.getTailleJoueur(), etat.getTailleJoueur(), 20);
@@ -189,7 +202,7 @@ public class Affichage extends JPanel{
 		/**
 		 * Suppresion de la route au dessus de l'horizon
 		 */
-		g.clearRect(0, 0, LARGEUR, etat.getHorizon());
+		//g.clearRect(0, 0, LARGEUR, etat.getHorizon());
 
 		/**
 		 * Decor du fond
@@ -197,7 +210,8 @@ public class Affichage extends JPanel{
 		graphics2D.drawImage(montagneImage, LARGEUR / 2 + etat.getPositionDecor(), etat.getHorizon() - 130, 500, 130, null);
 		graphics2D.drawImage(montagneImage, LARGEUR + etat.getPositionDecor(), etat.getHorizon() - 130, 500, 130, null);
 		graphics2D.drawImage(montagneImage, -50 + etat.getPositionDecor(), etat.getHorizon() - 130, 500, 130, null);
-
+		graphics2D.drawImage(nuage1, 300 + etat.getPositionDecor(), etat.getHorizon() - 260, 400, 130, null);
+		graphics2D.drawImage(nuage2, -50 + etat.getPositionDecor(), etat.getHorizon() - 260, 300, 130, null);
 		/**
 		 * Affichages informations jeu
 		 */
