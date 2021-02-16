@@ -15,7 +15,7 @@ import kozlov_ponroy.view.Affichage;
 public class Etat {
 
 	private final int HORIZON = 250;
-	private final int TAILLE_JOUEUR = 100;
+	private final int TAILLE_JOUEUR = 180;
 	public final int LARGEUR_ROUTE = 100;
 	private final int HAUTEUR_JOUEUR = 550;
 
@@ -34,8 +34,8 @@ public class Etat {
 
 	public Etat(Affichage affichage) {
 		this.affichage = affichage;
-		playerPosition = new Point(affichage.LARGEUR / 2, affichage.HAUTEUR / 2);
 		route = new Route(affichage.LARGEUR, affichage.HAUTEUR, LARGEUR_ROUTE);
+		playerPosition = new Point(route.getFirstPosXPlayer(), affichage.HAUTEUR / 2);
 		new MouvementVehicule(this).start();
 		new MouvementRoute(this).start();
 		positionDecor = 0;
@@ -116,7 +116,7 @@ public class Etat {
 	}
 
 	public String getScore() {
-		return "" + route.getPosition();
+		return "Score : " + route.getPosition();
 	}
 
 	public int getTailleJoueur() {
