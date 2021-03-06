@@ -57,13 +57,17 @@ public class Etat {
 	 * @param deltaY
 	 */
 	private void addPositionY(int deltaY) {
-		if(playerPosition.y + deltaY < HAUTEUR_JOUEUR && playerPosition.y + deltaY > HORIZON - TAILLE_JOUEUR / 2) {
+		if(playerPosition.y + deltaY < HAUTEUR_JOUEUR && playerPosition.y + deltaY > HORIZON + TAILLE_JOUEUR / 2) {
 			playerPosition.y += deltaY;
 		}
 	}
 
 	public void avancerRoute() {
-		route.setPosition();
+		route.avancer();
+	}
+
+	public void genererObstacle() {
+		route.genererObstacle();
 	}
 
 	public Affichage getAffichage() {
@@ -94,6 +98,19 @@ public class Etat {
 		return playerPosition.y;
 	}
 
+	/**
+	 * Renvoie les points de la route dans le sens inversé
+	 * @return
+	 */
+	public ArrayList<Point> getPoints(){
+		ArrayList<Point> temp = new ArrayList<>();
+		for(Point p : route.getPoints())
+		{
+			temp.add(new Point(p.x, affichage.HAUTEUR - p.y));
+		}
+		return temp;
+	}
+
 	public int getPosition() {
 		return route.getPosition();
 	}
@@ -102,17 +119,8 @@ public class Etat {
 		return positionDecor;
 	}
 
-	/**
-	 * Renvoie les points de la route dans le sens inversé
-	 * @return
-	 */
-	public ArrayList<Point> getRoute(){
-		ArrayList<Point> temp = new ArrayList<>();
-		for(Point p : route.getRoute())
-		{
-			temp.add(new Point(p.x, affichage.HAUTEUR - p.y));
-		}
-		return temp;
+	public Route getRoute() {
+		return route;
 	}
 
 	public String getScore() {
@@ -154,8 +162,8 @@ public class Etat {
 		}
 
 		int positionRelative = getPosition() % Route.ESPACEMENT;
-		Point p1 = getRoute().get(1);
-		Point p2 = getRoute().get(2);
+		Point p1 = getPoints().get(1);
+		Point p2 = getPoints().get(2);
 		Point mid = new Point((int)(p1.x + (p2.x - p1.x) / (Route.ESPACEMENT * 1.0) * positionRelative), 700);
 		if(getPlayerX() + getTailleJoueur() / 2< mid.x - LARGEUR_ROUTE || getPlayerX() + getTailleJoueur() / 2 > mid.x + LARGEUR_ROUTE) {
 			//ralentissement

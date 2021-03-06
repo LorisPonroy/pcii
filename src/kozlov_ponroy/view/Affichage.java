@@ -18,7 +18,7 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import kozlov_ponroy.model.Etat;
-import kozlov_ponroy.model.Route;
+import kozlov_ponroy.model.Obstacle;
 
 /**
  * Gère l'affichage dans le MVC
@@ -43,6 +43,7 @@ public class Affichage extends JPanel{
 	final private Image nuage2;
 	final private Image grass;
 	final private Image grass2;
+	final private Image fense;
 	final float NB_BANDE = 40;
 	final Color C_VAISSEAU;
 	final Color C_ROUTE;
@@ -50,7 +51,7 @@ public class Affichage extends JPanel{
 	QuadCurve2D courbeGauche = new QuadCurve2D.Double();
 	QuadCurve2D courbeBande = new QuadCurve2D.Double();
 	final private float dash1[] = {20.0f};
-    final private BasicStroke dashed;
+	final private BasicStroke dashed;
 	Point2D debut;
 	Point2D ctrl;
 	Point2D fin;
@@ -65,13 +66,13 @@ public class Affichage extends JPanel{
 		setPreferredSize(new Dimension(LARGEUR, HAUTEUR));
 		addKeyListener(listener);
 		setFocusable(true);
-		
+
 		/**
 		 * Tableau pour routes
 		 */
 		routeX = new int[5];
 		routeY = new int[5];
-		
+
 		/**
 		 * Initialisation images
 		 */
@@ -84,6 +85,7 @@ public class Affichage extends JPanel{
 		nuage2 = Toolkit.getDefaultToolkit().getImage("./ressources/nuage_2.png");
 		grass = Toolkit.getDefaultToolkit().getImage("./ressources/Grass_Texture.jpg");
 		grass2 = Toolkit.getDefaultToolkit().getImage("./ressources/Grass_Texture_2.jpg");
+		fense = Toolkit.getDefaultToolkit().getImage("./ressources/fense.png");
 		/**
 		 * Initialisation couleurs et stroke
 		 */
@@ -98,7 +100,7 @@ public class Affichage extends JPanel{
 	@Override
 	public void paint(Graphics g){
 		super.paint(g);
-		
+
 		/**
 		 * Recuperation graphique et antialiasing on
 		 */
@@ -107,13 +109,13 @@ public class Affichage extends JPanel{
 		graphics2D.setRenderingHint(
 				RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
-		
+
 		/**
 		 * Ligne d'horizon
 		 */
 		g.setColor(Color.BLACK);
 		g.drawLine(0, etat.getHorizon(), LARGEUR, etat.getHorizon());
-		graphics2D.drawImage(grass, 0, (etat.getPosition() % (HAUTEUR + HAUTEUR / 2)) - HAUTEUR / 2, LARGEUR, HAUTEUR / 2 + etat.getHorizon(), null);
+		//graphics2D.drawImage(grass, 0, etat.getPosition() % (HAUTEUR + HAUTEUR / 2) - HAUTEUR / 2, LARGEUR, HAUTEUR / 2 + etat.getHorizon(), null);
 		/**
 		 * TODO: Roulement image pour decor
 		 */
@@ -124,14 +126,14 @@ public class Affichage extends JPanel{
 		 * Affichage de la route
 		 */
 		g.setColor(Color.gray);
-		route = etat.getRoute();
+		route = etat.getPoints();
 		for(int i = 0 ; i < route.size() - 2 ; i++) // -2 : besoin de 3 points pour construire les routes
 		{
 			g.setColor(Color.gray);
 			p1 = route.get(i);
 			p2 = route.get(i+1);
 			p3 = route.get(i+2);
-			
+
 			/**
 			 * Definition des points pour la route
 			 */
@@ -158,7 +160,7 @@ public class Affichage extends JPanel{
 			ctrl = new Point2D.Double(routeX[2], routeY[2]);
 			debut = new Point2D.Double(routeX[2] + (routeX[4]- routeX[2]) / 2, routeY[2] + (routeY[4]- routeY[2]) / 2);
 			courbeGauche.setCurve(debut,ctrl,fin);
-			
+
 			/**
 			 * Courbe ferme qui est la route entiere
 			 */
@@ -167,7 +169,7 @@ public class Affichage extends JPanel{
 			closedCurve.append(courbeGauche, true);
 			closedCurve.lineTo(routeX[0] + (routeX[1]- routeX[0]) / 2, routeY[0] + (routeY[1]- routeY[0]) / 2);
 			closedCurve.closePath();
-			
+
 			/**
 			 * Courbe bande
 			 */
@@ -175,7 +177,7 @@ public class Affichage extends JPanel{
 			ctrl = new Point2D.Double(p2.x, p2.y);
 			fin = new Point2D.Double(p2.x + (p3.x - p2.x) / 2, p2.y + (p3.y - p2.y) / 2);
 			courbeBande.setCurve(debut,ctrl,fin);
-			
+
 			/**
 			 * Affichage route
 			 */
@@ -184,7 +186,7 @@ public class Affichage extends JPanel{
 			graphics2D.fill(closedCurve);
 			graphics2D.draw(courbeGauche);
 			graphics2D.draw(courbeDroite);
-			
+
 			/**
 			 * Affichage bande route
 			 */
@@ -192,7 +194,14 @@ public class Affichage extends JPanel{
 			graphics2D.setColor(Color.white);
 			graphics2D.draw(courbeBande);
 		}
-		
+
+		//Affichage des obstacles
+		for(Obstacle o : etat.getRoute().getObstacles()) {
+			g.setColor(Color.black);
+			//g.fillRect(o.getX(), o.getY(), 100, Math.abs(etat.getFacteurElargissement(o.getY())));
+			graphics2D.drawImage(fense, o.getX(), o.getY(), Math.abs(etat.getFacteurElargissement(o.getY())),o.getHauteur()*Math.abs(etat.getFacteurElargissement(o.getY())),null);
+		}
+
 		/**
 		 * Affichage du joueur
 		 */
@@ -202,7 +211,7 @@ public class Affichage extends JPanel{
 		/**
 		 * Suppresion de la route au dessus de l'horizon
 		 */
-		//g.clearRect(0, 0, LARGEUR, etat.getHorizon());
+		g.clearRect(0, 0, LARGEUR, etat.getHorizon());
 
 		/**
 		 * Decor du fond

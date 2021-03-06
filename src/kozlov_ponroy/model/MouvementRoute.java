@@ -12,6 +12,9 @@ public class MouvementRoute extends Thread {
 	public void run() {
 		while(true) {
 			etat.avancerRoute();
+			if(Math.random()<0.01) {
+				etat.genererObstacle();
+			}
 			try {
 				Thread.sleep((long)(30 * etat.getFacteurVitesse()));
 			} catch(Exception e) {
