@@ -66,7 +66,7 @@ public class Etat {
 	 * Renvoie les points de la route dans le sens inversé
 	 * @return
 	 */
-	public ArrayList<Point> getPoints(){
+	public ArrayList<Point> getRoutePoints(){
 		ArrayList<Point> temp = new ArrayList<>();
 		for(Point p : route.getPoints())
 		{
@@ -120,8 +120,8 @@ public class Etat {
 		 * On check si le joueur est sur la route ou en dehors
 		 */
 		int positionRelative = getPositionRoute() % Route.ESPACEMENT;
-		Point p1 = getPoints().get(1);
-		Point p2 = getPoints().get(2);
+		Point p1 = getRoutePoints().get(1);
+		Point p2 = getRoutePoints().get(2);
 		Point mid = new Point((int)(p1.x + (p2.x - p1.x) / (Route.ESPACEMENT * 1.0) * positionRelative), 700);
 		if(getPlayerX() + getTailleJoueur() / 2 < mid.x - LARGEUR_ROUTE || getPlayerX() + getTailleJoueur() / 2 > mid.x + LARGEUR_ROUTE) {
 			//ralentissement
