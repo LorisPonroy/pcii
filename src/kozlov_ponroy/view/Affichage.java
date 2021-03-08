@@ -110,6 +110,9 @@ public class Affichage extends JPanel{
 				RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
 
+		g.setColor(Color.YELLOW);
+		g.fillRect(0, 0, LARGEUR, HAUTEUR);
+
 		/**
 		 * Ligne d'horizon
 		 */
@@ -198,15 +201,16 @@ public class Affichage extends JPanel{
 		//Affichage des obstacles
 		for(Obstacle o : etat.getRoute().getObstacles()) {
 			g.setColor(Color.black);
-			//g.fillRect(o.getX(), o.getY(), 100, Math.abs(etat.getFacteurElargissement(o.getY())));
-			graphics2D.drawImage(fense, o.getX(), o.getY(), Math.abs(etat.getFacteurElargissement(o.getY())),o.getHauteur()*Math.abs(etat.getFacteurElargissement(o.getY())),null);
+			int width = Math.abs(etat.getFacteurElargissement(o.getY()));
+			//width = 100;
+			graphics2D.drawImage(fense, o.getX() - width/2, o.getY(), width,o.getHauteur() * width,null);
 		}
 
 		/**
 		 * Affichage du joueur
 		 */
 		g.setColor(C_VAISSEAU);
-		g.fillOval(etat.getPlayerX(), etat.getHauteurJoueur() + etat.getTailleJoueur(), etat.getTailleJoueur(), 20);
+		g.fillOval(etat.getPlayerX(), etat.getHauteurJoueur() + 100, etat.getTailleJoueur(), 20);
 		vaisseauG.drawImage(playerCenterImage, etat.getPlayerX(), etat.getPlayerY(), etat.getTailleJoueur(), etat.getTailleJoueur() / 2, null);
 		/**
 		 * Suppresion de la route au dessus de l'horizon

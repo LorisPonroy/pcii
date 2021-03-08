@@ -17,7 +17,7 @@ public class Etat {
 	private final int HORIZON = 250;
 	private final int TAILLE_JOUEUR = 180;
 	public final int LARGEUR_ROUTE = 100;
-	private final int HAUTEUR_JOUEUR = 550;
+	private final int HAUTEUR_JOUEUR = 600;
 
 	private final int moveDown = 5;
 	private final int moveRight = 5;
@@ -57,7 +57,7 @@ public class Etat {
 	 * @param deltaY
 	 */
 	private void addPositionY(int deltaY) {
-		if(playerPosition.y + deltaY < HAUTEUR_JOUEUR && playerPosition.y + deltaY > HORIZON + TAILLE_JOUEUR / 2) {
+		if(playerPosition.y + deltaY < HAUTEUR_JOUEUR && playerPosition.y + deltaY > HORIZON + TAILLE_JOUEUR /4) {
 			playerPosition.y += deltaY;
 		}
 	}
@@ -76,7 +76,6 @@ public class Etat {
 
 
 	public int getFacteurElargissement(int y) {
-
 		return (int) ((HORIZON-y) * 0.4);
 	}
 
