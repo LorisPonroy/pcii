@@ -17,8 +17,8 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
-import kozlov_ponroy.model.Etat;
-import kozlov_ponroy.model.Obstacle;
+import kozlov_ponroy.model.route.Obstacle;
+import kozlov_ponroy.model.state.Etat;
 
 /**
  * Gère l'affichage dans le MVC
@@ -27,8 +27,8 @@ import kozlov_ponroy.model.Obstacle;
  */
 public class Affichage extends JPanel{
 
-	public final int HAUTEUR = 800;
-	public final int LARGEUR = 800;
+	public static final int HAUTEUR = 800;
+	public static final int LARGEUR = 800;
 	private Etat etat;
 	private Point p1, p2, p3;
 	private int[] routeX;

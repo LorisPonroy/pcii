@@ -1,4 +1,4 @@
-package kozlov_ponroy.model;
+package kozlov_ponroy.model.route;
 
 public class Obstacle {
 	private int x;

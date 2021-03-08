@@ -3,7 +3,8 @@ package kozlov_ponroy.control;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import kozlov_ponroy.model.Etat;
+import kozlov_ponroy.model.state.Etat;
+import kozlov_ponroy.model.state.Move;
 
 /**
  * Le controleur qui gère le clavier et les actions liées aux touches
@@ -13,7 +14,7 @@ import kozlov_ponroy.model.Etat;
 
 public class KeyboardController implements KeyListener {
 
-	private Etat etat;
+	private Move move;
 
 	/**
 	 * Modifie l'état de notre jeu en fonction de la touche appuyée
@@ -24,16 +25,16 @@ public class KeyboardController implements KeyListener {
 		switch(key)
 		{
 		case 'd':
-			etat.setRight(true);
+			move.setRight(true);
 			break;
 		case 'q':
-			etat.setLeft(true);
+			move.setLeft(true);
 			break;
 		case 'z':
-			etat.setUp(true);
+			move.setUp(true);
 			break;
 		case 's':
-			//etat.setDown(true);
+			//move.setDown(true);
 			break;
 		}
 	}
@@ -44,14 +45,13 @@ public class KeyboardController implements KeyListener {
 		switch(key)
 		{
 		case 'd':
-			etat.setRight(false);
+			move.setRight(false);
 			break;
 		case 'q':
-			etat.setLeft(false);
+			move.setLeft(false);
 			break;
 		case 'z':
-		case ' ':
-			etat.setUp(false);
+			move.setUp(false);
 			break;
 		case 's':
 			//etat.setDown(false);
@@ -62,8 +62,8 @@ public class KeyboardController implements KeyListener {
 	@Override
 	public void keyTyped(KeyEvent e) {}
 
-	public void setEtat(Etat etat) {
-		this.etat = etat;
+	public void setMove(Move move) {
+		this.move = move;
 	}
 
 }

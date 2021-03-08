@@ -1,4 +1,6 @@
-package kozlov_ponroy.model;
+package kozlov_ponroy.model.threads;
+
+import kozlov_ponroy.model.state.Etat;
 
 public class MouvementRoute extends Thread {
 

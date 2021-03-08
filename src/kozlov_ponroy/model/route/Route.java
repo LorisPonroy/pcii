@@ -1,4 +1,4 @@
-package kozlov_ponroy.model;
+package kozlov_ponroy.model.route;
 
 import java.awt.Point;
 import java.util.ArrayList;
