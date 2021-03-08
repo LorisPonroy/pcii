@@ -126,7 +126,7 @@ public class Affichage extends JPanel{
 		 * Affichage de la route
 		 */
 		g.setColor(Color.gray);
-		route = etat.getPoints();
+		route = etat.getRoutePoints();
 		for(int i = 0 ; i < route.size() - 2 ; i++) // -2 : besoin de 3 points pour construire les routes
 		{
 			g.setColor(Color.gray);

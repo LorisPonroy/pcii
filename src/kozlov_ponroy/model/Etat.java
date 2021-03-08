@@ -76,6 +76,7 @@ public class Etat {
 
 
 	public int getFacteurElargissement(int y) {
+
 		return (int) ((HORIZON-y) * 0.4);
 	}
 
@@ -98,19 +99,6 @@ public class Etat {
 		return playerPosition.y;
 	}
 
-	/**
-	 * Renvoie les points de la route dans le sens inversé
-	 * @return
-	 */
-	public ArrayList<Point> getPoints(){
-		ArrayList<Point> temp = new ArrayList<>();
-		for(Point p : route.getPoints())
-		{
-			temp.add(new Point(p.x, affichage.HAUTEUR - p.y));
-		}
-		return temp;
-	}
-
 	public int getPosition() {
 		return route.getPosition();
 	}
@@ -121,6 +109,19 @@ public class Etat {
 
 	public Route getRoute() {
 		return route;
+	}
+
+	/**
+	 * Renvoie les points de la route dans le sens inversé
+	 * @return
+	 */
+	public ArrayList<Point> getRoutePoints(){
+		ArrayList<Point> temp = new ArrayList<>();
+		for(Point p : route.getPoints())
+		{
+			temp.add(new Point(p.x, affichage.HAUTEUR - p.y));
+		}
+		return temp;
 	}
 
 	public String getScore() {
@@ -162,8 +163,8 @@ public class Etat {
 		}
 
 		int positionRelative = getPosition() % Route.ESPACEMENT;
-		Point p1 = getPoints().get(1);
-		Point p2 = getPoints().get(2);
+		Point p1 = getRoutePoints().get(1);
+		Point p2 = getRoutePoints().get(2);
 		Point mid = new Point((int)(p1.x + (p2.x - p1.x) / (Route.ESPACEMENT * 1.0) * positionRelative), 700);
 		if(getPlayerX() + getTailleJoueur() / 2< mid.x - LARGEUR_ROUTE || getPlayerX() + getTailleJoueur() / 2 > mid.x + LARGEUR_ROUTE) {
 			//ralentissement
