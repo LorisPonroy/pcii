@@ -1,5 +1,6 @@
 package kozlov_ponroy.model.state;
 
+import kozlov_ponroy.model.Etat;
 import kozlov_ponroy.view.Affichage;
 
 public class Move {

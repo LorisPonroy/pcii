@@ -3,7 +3,7 @@ package kozlov_ponroy.control;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import kozlov_ponroy.model.state.Etat;
+import kozlov_ponroy.model.Etat;
 import kozlov_ponroy.model.state.Move;
 
 /**

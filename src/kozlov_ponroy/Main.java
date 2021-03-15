@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 import kozlov_ponroy.control.KeyboardController;
-import kozlov_ponroy.model.state.Etat;
+import kozlov_ponroy.model.Etat;
 import kozlov_ponroy.view.Affichage;
 
 /**
@@ -22,7 +22,6 @@ public class Main {
 		KeyboardController controller = new KeyboardController();
 		Affichage aff = new Affichage(controller);
 		Etat etat = new Etat(aff, controller);
-		aff.setEtat(etat);
 
 		fenetre.add(aff);
 		fenetre.pack();
