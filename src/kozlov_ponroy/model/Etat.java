@@ -1,13 +1,23 @@
-package kozlov_ponroy.model.state;
+package kozlov_ponroy.model;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.List;
 
 import kozlov_ponroy.control.KeyboardController;
 import kozlov_ponroy.model.route.Route;
+import kozlov_ponroy.model.state.Move;
+import kozlov_ponroy.model.state.Player;
 import kozlov_ponroy.model.threads.MouvementRoute;
 import kozlov_ponroy.model.threads.MouvementVehicule;
 import kozlov_ponroy.view.Affichage;
+import kozlov_ponroy.view.IAffichage;
+import kozlov_ponroy.view.objects.Decor;
+import kozlov_ponroy.view.objects.GameInfoView;
+import kozlov_ponroy.view.objects.Horizon;
+import kozlov_ponroy.view.objects.ObstacleView;
+import kozlov_ponroy.view.objects.RouteView;
+import kozlov_ponroy.view.objects.Vaisseau;
 
 /**
  * Gère l'état de notre MVC
@@ -26,7 +36,6 @@ public class Etat {
 	private int positionDecor;
 	private final Player player;
 	private final Move move;
-	private final KeyboardController controller;
 	private double facteurVitesse = 1.0;
 
 	public Etat(Affichage affichage, KeyboardController controller) {
@@ -34,8 +43,8 @@ public class Etat {
 		route = new Route(Affichage.LARGEUR, Affichage.HAUTEUR, LARGEUR_ROUTE);
 		player = new Player(new Point(route.getFirstPosXPlayer(), Affichage.HAUTEUR / 2));
 		move = new Move(player);
-		this.controller = controller;
 		controller.setMove(move);
+		initAffichage();
 		
 		new MouvementVehicule(this).start();
 		new MouvementRoute(this).start();
@@ -70,7 +79,7 @@ public class Etat {
 		ArrayList<Point> temp = new ArrayList<>();
 		for(Point p : route.getPoints())
 		{
-			temp.add(new Point(p.x, affichage.HAUTEUR - p.y));
+			temp.add(new Point(p.x, Affichage.HAUTEUR - p.y));
 		}
 		return temp;
 	}
@@ -137,5 +146,22 @@ public class Etat {
 			}
 		}
 		affichage.repaint();
+	}
+	
+	public void initAffichage() {
+		List<IAffichage> views = new ArrayList<>();
+		Vaisseau vaisseau = new Vaisseau(this);
+		Horizon horizon = new Horizon(this);
+		RouteView routeView = new RouteView(this);
+		Decor decor = new Decor(this);
+		GameInfoView gameInfo = new GameInfoView(this);
+		ObstacleView obstacleView = new ObstacleView(this);
+		views.add(routeView);
+		views.add(vaisseau);
+		views.add(obstacleView);
+		views.add(decor);
+		views.add(horizon);
+		views.add(gameInfo);
+		affichage.addViews(views);
 	}
 }

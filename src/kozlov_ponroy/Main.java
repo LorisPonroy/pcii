@@ -5,6 +5,7 @@ import javax.swing.WindowConstants;
 
 import kozlov_ponroy.view.AffichageMenu;
 
+
 /**
  * Configure la fenetre ainsi que les composants, modèle, controlleur
  * @author Asey

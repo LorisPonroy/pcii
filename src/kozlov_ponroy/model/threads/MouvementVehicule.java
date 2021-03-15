@@ -1,6 +1,6 @@
 package kozlov_ponroy.model.threads;
 
-import kozlov_ponroy.model.state.Etat;
+import kozlov_ponroy.model.Etat;
 
 public class MouvementVehicule extends Thread {
 	

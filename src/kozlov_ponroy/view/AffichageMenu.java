@@ -13,7 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import kozlov_ponroy.control.KeyboardController;
-import kozlov_ponroy.model.state.Etat;
+import kozlov_ponroy.model.Etat;
 
 public class AffichageMenu extends JPanel{
 
@@ -42,12 +42,13 @@ public class AffichageMenu extends JPanel{
 			public void mouseClicked(MouseEvent e) {
 				KeyboardController controller = new KeyboardController();
 				Affichage aff = new Affichage(controller);
-				Etat etat = new Etat(aff, controller);
-				aff.setEtat(etat);
+				new Etat(aff, controller);
 				fenetre.getContentPane().removeAll();
 				fenetre.getContentPane().invalidate();
 				fenetre.getContentPane().add(aff);
 				fenetre.getContentPane().revalidate();
+				fenetre.pack();
+				fenetre.setLocationRelativeTo(null);
 				System.out.println("start");
 			}
 
