@@ -9,7 +9,7 @@ public class Obstacle {
 	public Obstacle(int x,int y){
 		this.x = x;
 		this.y = y;
-		hauteur = (int) (Math.random()*5 +1);
+		hauteur = (int) (Math.random()*2 + 2);
 	}
 
 	public int getHauteur() {

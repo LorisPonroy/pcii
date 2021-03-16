@@ -8,17 +8,20 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 
 import kozlov_ponroy.control.KeyboardController;
 import kozlov_ponroy.model.Etat;
 
 public class AffichageMenu extends JPanel{
 
-	public static final int HAUTEUR = 800;
-	public static final int LARGEUR = 800;
+	public static final int HAUTEUR = 200;
+	public static final int LARGEUR = 200;
 
 	private JFrame fenetre;
 
@@ -31,6 +34,13 @@ public class AffichageMenu extends JPanel{
 
 		titre = Toolkit.getDefaultToolkit().getImage("./ressources/nuage_1.png");
 		addButtons();
+
+		fenetre.addWindowListener( new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent we) {
+				System.exit(0);
+			}
+		} );
 	}
 
 	public void addButtons() {
@@ -40,16 +50,24 @@ public class AffichageMenu extends JPanel{
 		playButton.addMouseListener(new MouseListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Affichage aff = new Affichage();
-				fenetre.getContentPane().removeAll();
-				fenetre.getContentPane().invalidate();
-				fenetre.getContentPane().add(aff);
-				fenetre.getContentPane().revalidate();
-				fenetre.pack();
-				fenetre.setLocationRelativeTo(null);
+				JFrame frame = new JFrame("Test");
+				frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 				KeyboardController controller = new KeyboardController();
+				Affichage aff = new Affichage();
 				new Etat(aff, controller);
-				System.err.println("start");
+				frame.getContentPane().add(aff);
+				frame.pack();
+				frame.setLocationRelativeTo(null);
+				frame.setVisible(true);
+				fenetre.setVisible(false);
+				frame.addWindowListener( new WindowAdapter() {
+					@Override
+					public void windowClosing(WindowEvent we) {
+						frame.dispose();
+						fenetre.setVisible(true);
+					}
+				} );
+				System.out.println("start");
 			}
 
 			@Override
@@ -71,7 +89,7 @@ public class AffichageMenu extends JPanel{
 		exitButton.addMouseListener(new MouseListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				fenetre.dispose();
+				System.exit(0);
 			}
 
 			@Override

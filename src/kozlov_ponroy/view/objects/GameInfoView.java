@@ -21,6 +21,7 @@ public class GameInfoView implements IAffichage {
 		g.setColor(Color.black);
 		g.drawString(etat.getScore(), 20, 20);
 		g.drawString("Vitesse : " + (int)(VITESSE_MAX / etat.getFacteurVitesse()) + " km/h", 20, 60);
+		g.drawString(etat.tempsRestant(), 20, 100);
 	}
 	
 	@Override

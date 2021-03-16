@@ -25,9 +25,11 @@ public class ObstacleView implements IAffichage {
 	@Override
 	public void paint(Graphics g) {
 		for(Obstacle o : etat.getRoute().getObstacles()) {
+			System.out.println("Obstacle X = " + o.getX() + " ; Y = " + o.getY());
 			g.setColor(Color.black);
-			int width = Math.abs(etat.getFacteurElargissement(o.getY()));
-			graphics2D.drawImage(fense, o.getX() - width/2, o.getY(), width,o.getHauteur() * width,null);
+			graphics2D.drawImage(fense, o.getX(), o.getY(), 10, 10, null);
+			//int width = Math.abs(etat.getFacteurElargissement(o.getY()));
+			//graphics2D.drawImage(fense, o.getX() - width/2, o.getY(), width,o.getHauteur() * width,null);
 		}
 	}
 

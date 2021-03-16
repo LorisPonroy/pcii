@@ -4,6 +4,9 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Random;
 
+import kozlov_ponroy.model.Etat;
+import kozlov_ponroy.view.Affichage;
+
 /**
  * Création de la route
  * @author Asey
@@ -21,19 +24,23 @@ public class Route {
 	private final int X_MAX, Y_MAX, LARGEUR_ROUTE;
 	public final int PX_PAS = 5;
 	private Random random;
+	private Point cp;
+	final Etat etat;
 
-	public Route(int x_max, int y_max, int largeurRoute){
-		X_MAX = x_max;
-		Y_MAX = y_max;
+	public Route(Etat etat, int largeurRoute){
+		this.etat = etat;
+		X_MAX = Affichage.LARGEUR;
+		Y_MAX = Affichage.HAUTEUR;
 		LARGEUR_ROUTE = largeurRoute;
 		points = new ArrayList<>();
 		obstacles = new ArrayList<>();
 		random = new Random();
 		position = 0;
-		points.add(new Point(random.nextInt(x_max), -400));
+		points.add(new Point(random.nextInt(X_MAX), -400));
 		while(lastY() <= Y_MAX) {
 			ajouterPoint();
 		}
+		cp = (Point) lastPoint().clone();
 	}
 
 	/**
@@ -66,13 +73,14 @@ public class Route {
 			}
 		}
 		position += PX_PAS;
+		avancerCP();
 		for(Obstacle o : obstacles) {
 			o.setY(o.getY() + PX_PAS);
 		}
 	}
 
 	public void genererObstacle() {
-		int x = (int) (Math.random()*X_MAX);
+		int x = lastX() + (int) (Math.random() * MARGE_RANDOM) - MARGE_RANDOM / 2;
 		int y = 0;
 		obstacles.add(new Obstacle(x, y));
 	}
@@ -101,17 +109,33 @@ public class Route {
 		return temp;
 	}
 
-
-
 	public int getPosition() {
 		return position;
 	}
-
+	
+	private Point lastPoint() {
+		return points.get(points.size() - 1);
+	}
+	
 	private int lastX() {
-		return points.get(points.size() - 1).x;
+		return lastPoint().x;
 	}
 
 	private int lastY() {
-		return points.get(points.size() - 1).y;
+		return lastPoint().y;
+	}
+	
+	private void avancerCP() {
+		cp.y -= PX_PAS;
+		System.out.println(cp.y);
+		if(cp.y <= -5000) {
+			cp = (Point) lastPoint().clone();
+			cp.y -= position;
+			etat.nouveauCP();
+		}
+	}
+	
+	public Point getCheckPoint() {
+		return cp;
 	}
 }
