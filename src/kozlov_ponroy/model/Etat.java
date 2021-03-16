@@ -83,6 +83,11 @@ public class Etat {
 		}
 		return temp;
 	}
+	
+	public Point getCheckPoint() {
+		Point tmp = route.getCheckPoint();
+		return new Point(tmp.x, Affichage.HAUTEUR - tmp.y);
+	}
 
 	public int getPositionRoute() {
 		return route.getPosition();
@@ -163,5 +168,9 @@ public class Etat {
 		views.add(horizon);
 		views.add(gameInfo);
 		affichage.addViews(views);
+	}
+	
+	public int tailleCP() {
+		return -getFacteurElargissement(getCheckPoint().y);
 	}
 }

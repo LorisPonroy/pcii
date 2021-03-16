@@ -19,7 +19,7 @@ public class RouteView implements IAffichage {
 	
 	final Etat etat;
 	private List<Point> route;
-	private Point p1, p2, p3;
+	private Point p1, p2, p3, cp;
 	private int[] routeX;
 	private int[] routeY;
 	private Color colorRoute;
@@ -120,7 +120,8 @@ public class RouteView implements IAffichage {
 
 		graphics2D.setStroke(new BasicStroke(5));
 		g.setColor(Color.RED);
-		g.drawRect(routeX[3]-20, routeY[0], routeX[0]-routeX[3]+40, 5);
+		cp = etat.getCheckPoint();
+		g.drawRect(cp.x - etat.tailleCP() / 2, cp.y, etat.tailleCP(), 10);
 	}
 
 	@Override

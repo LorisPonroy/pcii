@@ -33,6 +33,13 @@ public class AffichageMenu extends JPanel{
 
 		titre = Toolkit.getDefaultToolkit().getImage("./ressources/nuage_1.png");
 		addButtons();
+		
+		fenetre.addWindowListener( new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent we) {
+            	System.exit(0);
+            }
+        } );
 	}
 
 	public void addButtons() {
@@ -81,7 +88,7 @@ public class AffichageMenu extends JPanel{
 		exitButton.addMouseListener(new MouseListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				fenetre.dispose();
+				System.exit(0);
 			}
 
 			@Override

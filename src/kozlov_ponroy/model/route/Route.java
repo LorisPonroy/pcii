@@ -4,6 +4,8 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Random;
 
+import kozlov_ponroy.view.Affichage;
+
 /**
  * Création de la route
  * @author Asey
@@ -21,6 +23,7 @@ public class Route {
 	private final int X_MAX, Y_MAX, LARGEUR_ROUTE;
 	public final int PX_PAS = 5;
 	private Random random;
+	private Point cp;
 
 	public Route(int x_max, int y_max, int largeurRoute){
 		X_MAX = x_max;
@@ -34,6 +37,7 @@ public class Route {
 		while(lastY() <= Y_MAX) {
 			ajouterPoint();
 		}
+		cp = (Point) lastPoint().clone();
 	}
 
 	/**
@@ -66,6 +70,7 @@ public class Route {
 			}
 		}
 		position += PX_PAS;
+		avancerCP();
 		for(Obstacle o : obstacles) {
 			o.setY(o.getY() + PX_PAS);
 		}
@@ -104,12 +109,28 @@ public class Route {
 	public int getPosition() {
 		return position;
 	}
-
+	
+	private Point lastPoint() {
+		return points.get(points.size() - 1);
+	}
+	
 	private int lastX() {
-		return points.get(points.size() - 1).x;
+		return lastPoint().x;
 	}
 
 	private int lastY() {
-		return points.get(points.size() - 1).y;
+		return lastPoint().y;
+	}
+	
+	private void avancerCP() {
+		cp.y -= PX_PAS;
+		if(cp.y <= 0) {
+			cp = (Point) lastPoint().clone();
+			cp.y -= position;
+		}
+	}
+	
+	public Point getCheckPoint() {
+		return cp;
 	}
 }
