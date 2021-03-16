@@ -37,15 +37,17 @@ public class Etat {
 	private final Player player;
 	private final Move move;
 	private double facteurVitesse = 1.0;
+	private KeyboardController controller;
 
 	public Etat(Affichage affichage, KeyboardController controller) {
 		this.affichage = affichage;
 		route = new Route(Affichage.LARGEUR, Affichage.HAUTEUR, LARGEUR_ROUTE);
 		player = new Player(new Point(route.getFirstPosXPlayer(), Affichage.HAUTEUR / 2));
 		move = new Move(player);
+		this.controller = controller;
 		controller.setMove(move);
 		initAffichage();
-		
+
 		new MouvementVehicule(this).start();
 		new MouvementRoute(this).start();
 		positionDecor = 0;
@@ -67,8 +69,32 @@ public class Etat {
 		return facteurVitesse;
 	}
 
+	public int getHauteurJoueur() {
+		return player.HAUTEUR;
+	}
+
 	public int getHorizon() {
 		return HORIZON;
+	}
+
+	public int getPlayerX() {
+		return player.getX();
+	}
+
+	public int getPlayerY() {
+		return player.getY();
+	}
+
+	public int getPositionDecor() {
+		return positionDecor;
+	}
+
+	public int getPositionRoute() {
+		return route.getPosition();
+	}
+
+	public Route getRoute() {
+		return route;
 	}
 
 	/**
@@ -84,44 +110,38 @@ public class Etat {
 		return temp;
 	}
 
-	public int getPositionRoute() {
-		return route.getPosition();
-	}
-
-	public int getPositionDecor() {
-		return positionDecor;
-	}
-
-	public Route getRoute() {
-		return route;
-	}
-
 	public String getScore() {
 		return "Score : " + route.getPosition();
 	}
 
-	/* 
-	 * Joueur 
+	/*
+	 * Joueur
 	 */
 	public int getTailleJoueur() {
 		return player.TAILLE;
 	}
-	
-	public int getPlayerX() {
-		return player.getX();
-	}
 
-	public int getPlayerY() {
-		return player.getY();
-	}
-	
-	public int getHauteurJoueur() {
-		return player.HAUTEUR;
-	}
-	
-	/* 
-	 * FIN Joueur 
+	/*
+	 * FIN Joueur
 	 */
+
+	public void initAffichage() {
+		List<IAffichage> views = new ArrayList<>();
+		Vaisseau vaisseau = new Vaisseau(this);
+		Horizon horizon = new Horizon(this);
+		RouteView routeView = new RouteView(this);
+		Decor decor = new Decor(this);
+		GameInfoView gameInfo = new GameInfoView(this);
+		ObstacleView obstacleView = new ObstacleView(this);
+		views.add(routeView);
+		views.add(vaisseau);
+		views.add(obstacleView);
+		views.add(decor);
+		views.add(horizon);
+		views.add(gameInfo);
+		affichage.addViews(views);
+		affichage.addKeyListener(controller);
+	}
 
 	public void move() {
 		move.doMove();
@@ -146,22 +166,5 @@ public class Etat {
 			}
 		}
 		affichage.repaint();
-	}
-	
-	public void initAffichage() {
-		List<IAffichage> views = new ArrayList<>();
-		Vaisseau vaisseau = new Vaisseau(this);
-		Horizon horizon = new Horizon(this);
-		RouteView routeView = new RouteView(this);
-		Decor decor = new Decor(this);
-		GameInfoView gameInfo = new GameInfoView(this);
-		ObstacleView obstacleView = new ObstacleView(this);
-		views.add(routeView);
-		views.add(vaisseau);
-		views.add(obstacleView);
-		views.add(decor);
-		views.add(horizon);
-		views.add(gameInfo);
-		affichage.addViews(views);
 	}
 }

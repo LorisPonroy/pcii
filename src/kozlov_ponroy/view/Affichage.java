@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,12 +22,12 @@ public class Affichage extends JPanel{
 	List<IAffichage> views;
 	private Graphics2D graphics2D;
 
-	public Affichage(KeyListener listener){
+	public Affichage(){
 		/**
 		 *  Initialise la taille de la fenetre au lancement
 		 */
 		setPreferredSize(new Dimension(LARGEUR, HAUTEUR));
-		addKeyListener(listener);
+		//addKeyListener(listener);
 		setFocusable(true);
 
 		views = new ArrayList<>();

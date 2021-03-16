@@ -40,16 +40,16 @@ public class AffichageMenu extends JPanel{
 		playButton.addMouseListener(new MouseListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				KeyboardController controller = new KeyboardController();
-				Affichage aff = new Affichage(controller);
-				new Etat(aff, controller);
+				Affichage aff = new Affichage();
 				fenetre.getContentPane().removeAll();
 				fenetre.getContentPane().invalidate();
 				fenetre.getContentPane().add(aff);
 				fenetre.getContentPane().revalidate();
 				fenetre.pack();
 				fenetre.setLocationRelativeTo(null);
-				System.out.println("start");
+				KeyboardController controller = new KeyboardController();
+				new Etat(aff, controller);
+				System.err.println("start");
 			}
 
 			@Override
