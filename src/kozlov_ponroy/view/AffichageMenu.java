@@ -8,6 +8,8 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -17,8 +19,8 @@ import kozlov_ponroy.model.Etat;
 
 public class AffichageMenu extends JPanel{
 
-	public static final int HAUTEUR = 800;
-	public static final int LARGEUR = 800;
+	public static final int HAUTEUR = 200;
+	public static final int LARGEUR = 200;
 
 	private JFrame fenetre;
 
@@ -40,15 +42,23 @@ public class AffichageMenu extends JPanel{
 		playButton.addMouseListener(new MouseListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				JFrame frame = new JFrame("Test");
+				frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 				KeyboardController controller = new KeyboardController();
 				Affichage aff = new Affichage(controller);
 				new Etat(aff, controller);
-				fenetre.getContentPane().removeAll();
-				fenetre.getContentPane().invalidate();
-				fenetre.getContentPane().add(aff);
-				fenetre.getContentPane().revalidate();
-				fenetre.pack();
-				fenetre.setLocationRelativeTo(null);
+				frame.getContentPane().add(aff);
+				frame.pack();
+				frame.setLocationRelativeTo(null);
+				frame.setVisible(true);
+				fenetre.setVisible(false);
+				frame.addWindowListener( new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent we) {
+                    	frame.dispose();
+                        fenetre.setVisible(true);
+                    }
+                } );
 				System.out.println("start");
 			}
 

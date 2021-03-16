@@ -16,7 +16,7 @@ public class Main {
 	public static void main(String[] args) {
 
 		JFrame fenetre = new JFrame("Course planétaire");
-		fenetre.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		AffichageMenu affMenu = new AffichageMenu(fenetre);
 

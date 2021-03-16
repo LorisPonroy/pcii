@@ -72,7 +72,7 @@ public class Route {
 	}
 
 	public void genererObstacle() {
-		int x = (int) (Math.random()*X_MAX);
+		int x = lastX() + (int) (Math.random() * MARGE_RANDOM) - MARGE_RANDOM / 2;
 		int y = 0;
 		obstacles.add(new Obstacle(x, y));
 	}
@@ -100,8 +100,6 @@ public class Route {
 		}
 		return temp;
 	}
-
-
 
 	public int getPosition() {
 		return position;
