@@ -10,6 +10,7 @@ import kozlov_ponroy.model.state.Move;
 import kozlov_ponroy.model.state.Player;
 import kozlov_ponroy.model.threads.MouvementRoute;
 import kozlov_ponroy.model.threads.MouvementVehicule;
+import kozlov_ponroy.model.threads.Temps;
 import kozlov_ponroy.view.Affichage;
 import kozlov_ponroy.view.IAffichage;
 import kozlov_ponroy.view.objects.Decor;
@@ -37,10 +38,12 @@ public class Etat {
 	private final Player player;
 	private final Move move;
 	private double facteurVitesse = 1.0;
+	private int time = 30000;
+	private boolean cpCross = false, nvCP = true;
 
 	public Etat(Affichage affichage, KeyboardController controller) {
 		this.affichage = affichage;
-		route = new Route(Affichage.LARGEUR, Affichage.HAUTEUR, LARGEUR_ROUTE);
+		route = new Route(this, LARGEUR_ROUTE);
 		player = new Player(new Point(route.getFirstPosXPlayer(), Affichage.HAUTEUR / 2));
 		move = new Move(player);
 		controller.setMove(move);
@@ -48,11 +51,15 @@ public class Etat {
 		
 		new MouvementVehicule(this).start();
 		new MouvementRoute(this).start();
+		new Temps(this).start();
 		positionDecor = 0;
 	}
 
 	public void avancerRoute() {
 		route.avancer();
+		if(getCheckPoint().y > player.getY()) {
+			cpCross = true;
+		} else cpCross = false;
 	}
 
 	public void genererObstacle() {
@@ -172,5 +179,26 @@ public class Etat {
 	
 	public int tailleCP() {
 		return -getFacteurElargissement(getCheckPoint().y);
+	}
+	
+	public String tempsRestant() {
+		int sec = time / 1000;
+		int min = sec / 60;
+		sec = sec % 60;
+		String formatted = String.format("%02d", sec);
+		return "Temps restant : " + min + ":" + formatted;
+	}
+	
+	public void time() {
+		time -= Temps.TIME;
+		if(cpCross && nvCP){
+			nvCP = false;
+			cpCross = false;
+			time += 30000;
+		}
+	}
+	
+	public void nouveauCP() {
+		nvCP = true;
 	}
 }

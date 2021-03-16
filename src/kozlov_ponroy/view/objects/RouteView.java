@@ -121,7 +121,7 @@ public class RouteView implements IAffichage {
 		graphics2D.setStroke(new BasicStroke(5));
 		g.setColor(Color.RED);
 		cp = etat.getCheckPoint();
-		g.drawRect(cp.x - etat.tailleCP() / 2, cp.y, etat.tailleCP(), 10);
+		g.fillRect(cp.x - etat.tailleCP() / 2, cp.y, etat.tailleCP(), 10);
 	}
 
 	@Override

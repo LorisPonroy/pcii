@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Random;
 
+import kozlov_ponroy.model.Etat;
 import kozlov_ponroy.view.Affichage;
 
 /**
@@ -24,16 +25,18 @@ public class Route {
 	public final int PX_PAS = 5;
 	private Random random;
 	private Point cp;
+	final Etat etat;
 
-	public Route(int x_max, int y_max, int largeurRoute){
-		X_MAX = x_max;
-		Y_MAX = y_max;
+	public Route(Etat etat, int largeurRoute){
+		this.etat = etat;
+		X_MAX = Affichage.LARGEUR;
+		Y_MAX = Affichage.HAUTEUR;
 		LARGEUR_ROUTE = largeurRoute;
 		points = new ArrayList<>();
 		obstacles = new ArrayList<>();
 		random = new Random();
 		position = 0;
-		points.add(new Point(random.nextInt(x_max), -400));
+		points.add(new Point(random.nextInt(X_MAX), -400));
 		while(lastY() <= Y_MAX) {
 			ajouterPoint();
 		}
@@ -124,9 +127,11 @@ public class Route {
 	
 	private void avancerCP() {
 		cp.y -= PX_PAS;
-		if(cp.y <= 0) {
+		System.out.println(cp.y);
+		if(cp.y <= -5000) {
 			cp = (Point) lastPoint().clone();
 			cp.y -= position;
+			etat.nouveauCP();
 		}
 	}
 	
