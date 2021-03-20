@@ -68,4 +68,12 @@ public class Move {
 		this.left = left;
 	}
 	
+	public boolean isRight() {
+		return right;
+	}
+	
+	public boolean isLeft() {
+		return left;
+	}
+	
 }

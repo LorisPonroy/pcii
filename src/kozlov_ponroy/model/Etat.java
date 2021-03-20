@@ -208,4 +208,12 @@ public class Etat {
 			time += 30000;
 		}
 	}
+	
+	public boolean isRight() {
+		return move.isRight();
+	}
+	
+	public boolean isLeft() {
+		return move.isLeft();
+	}
 }
