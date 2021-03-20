@@ -57,6 +57,22 @@ public class Etat {
 		new MouvementRoute(this).start();
 		new Temps(this).start();
 		positionDecor = 0;
+
+		System.out.println("Fe(y=H) = "  + getFacteurElargissement(HORIZON));
+		System.out.println("Fe(y=0) = "  + getFacteurElargissement(0));
+		System.out.println("Fe(y=H/2) = "  + getFacteurElargissement(HORIZON/2));
+		System.out.println("---");
+		System.out.println("fp(100,H) = " + transformePositionToPerspective(100, HORIZON));
+		System.out.println("fp(100,0) = " + transformePositionToPerspective(100, 0));
+		System.out.println("fp(100,H/2) = " + transformePositionToPerspective(100, HORIZON/2));
+		System.out.println("---");
+		System.out.println("fp(0,H) = " + transformePositionToPerspective(0, HORIZON));
+		System.out.println("fp(0) = " + transformePositionToPerspective(0, 0));
+		System.out.println("fp(0,H/2) = " + transformePositionToPerspective(0, HORIZON/2));
+		System.out.println("---");
+		System.out.println("fp(-100,H) = " + transformePositionToPerspective(-100, HORIZON));
+		System.out.println("fp(-100,0) = " + transformePositionToPerspective(-100, 0));
+		System.out.println("fp(-100,H/2) = " + transformePositionToPerspective(-100, HORIZON/2));
 	}
 
 	public void avancerRoute() {
@@ -137,10 +153,6 @@ public class Etat {
 		return player.TAILLE;
 	}
 
-	/*
-	 * FIN Joueur
-	 */
-
 	public void initAffichage() {
 		List<IAffichage> views = new ArrayList<>();
 		Vaisseau vaisseau = new Vaisseau(this);
@@ -158,6 +170,10 @@ public class Etat {
 		affichage.addViews(views);
 		affichage.addKeyListener(controller);
 	}
+
+	/*
+	 * FIN Joueur
+	 */
 
 	public void move() {
 		move.doMove();
@@ -208,12 +224,11 @@ public class Etat {
 			time += 30000;
 		}
 	}
-	
-	public boolean isRight() {
-		return move.isRight();
-	}
-	
-	public boolean isLeft() {
-		return move.isLeft();
+
+	public int transformePositionToPerspective(int x,int y) {
+		double centre = 400;
+		double a = (x - centre) / (800.0 - HORIZON);
+		double b = x - a*800.0;
+		return (int) Math.round(a * y + b);
 	}
 }
