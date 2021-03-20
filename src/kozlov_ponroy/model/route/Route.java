@@ -19,7 +19,7 @@ public class Route {
 	private ArrayList<Point> points;
 
 	private ArrayList<Obstacle> obstacles;
-	private final int MARGE_RANDOM = 300;
+	private final int MARGE_RANDOM = 600;
 	private int position;
 	private final int X_MAX, Y_MAX, LARGEUR_ROUTE;
 	public final int PX_PAS = 5;
