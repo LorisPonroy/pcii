@@ -3,7 +3,6 @@ package kozlov_ponroy.view.objects;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.RenderingHints;
 import java.awt.Toolkit;
 
 import kozlov_ponroy.model.Etat;
@@ -11,13 +10,13 @@ import kozlov_ponroy.view.Affichage;
 import kozlov_ponroy.view.IAffichage;
 
 public class Decor implements IAffichage {
-	
+
 	final private Image montagneImage;
 	final private Image nuage1;
 	final private Image nuage2;
 	private Graphics2D graphics2D;
 	final Etat etat;
-	
+
 	public Decor(Etat etat) {
 		this.etat = etat;
 		montagneImage = Toolkit.getDefaultToolkit().getImage("./ressources/montagne.png");
@@ -37,7 +36,7 @@ public class Decor implements IAffichage {
 
 	@Override
 	public void setGraphics2D(Graphics2D g2d) {
-		this.graphics2D = g2d;
+		graphics2D = g2d;
 	}
 
 }

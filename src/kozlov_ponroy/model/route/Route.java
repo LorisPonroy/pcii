@@ -79,10 +79,24 @@ public class Route {
 		}
 	}
 
+	private void avancerCP() {
+		cp.y -= PX_PAS;
+		//System.out.println(cp.y);
+		if(cp.y <= -5000) {
+			cp = (Point) lastPoint().clone();
+			cp.y -= position;
+			etat.nouveauCP();
+		}
+	}
+
 	public void genererObstacle() {
 		int x = lastX() + (int) (Math.random() * MARGE_RANDOM) - MARGE_RANDOM / 2;
 		int y = 0;
 		obstacles.add(new Obstacle(x, y));
+	}
+
+	public Point getCheckPoint() {
+		return cp;
 	}
 
 	/** TODO: refaire la fonction pour renvoyer la position X pour le joueur
@@ -103,7 +117,8 @@ public class Route {
 	 */
 	public ArrayList<Point> getPoints() {
 		ArrayList<Point> temp = new ArrayList<>();
-		for(Point p: points) {
+		for (int i=0;i<points.size();i++) {
+			Point p = points.get(i);
 			temp.add(new Point(p.x, p.y - position));
 		}
 		return temp;
@@ -112,30 +127,16 @@ public class Route {
 	public int getPosition() {
 		return position;
 	}
-	
+
 	private Point lastPoint() {
 		return points.get(points.size() - 1);
 	}
-	
+
 	private int lastX() {
 		return lastPoint().x;
 	}
 
 	private int lastY() {
 		return lastPoint().y;
-	}
-	
-	private void avancerCP() {
-		cp.y -= PX_PAS;
-		System.out.println(cp.y);
-		if(cp.y <= -5000) {
-			cp = (Point) lastPoint().clone();
-			cp.y -= position;
-			etat.nouveauCP();
-		}
-	}
-	
-	public Point getCheckPoint() {
-		return cp;
 	}
 }

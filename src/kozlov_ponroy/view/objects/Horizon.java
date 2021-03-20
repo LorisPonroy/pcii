@@ -11,15 +11,15 @@ import kozlov_ponroy.view.IAffichage;
 public class Horizon implements IAffichage {
 
 	final Etat etat;
-	
+
 	public Horizon(Etat etat) {
 		this.etat = etat;
 	}
-	
+
 	@Override
 	public void paint(Graphics g) {
 		g.setColor(Color.BLACK);
-		g.drawLine(0, etat.getHorizon(), Affichage.LARGEUR, etat.getHorizon());
+		g.fillRect(0, etat.getHorizon(), Affichage.LARGEUR, 1);
 	}
 
 	@Override
