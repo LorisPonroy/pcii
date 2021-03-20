@@ -10,7 +10,7 @@ import kozlov_ponroy.view.IAffichage;
 public class GameInfoView implements IAffichage {
 	
 	final Etat etat;
-	final private int VITESSE_MAX = 1200;
+	final private int VITESSE_MAX = 120;
 	
 	public GameInfoView(Etat etat) {
 		this.etat = etat;

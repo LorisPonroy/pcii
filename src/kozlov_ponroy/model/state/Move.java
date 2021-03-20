@@ -6,15 +6,17 @@ import kozlov_ponroy.view.Affichage;
 public class Move {
 
 	private boolean up = false, down = false, right = false, left = false;
-	private final int moveDown = 5;
+	private final int moveDown = 4;
 	private final int moveRight = 5;
 	private final int moveLeft = -5;
-	private final int moveUp = -5;
+	private final int moveUp = -2;
 	
 	private final Player player;
+	private final Etat etat;
 	
-	public Move(Player player) {
+	public Move(Player player, Etat etat) {
 		this.player = player;
+		this.etat = etat;
 	}
 	
 	/**
@@ -23,7 +25,13 @@ public class Move {
 	 */
 	private void addPositionX(int deltaX) {
 		if(player.getX() + deltaX < Affichage.LARGEUR && player.getX() + deltaX > - player.TAILLE / 2) {
-			player.addX(deltaX);
+			player.addX((int) (deltaX * (1.0 / etat.getFacteurVitesse())) + 1);
+		}
+	}
+	
+	private void minusPositionX(int deltaX) {
+		if(player.getX() + deltaX < Affichage.LARGEUR && player.getX() + deltaX > - player.TAILLE / 2) {
+			player.addX((int) (deltaX * (1.0 / etat.getFacteurVitesse())) - 1);
 		}
 	}
 
@@ -32,7 +40,7 @@ public class Move {
 	 * @param deltaY
 	 */
 	private void addPositionY(int deltaY) {
-		if(player.getY() + deltaY < player.HAUTEUR && player.getY() + deltaY > Etat.HORIZON + player.TAILLE / 2) {
+		if(player.getY() + deltaY < Affichage.HAUTEUR && player.getY() + deltaY > Etat.HORIZON + player.TAILLE / 2) {
 			player.addY(deltaY);
 		}
 	}
@@ -40,14 +48,14 @@ public class Move {
 	public void doMove() {
 		if(left ^ right) {
 			if(left) {
-				addPositionX(moveLeft);
+				minusPositionX(moveLeft);
 			} else {
 				addPositionX(moveRight);
 			}
 		}
 		if(up) {
 			addPositionY(moveUp);
-		} else {
+		} else if(down){
 			addPositionY(moveDown);
 		}
 	}
@@ -74,6 +82,14 @@ public class Move {
 	
 	public boolean isLeft() {
 		return left;
+	}
+	
+	public boolean isUp() {
+		return up;
+	}
+	
+	public boolean isDown() {
+		return down;
 	}
 	
 }

@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
 import java.awt.geom.QuadCurve2D;
@@ -12,119 +13,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kozlov_ponroy.model.Etat;
+import kozlov_ponroy.model.route.Route;
+import kozlov_ponroy.model.route.RoutePreview;
 import kozlov_ponroy.view.IAffichage;
 
 public class RouteView implements IAffichage {
 
 	final Etat etat;
-	private List<Point> route;
-	private Point p1, p2, p3, cp;
-	private int[] routeX;
-	private int[] routeY;
-	private Color colorRoute;
-
-	QuadCurve2D courbeDroite = new QuadCurve2D.Double();
-	QuadCurve2D courbeGauche = new QuadCurve2D.Double();
-	QuadCurve2D courbeBande = new QuadCurve2D.Double();
-
+	final RoutePreview route;
 	final private float dash1[] = {20.0f};
 	final private BasicStroke dashed;
-	private Point2D debut;
-	private Point2D ctrl;
-	private Point2D fin;
-	private GeneralPath closedCurve;
-
+	final private BasicStroke defaultStroke;
 	private Graphics2D graphics2D;
 
-	public RouteView(Etat etat) {
+	public RouteView(Etat etat, RoutePreview route) {
 		this.etat = etat;
-		route = new ArrayList<>();
-		routeX = new int[5];
-		routeY = new int[5];
-		colorRoute = new Color(100,100,100,255);
+		this.route = route;
 		dashed = new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash1, 0.0f);
+		defaultStroke = new BasicStroke(5);
 	}
 
 	@Override
 	public void paint(Graphics g) {
+		graphics2D.setStroke(defaultStroke);
 		g.setColor(Color.gray);
-		route = etat.getRoutePoints();
-		for(int i = 0 ; i < route.size() - 2 ; i++) // -2 : besoin de 3 points pour construire les routes
-		{
-			g.setColor(Color.gray);
-			p1 = route.get(i);
-			p2 = route.get(i+1);
-			p3 = route.get(i+2);
-			int p1X = etat.transformePositionToPerspective(p1.x, p1.y);
-			int p2X = etat.transformePositionToPerspective(p2.x, p2.y);
-			int p3X = etat.transformePositionToPerspective(p3.x, p3.y);
-
-			/**
-			 * Definition des points pour la route
-			 */
-			routeX[0] = p1X - etat.getFacteurElargissement(p1.y) / 2; routeY[0] = p1.y; //Point bas	gauche
-			routeX[1] = p2X - etat.getFacteurElargissement(p2.y) / 2; routeY[1] = p2.y; //Point haut	gauche
-			routeX[2] = p2X + etat.getFacteurElargissement(p2.y) / 2; routeY[2] = p2.y; //Point haut	droite
-			routeX[3] = p1X + etat.getFacteurElargissement(p1.y) / 2; routeY[3] = p1.y; //Point bas	droite
-
-			g.setColor(Color.BLACK);
-			/**
-			 * Courbe droite route
-			 */
-			routeX[4] = p3X - etat.getFacteurElargissement(p3.y) / 2;	routeY[4] = p3.y;
-			debut = new Point2D.Double(routeX[0] + (routeX[1]- routeX[0]) / 2, routeY[0] + (routeY[1]- routeY[0]) / 2);
-			ctrl = new Point2D.Double(routeX[1], routeY[1]);
-			fin = new Point2D.Double(routeX[1] + (routeX[4]- routeX[1]) / 2, routeY[1] + (routeY[4]- routeY[1]) / 2);
-			courbeDroite.setCurve(debut,ctrl,fin);
-
-			/**
-			 * Courbe gauche route
-			 */
-			routeX[4] = p3X + etat.getFacteurElargissement(p3.y) / 2;	routeY[4] = p3.y;
-			fin = new Point2D.Double(routeX[3] + (routeX[2]- routeX[3]) / 2, routeY[3] + (routeY[2]- routeY[3]) / 2);
-			ctrl = new Point2D.Double(routeX[2], routeY[2]);
-			debut = new Point2D.Double(routeX[2] + (routeX[4]- routeX[2]) / 2, routeY[2] + (routeY[4]- routeY[2]) / 2);
-			courbeGauche.setCurve(debut,ctrl,fin);
-
-			/**
-			 * Courbe ferme qui est la route entiere
-			 */
-			closedCurve = new GeneralPath();
-			closedCurve.append(courbeDroite, true);
-			closedCurve.append(courbeGauche, true);
-			closedCurve.lineTo(routeX[0] + (routeX[1]- routeX[0]) / 2, routeY[0] + (routeY[1]- routeY[0]) / 2);
-			closedCurve.closePath();
-
-			/**
-			 * Courbe bande
-			 */
-			debut = new Point2D.Double(p1X + (p2X - p1X) / 2, p1.y + (p2.y - p1.y) / 2);
-			ctrl = new Point2D.Double(p2X, p2.y);
-			fin = new Point2D.Double(p2X + (p3X - p2X) / 2, p2.y + (p3.y - p2.y) / 2);
-			courbeBande.setCurve(debut,ctrl,fin);
-
-			/**
-			 * Affichage route
-			 */
-			graphics2D.setStroke(new BasicStroke(5));
-			graphics2D.setColor(colorRoute);
-			graphics2D.fill(closedCurve);
-			graphics2D.draw(courbeGauche);
-			graphics2D.draw(courbeDroite);
-
-			/**
-			 * Affichage bande route
-			 */
-			graphics2D.setStroke(dashed);
-			graphics2D.setColor(Color.white);
-			graphics2D.draw(courbeBande);
-		}
-
-		graphics2D.setStroke(new BasicStroke(5));
-		g.setColor(Color.RED);
-		cp = etat.getCheckPoint();
-		int cpX = etat.transformePositionToPerspective(cp.x, cp.y);
-		g.fillRect(cpX - etat.tailleCP() / 2, cp.y, etat.tailleCP(), 10);
+		graphics2D.fill(etat.route().routeGeneralPath());
+		
+		
+		graphics2D.setStroke(dashed);
+		graphics2D.setColor(Color.white);
+		graphics2D.draw(etat.route().getBande());
+		etat.route().clearRoute();
+		graphics2D.setStroke(defaultStroke);
 	}
 
 	@Override
