@@ -37,7 +37,7 @@ public class Etat {
 	private int positionDecor;
 	private final Player player;
 	private final Move move;
-	private double facteurVitesse = 1.0;
+	private double facteurVitesse = 6.0;
 
 	private KeyboardController controller;
 
@@ -192,7 +192,7 @@ public class Etat {
 		}
 		else if (facteurVitesse != 1){ //acceleration
 			if(facteurVitesse > 1) {
-				facteurVitesse *= 0.97;
+				facteurVitesse *= 0.98;
 			} else {
 				facteurVitesse = 1.0;
 			}
@@ -223,6 +223,14 @@ public class Etat {
 			cpCross = false;
 			time += 30000;
 		}
+	}
+	
+	public boolean isRight() {
+		return move.isRight();
+	}
+	
+	public boolean isLeft() {
+		return move.isLeft();
 	}
 
 	public int transformePositionToPerspective(int x,int y) {

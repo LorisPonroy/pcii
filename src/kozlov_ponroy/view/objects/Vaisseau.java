@@ -23,16 +23,20 @@ public class Vaisseau implements IAffichage {
 	public Vaisseau(Etat etat) {
 		this.etat = etat;
 		ombre = new Color(0,0,0,170);
-		playerCenterImage = Toolkit.getDefaultToolkit().getImage("./ressources/player.png");
-		playerLeftImage = Toolkit.getDefaultToolkit().getImage("./ressources/player_left.png");
-		playerRightImage = Toolkit.getDefaultToolkit().getImage("./ressources/player_right.png");
+		playerCenterImage = Toolkit.getDefaultToolkit().getImage("./ressources/playert.png");
+		playerLeftImage = Toolkit.getDefaultToolkit().getImage("./ressources/playertleft.png");
+		playerRightImage = Toolkit.getDefaultToolkit().getImage("./ressources/playertright.png");
 	}
 	
 	@Override
 	public void paint(Graphics g) {
 		graphics2D.setColor(ombre);
-		graphics2D.fillOval(etat.getPlayerX(), etat.getHauteurJoueur() + 100, etat.getTailleJoueur(), 20);
-		graphics2D.drawImage(playerCenterImage, etat.getPlayerX(), etat.getPlayerY(), etat.getTailleJoueur(), etat.getTailleJoueur() / 2, null);		
+		//graphics2D.fillOval(etat.getPlayerX(), etat.getHauteurJoueur() + 100, etat.getTailleJoueur(), 20);
+		if(etat.isLeft()) {
+			graphics2D.drawImage(playerLeftImage, etat.getPlayerX(), etat.getPlayerY(), etat.getTailleJoueur() / 2, etat.getTailleJoueur(), null);	
+		} else if(etat.isRight()) {
+			graphics2D.drawImage(playerRightImage, etat.getPlayerX(), etat.getPlayerY(), etat.getTailleJoueur() / 2, etat.getTailleJoueur(), null);	
+		} else graphics2D.drawImage(playerCenterImage, etat.getPlayerX(), etat.getPlayerY(), etat.getTailleJoueur() / 2, etat.getTailleJoueur(), null);	
 	}
 
 	@Override
