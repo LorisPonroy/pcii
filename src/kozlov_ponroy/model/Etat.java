@@ -175,6 +175,14 @@ public class Etat {
 	 * FIN Joueur
 	 */
 
+	public boolean isLeft() {
+		return move.isLeft();
+	}
+
+	public boolean isRight() {
+		return move.isRight();
+	}
+
 	public void move() {
 		move.doMove();
 		/*
@@ -223,14 +231,6 @@ public class Etat {
 			cpCross = false;
 			time += 30000;
 		}
-	}
-	
-	public boolean isRight() {
-		return move.isRight();
-	}
-	
-	public boolean isLeft() {
-		return move.isLeft();
 	}
 
 	public int transformePositionToPerspective(int x,int y) {
