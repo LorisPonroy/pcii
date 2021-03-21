@@ -6,6 +6,7 @@ import java.util.List;
 
 import kozlov_ponroy.control.KeyboardController;
 import kozlov_ponroy.model.route.Route;
+import kozlov_ponroy.model.route.RoutePreview;
 import kozlov_ponroy.model.state.Move;
 import kozlov_ponroy.model.state.Player;
 import kozlov_ponroy.model.threads.MouvementRoute;
@@ -37,20 +38,22 @@ public class Etat {
 	private int positionDecor;
 	private final Player player;
 	private final Move move;
-	private double facteurVitesse = 6.0;
+	private double facteurVitesse = 1.0;
 
 	private KeyboardController controller;
 
 	private int time = 30000;
 	private boolean cpCross = false, nvCP = true;
+	final RoutePreview routePreview;
 
 	public Etat(Affichage affichage, KeyboardController controller) {
 		this.affichage = affichage;
 		route = new Route(this, LARGEUR_ROUTE);
 		player = new Player(new Point(route.getFirstPosXPlayer(), Affichage.HAUTEUR / 2));
-		move = new Move(player);
+		move = new Move(player, this);
 		this.controller = controller;
 		controller.setMove(move);
+		routePreview = new RoutePreview(this);
 		initAffichage();
 
 		new MouvementVehicule(this).start();
@@ -157,7 +160,7 @@ public class Etat {
 		List<IAffichage> views = new ArrayList<>();
 		Vaisseau vaisseau = new Vaisseau(this);
 		Horizon horizon = new Horizon(this);
-		RouteView routeView = new RouteView(this);
+		RouteView routeView = new RouteView(this, routePreview);
 		Decor decor = new Decor(this);
 		GameInfoView gameInfo = new GameInfoView(this);
 		ObstacleView obstacleView = new ObstacleView(this);
@@ -175,6 +178,10 @@ public class Etat {
 	 * FIN Joueur
 	 */
 
+	public boolean isGameOver() {
+		return facteurVitesse > 100;
+	}
+
 	public boolean isLeft() {
 		return move.isLeft();
 	}
@@ -185,24 +192,25 @@ public class Etat {
 
 	public void move() {
 		move.doMove();
+
 		/*
 		 * On check si le joueur est sur la route ou en dehors
 		 */
-		int positionRelative = getPositionRoute() % Route.ESPACEMENT;
-		Point p1 = getRoutePoints().get(1);
-		Point p2 = getRoutePoints().get(2);
-		Point mid = new Point((int)(p1.x + (p2.x - p1.x) / (Route.ESPACEMENT * 1.0) * positionRelative), 700);
-		if(getPlayerX() + getTailleJoueur() / 2 < mid.x - LARGEUR_ROUTE || getPlayerX() + getTailleJoueur() / 2 > mid.x + LARGEUR_ROUTE) {
+		if(!routePreview.routeGeneralPath(null).contains(getPlayerX(), getPlayerY())) {
 			//ralentissement
-			if(facteurVitesse <= 10.0) {
-				facteurVitesse *= 1.02;
+			facteurVitesse *= 1.01;
+
+			System.out.println("facteur vitesse = " + facteurVitesse);
+		} else { //vitesse de base
+			if(move.isDown()) { //freine
+				facteurVitesse *= 1.01;
 			}
-		}
-		else if (facteurVitesse != 1){ //acceleration
-			if(facteurVitesse > 1) {
-				facteurVitesse *= 0.98;
-			} else {
-				facteurVitesse = 1.0;
+			else if(move.isUp()) { //accelere
+				facteurVitesse *= 0.998;
+			} else if (facteurVitesse != 1){
+				if(facteurVitesse > 1) {
+					facteurVitesse *= 0.99;
+				}
 			}
 		}
 		affichage.repaint();
@@ -210,6 +218,10 @@ public class Etat {
 
 	public void nouveauCP() {
 		nvCP = true;
+	}
+
+	public RoutePreview route() {
+		return routePreview;
 	}
 
 	public int tailleCP() {
@@ -239,4 +251,5 @@ public class Etat {
 		double b = x - a*800.0;
 		return (int) Math.round(a * y + b);
 	}
+
 }

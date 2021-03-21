@@ -33,10 +33,13 @@ public class Vaisseau implements IAffichage {
 		graphics2D.setColor(ombre);
 		//graphics2D.fillOval(etat.getPlayerX(), etat.getHauteurJoueur() + 100, etat.getTailleJoueur(), 20);
 		if(etat.isLeft()) {
-			graphics2D.drawImage(playerLeftImage, etat.getPlayerX(), etat.getPlayerY(), etat.getTailleJoueur() / 2, etat.getTailleJoueur(), null);	
+			graphics2D.drawImage(playerLeftImage, etat.getPlayerX() - etat.getTailleJoueur() / 4, etat.getPlayerY() - etat.getTailleJoueur(), etat.getTailleJoueur() / 2, etat.getTailleJoueur(), null);	
 		} else if(etat.isRight()) {
-			graphics2D.drawImage(playerRightImage, etat.getPlayerX(), etat.getPlayerY(), etat.getTailleJoueur() / 2, etat.getTailleJoueur(), null);	
-		} else graphics2D.drawImage(playerCenterImage, etat.getPlayerX(), etat.getPlayerY(), etat.getTailleJoueur() / 2, etat.getTailleJoueur(), null);	
+			graphics2D.drawImage(playerRightImage, etat.getPlayerX() - etat.getTailleJoueur() / 4, etat.getPlayerY() - etat.getTailleJoueur(), etat.getTailleJoueur() / 2, etat.getTailleJoueur(), null);	
+		} else graphics2D.drawImage(playerCenterImage, etat.getPlayerX() - etat.getTailleJoueur() / 4, etat.getPlayerY() - etat.getTailleJoueur(), etat.getTailleJoueur() / 2, etat.getTailleJoueur(), null);	
+		graphics2D.setColor(Color.red);
+		//Hitbox
+		graphics2D.drawRect(etat.getPlayerX(), etat.getPlayerY(), 2, 2);
 	}
 
 	@Override

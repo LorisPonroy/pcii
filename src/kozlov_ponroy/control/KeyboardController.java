@@ -32,7 +32,7 @@ public class KeyboardController implements KeyListener {
 			move.setUp(true);
 			break;
 		case 's':
-			//move.setDown(true);
+			move.setDown(true);
 			break;
 		}
 	}
@@ -52,7 +52,7 @@ public class KeyboardController implements KeyListener {
 			move.setUp(false);
 			break;
 		case 's':
-			//etat.setDown(false);
+			move.setDown(false);
 			break;
 		}
 	}

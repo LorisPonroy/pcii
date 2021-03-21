@@ -6,7 +6,6 @@ import java.awt.Image;
 import java.awt.Toolkit;
 
 import kozlov_ponroy.model.Etat;
-import kozlov_ponroy.view.Affichage;
 import kozlov_ponroy.view.IAffichage;
 
 public class Decor implements IAffichage {
@@ -26,12 +25,12 @@ public class Decor implements IAffichage {
 
 	@Override
 	public void paint(Graphics g) {
-		g.clearRect(0, 0, Affichage.LARGEUR, etat.getHorizon());
-		graphics2D.drawImage(montagneImage, Affichage.LARGEUR / 2 + etat.getPositionDecor(), etat.getHorizon() - 130, 500, 130, null);
-		graphics2D.drawImage(montagneImage, Affichage.LARGEUR + etat.getPositionDecor(), etat.getHorizon() - 130, 500, 130, null);
-		graphics2D.drawImage(montagneImage, -50 + etat.getPositionDecor(), etat.getHorizon() - 130, 500, 130, null);
-		graphics2D.drawImage(nuage1, 300 + etat.getPositionDecor(), etat.getHorizon() - 260, 400, 130, null);
-		graphics2D.drawImage(nuage2, -50 + etat.getPositionDecor(), etat.getHorizon() - 260, 300, 130, null);
+		//g.clearRect(0, 0, Affichage.LARGEUR, etat.getHorizon());
+		//graphics2D.drawImage(montagneImage, Affichage.LARGEUR / 2 + etat.getPositionDecor(), etat.getHorizon() - 130, 500, 130, null);
+		//graphics2D.drawImage(montagneImage, Affichage.LARGEUR + etat.getPositionDecor(), etat.getHorizon() - 130, 500, 130, null);
+		//graphics2D.drawImage(montagneImage, -50 + etat.getPositionDecor(), etat.getHorizon() - 130, 500, 130, null);
+		//graphics2D.drawImage(nuage1, 300 + etat.getPositionDecor(), etat.getHorizon() - 260, 400, 130, null);
+		//graphics2D.drawImage(nuage2, -50 + etat.getPositionDecor(), etat.getHorizon() - 260, 300, 130, null);
 	}
 
 	@Override
