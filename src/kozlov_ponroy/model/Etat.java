@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kozlov_ponroy.control.KeyboardController;
+import kozlov_ponroy.model.decor.DecorPreview;
+import kozlov_ponroy.model.decor.GenerationDecor;
 import kozlov_ponroy.model.route.Route;
 import kozlov_ponroy.model.route.RoutePreview;
 import kozlov_ponroy.model.state.Move;
@@ -35,7 +37,6 @@ public class Etat {
 
 	private final Affichage affichage;
 	private Route route;
-	private int positionDecor;
 	private final Player player;
 	private final Move move;
 	private double facteurVitesse = 1.0;
@@ -46,6 +47,9 @@ public class Etat {
 	private int time = 30000;
 	private boolean cpCross = false, nvCP = true;
 	final RoutePreview routePreview;
+	final GenerationDecor generationDecor;
+	
+	private int posDecor = 0;
 
 	public Etat(Affichage affichage, KeyboardController controller) {
 		this.affichage = affichage;
@@ -56,11 +60,11 @@ public class Etat {
 		controller.setMove(move);
 		routePreview = new RoutePreview(this);
 		initAffichage();
+		this.generationDecor = new GenerationDecor();
 
 		new MouvementVehicule(this).start();
 		new MouvementRoute(this).start();
 		new Temps(this).start();
-		positionDecor = 0;
 
 		System.out.println("Fe(y=H) = "  + getFacteurElargissement(HORIZON));
 		System.out.println("Fe(y=0) = "  + getFacteurElargissement(0));
@@ -119,10 +123,6 @@ public class Etat {
 
 	public int getPlayerY() {
 		return player.getY();
-	}
-
-	public int getPositionDecor() {
-		return positionDecor;
 	}
 
 	public int getPositionRoute() {
@@ -235,6 +235,11 @@ public class Etat {
 			cpCross = false;
 			time += 30000;
 		}
+		generationDecor.move();
+	}
+	
+	public int getPosDecor() {
+		return posDecor;
 	}
 
 	public int transformePositionToPerspective(int x,int y) {
@@ -250,6 +255,10 @@ public class Etat {
 	
 	public int getVitesse() {
 		return (int) (VITESSE_BASE * (1.0 / facteurVitesse));
+	}
+	
+	public List<DecorPreview> getDecors() {
+		return generationDecor.getDecors();
 	}
 	
 }

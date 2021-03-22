@@ -9,6 +9,7 @@ import java.awt.geom.QuadCurve2D;
 import java.util.ArrayList;
 
 import kozlov_ponroy.model.Etat;
+import kozlov_ponroy.view.Affichage;
 
 public class RoutePreview {
 
@@ -46,7 +47,7 @@ public class RoutePreview {
 		Point p1,p2,p3;
 
 		Point2D debut, ctrl, fin;
-		for(int i = 0 ; i < route.size() - 2 ; i++) // -2 : besoin de 3 points pour construire les routes
+		for(int i = 0 ; i < 3 ; i++) // -2 : besoin de 3 points pour construire les routes
 		{
 			p1 = route.get(i);
 			p2 = route.get(i+1);
@@ -72,6 +73,7 @@ public class RoutePreview {
 			ctrl = new Point2D.Double(routeX[1], routeY[1]);
 			int finY = routeY[1] + (routeY[4]- routeY[1]) / 2;
 			int finX = etat.transformePositionToPerspective(routeX[1] + (routeX[4]- routeX[1]) / 2,finY);
+			fin = new Point2D.Double(finX,Etat.HORIZON);
 			fin = new Point2D.Double(finX,finY);
 			courbeDroite.setCurve(debut,ctrl,fin);
 			if(g!=null) {

@@ -10,6 +10,8 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
+import kozlov_ponroy.model.Etat;
+
 /**
  * Gère l'affichage dans le MVC
  * @author Asey
@@ -21,6 +23,7 @@ public class Affichage extends JPanel{
 	public static final int LARGEUR = 800;
 	List<IAffichage> views;
 	private Graphics2D graphics2D;
+	final Color sand;
 
 	public Affichage(){
 		/**
@@ -31,6 +34,7 @@ public class Affichage extends JPanel{
 		setFocusable(true);
 
 		views = new ArrayList<>();
+		sand = new Color(242,209,107);
 	}
 
 	public void addViews(List<IAffichage> list) {
@@ -52,8 +56,8 @@ public class Affichage extends JPanel{
 				RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
 
-		g.setColor(Color.YELLOW);
-		g.fillRect(0, 0, LARGEUR, HAUTEUR);
+		g.setColor(sand);
+		g.fillRect(0, Etat.HORIZON, LARGEUR, HAUTEUR);
 
 		for(IAffichage view : views) {
 			view.setGraphics2D(graphics2D);

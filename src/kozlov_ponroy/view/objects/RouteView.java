@@ -35,7 +35,7 @@ public class RouteView implements IAffichage {
 
 		graphics2D.setStroke(dashed);
 		graphics2D.setColor(Color.white);
-		graphics2D.draw(etat.route().getBande());
+		//graphics2D.draw(etat.route().getBande());
 		etat.route().clearRoute();
 		graphics2D.setStroke(defaultStroke);
 	}
