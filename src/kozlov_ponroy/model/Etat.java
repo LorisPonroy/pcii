@@ -1,7 +1,6 @@
 package kozlov_ponroy.model;
 
 import java.awt.Point;
-import java.awt.geom.GeneralPath;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,7 +54,7 @@ public class Etat {
 		move = new Move(player, this);
 		this.controller = controller;
 		controller.setMove(move);
-		this.routePreview = new RoutePreview(this);
+		routePreview = new RoutePreview(this);
 		initAffichage();
 
 		new MouvementVehicule(this).start();
@@ -180,13 +179,21 @@ public class Etat {
 	 * FIN Joueur
 	 */
 
+	public boolean isLeft() {
+		return move.isLeft();
+	}
+
+	public boolean isRight() {
+		return move.isRight();
+	}
+
 	public void move() {
 		move.doMove();
-		
+
 		/*
 		 * On check si le joueur est sur la route ou en dehors
 		 */
-		if(!routePreview.routeGeneralPath().contains(getPlayerX(), getPlayerY())) {
+		if(!routePreview.routeGeneralPath(null).contains(getPlayerX(), getPlayerY())) {
 			//ralentissement
 			facteurVitesse *= 1.01;
 		} else { //vitesse de base
@@ -204,6 +211,10 @@ public class Etat {
 
 	public void nouveauCP() {
 		nvCP = true;
+	}
+
+	public RoutePreview route() {
+		return routePreview;
 	}
 
 	public int tailleCP() {
@@ -225,24 +236,12 @@ public class Etat {
 			time += 30000;
 		}
 	}
-	
-	public boolean isRight() {
-		return move.isRight();
-	}
-	
-	public boolean isLeft() {
-		return move.isLeft();
-	}
 
 	public int transformePositionToPerspective(int x,int y) {
 		double centre = 400;
 		double a = (x - centre) / (800.0 - HORIZON);
 		double b = x - a*800.0;
 		return (int) Math.round(a * y + b);
-	}
-	
-	public RoutePreview route() {
-		return routePreview;
 	}
 	
 	public boolean isGameOver() {

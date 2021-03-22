@@ -4,16 +4,8 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.geom.GeneralPath;
-import java.awt.geom.Point2D;
-import java.awt.geom.QuadCurve2D;
-import java.util.ArrayList;
-import java.util.List;
 
 import kozlov_ponroy.model.Etat;
-import kozlov_ponroy.model.route.Route;
 import kozlov_ponroy.model.route.RoutePreview;
 import kozlov_ponroy.view.IAffichage;
 
@@ -37,9 +29,10 @@ public class RouteView implements IAffichage {
 	public void paint(Graphics g) {
 		graphics2D.setStroke(defaultStroke);
 		g.setColor(Color.gray);
-		graphics2D.fill(etat.route().routeGeneralPath());
-		
-		
+		//etat.route().routeGeneralPath(g);
+		graphics2D.fill(etat.route().routeGeneralPath(g));
+
+
 		graphics2D.setStroke(dashed);
 		graphics2D.setColor(Color.white);
 		graphics2D.draw(etat.route().getBande());
