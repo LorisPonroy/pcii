@@ -53,11 +53,11 @@ public class Move {
 				addPositionX(moveRight);
 			}
 		}
-		if(up) {
+		/*if(up) {
 			addPositionY(moveUp);
 		} else if(down){
 			addPositionY(moveDown);
-		}
+		}*/
 	}
 	
 	public void setUp(boolean up) {

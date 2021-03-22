@@ -40,6 +40,7 @@ public class Etat {
 	private final Player player;
 	private final Move move;
 	private double facteurVitesse = 1.0;
+	private final int VITESSE_BASE = 100;
 
 	private KeyboardController controller;
 
@@ -50,7 +51,7 @@ public class Etat {
 	public Etat(Affichage affichage, KeyboardController controller) {
 		this.affichage = affichage;
 		route = new Route(this, LARGEUR_ROUTE);
-		player = new Player(new Point(route.getFirstPosXPlayer(), Affichage.HAUTEUR / 2));
+		player = new Player(new Point(route.getFirstPosXPlayer(), Affichage.HAUTEUR - 50));
 		move = new Move(player, this);
 		this.controller = controller;
 		controller.setMove(move);
@@ -188,18 +189,14 @@ public class Etat {
 		if(!routePreview.routeGeneralPath().contains(getPlayerX(), getPlayerY())) {
 			//ralentissement
 			facteurVitesse *= 1.01;
-
-			System.out.println("facteur vitesse = " + facteurVitesse);
 		} else { //vitesse de base
 			if(move.isDown()) { //freine
 				facteurVitesse *= 1.01;
 			}
-			else if(move.isUp()) { //accelere
+			else if(move.isUp() && getVitesse() < 250) { //accelere
 				facteurVitesse *= 0.998;
-			} else if (facteurVitesse != 1){
-				if(facteurVitesse > 1) {
-					facteurVitesse *= 0.99;
-				}
+			} else if(facteurVitesse > 1) {
+				facteurVitesse *= 0.99;
 			}
 		}
 		affichage.repaint();
@@ -217,8 +214,7 @@ public class Etat {
 		int sec = time / 1000;
 		int min = sec / 60;
 		sec = sec % 60;
-		String formatted = String.format("%02d", sec);
-		return "Temps restant : " + min + ":" + formatted;
+		return "Temps restant : " + min + ":" + String.format("%02d", sec);
 	}
 
 	public void time() {
@@ -251,6 +247,10 @@ public class Etat {
 	
 	public boolean isGameOver() {
 		return facteurVitesse > 100;
+	}
+	
+	public int getVitesse() {
+		return (int) (VITESSE_BASE * (1.0 / facteurVitesse));
 	}
 	
 }

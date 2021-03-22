@@ -10,7 +10,6 @@ import kozlov_ponroy.view.IAffichage;
 public class GameInfoView implements IAffichage {
 	
 	final Etat etat;
-	final private int VITESSE_MAX = 120;
 	
 	public GameInfoView(Etat etat) {
 		this.etat = etat;
@@ -20,7 +19,7 @@ public class GameInfoView implements IAffichage {
 	public void paint(Graphics g) {
 		g.setColor(Color.black);
 		g.drawString(etat.getScore(), 20, 20);
-		g.drawString("Vitesse : " + (int)(VITESSE_MAX / etat.getFacteurVitesse()) + " km/h", 20, 60);
+		g.drawString("Vitesse : " + etat.getVitesse() + " km/h", 20, 60);
 		g.drawString(etat.tempsRestant(), 20, 100);
 	}
 	
