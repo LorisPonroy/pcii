@@ -10,6 +10,8 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
+import kozlov_ponroy.model.Etat;
+
 /**
  * Gère l'affichage dans le MVC
  * @author Asey
@@ -17,8 +19,6 @@ import javax.swing.JPanel;
  */
 public class Affichage extends JPanel{
 
-	public static final int HAUTEUR = 800;
-	public static final int LARGEUR = 800;
 	List<IAffichage> views;
 	private Graphics2D graphics2D;
 
@@ -26,7 +26,7 @@ public class Affichage extends JPanel{
 		/**
 		 *  Initialise la taille de la fenetre au lancement
 		 */
-		setPreferredSize(new Dimension(LARGEUR, HAUTEUR));
+		setPreferredSize(new Dimension(Etat.LARGEUR, Etat.HAUTEUR));
 		//addKeyListener(listener);
 		setFocusable(true);
 
@@ -53,7 +53,7 @@ public class Affichage extends JPanel{
 				RenderingHints.VALUE_ANTIALIAS_ON);
 
 		g.setColor(Color.YELLOW);
-		g.fillRect(0, 0, LARGEUR, HAUTEUR);
+		g.fillRect(0, 0, Etat.LARGEUR, Etat.HAUTEUR);
 
 		for(IAffichage view : views) {
 			view.setGraphics2D(graphics2D);

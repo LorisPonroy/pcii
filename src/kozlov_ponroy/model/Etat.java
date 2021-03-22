@@ -29,9 +29,12 @@ import kozlov_ponroy.view.objects.Vaisseau;
  */
 
 public class Etat {
+	//Taille de l'ecran
+	public static final int HAUTEUR = 400;
+	public static final int LARGEUR = 800;
 
-	public final static int HORIZON = 250;
-	public final int LARGEUR_ROUTE = 100;
+	public final static int HORIZON = 200;
+	public final static int LARGEUR_ROUTE = 300;
 
 	private final Affichage affichage;
 	private Route route;
@@ -49,8 +52,8 @@ public class Etat {
 
 	public Etat(Affichage affichage, KeyboardController controller) {
 		this.affichage = affichage;
-		route = new Route(this, LARGEUR_ROUTE);
-		player = new Player(new Point(route.getFirstPosXPlayer(), Affichage.HAUTEUR - 50));
+		route = new Route(this);
+		player = new Player(new Point(route.getFirstPosXPlayer(), HAUTEUR - 50));
 		move = new Move(player, this);
 		this.controller = controller;
 		controller.setMove(move);
@@ -61,22 +64,6 @@ public class Etat {
 		new MouvementRoute(this).start();
 		new Temps(this).start();
 		positionDecor = 0;
-
-		System.out.println("Fe(y=H) = "  + getFacteurElargissement(HORIZON));
-		System.out.println("Fe(y=0) = "  + getFacteurElargissement(0));
-		System.out.println("Fe(y=H/2) = "  + getFacteurElargissement(HORIZON/2));
-		System.out.println("---");
-		System.out.println("fp(100,H) = " + transformePositionToPerspective(100, HORIZON));
-		System.out.println("fp(100,0) = " + transformePositionToPerspective(100, 0));
-		System.out.println("fp(100,H/2) = " + transformePositionToPerspective(100, HORIZON/2));
-		System.out.println("---");
-		System.out.println("fp(0,H) = " + transformePositionToPerspective(0, HORIZON));
-		System.out.println("fp(0) = " + transformePositionToPerspective(0, 0));
-		System.out.println("fp(0,H/2) = " + transformePositionToPerspective(0, HORIZON/2));
-		System.out.println("---");
-		System.out.println("fp(-100,H) = " + transformePositionToPerspective(-100, HORIZON));
-		System.out.println("fp(-100,0) = " + transformePositionToPerspective(-100, 0));
-		System.out.println("fp(-100,H/2) = " + transformePositionToPerspective(-100, HORIZON/2));
 	}
 
 	public void avancerRoute() {
@@ -94,7 +81,7 @@ public class Etat {
 
 	public Point getCheckPoint() {
 		Point tmp = route.getCheckPoint();
-		return new Point(tmp.x, Affichage.HAUTEUR - tmp.y);
+		return new Point(tmp.x, HAUTEUR - tmp.y);
 	}
 
 	public int getFacteurElargissement(int y) {
@@ -125,10 +112,6 @@ public class Etat {
 		return positionDecor;
 	}
 
-	public int getPositionRoute() {
-		return route.getPosition();
-	}
-
 	public Route getRoute() {
 		return route;
 	}
@@ -138,16 +121,11 @@ public class Etat {
 	 * @return
 	 */
 	public ArrayList<Point> getRoutePoints(){
-		ArrayList<Point> temp = new ArrayList<>();
-		for(Point p : route.getPoints())
-		{
-			temp.add(new Point(p.x, Affichage.HAUTEUR - p.y));
-		}
-		return temp;
+		return route.getPoints();
 	}
 
 	public String getScore() {
-		return "Score : " + route.getPosition();
+		return "Score : ";
 	}
 
 	/*
@@ -157,17 +135,25 @@ public class Etat {
 		return player.TAILLE;
 	}
 
+	public int getVitesse() {
+		return (int) (VITESSE_BASE * (1.0 / facteurVitesse));
+	}
+
+	/*
+	 * FIN Joueur
+	 */
+
 	public void initAffichage() {
 		List<IAffichage> views = new ArrayList<>();
 		Vaisseau vaisseau = new Vaisseau(this);
 		Horizon horizon = new Horizon(this);
-		RouteView routeView = new RouteView(this, routePreview);
+		RouteView routeView = new RouteView(this);
 		Decor decor = new Decor(this);
 		GameInfoView gameInfo = new GameInfoView(this);
 		ObstacleView obstacleView = new ObstacleView(this);
 		views.add(routeView);
 		views.add(vaisseau);
-		views.add(obstacleView);
+		//views.add(obstacleView);
 		views.add(decor);
 		views.add(horizon);
 		views.add(gameInfo);
@@ -175,9 +161,9 @@ public class Etat {
 		affichage.addKeyListener(controller);
 	}
 
-	/*
-	 * FIN Joueur
-	 */
+	public boolean isGameOver() {
+		return facteurVitesse > 100;
+	}
 
 	public boolean isLeft() {
 		return move.isLeft();
@@ -193,19 +179,19 @@ public class Etat {
 		/*
 		 * On check si le joueur est sur la route ou en dehors
 		 */
-		if(!routePreview.routeGeneralPath(null).contains(getPlayerX(), getPlayerY())) {
-			//ralentissement
+		//if(!routePreview.routeGeneralPath(null).contains(getPlayerX(), getPlayerY())) {
+		//ralentissement
+		//facteurVitesse *= 1.01;
+		//} else { //vitesse de base
+		if(move.isDown()) { //freine
 			facteurVitesse *= 1.01;
-		} else { //vitesse de base
-			if(move.isDown()) { //freine
-				facteurVitesse *= 1.01;
-			}
-			else if(move.isUp() && getVitesse() < 250) { //accelere
-				facteurVitesse *= 0.998;
-			} else if(facteurVitesse > 1) {
-				facteurVitesse *= 0.99;
-			}
 		}
+		else if(move.isUp() && getVitesse() < 250) { //accelere
+			facteurVitesse *= 0.998;
+		} else if(facteurVitesse > 1) {
+			facteurVitesse *= 0.99;
+		}
+		//}
 		affichage.repaint();
 	}
 
@@ -243,13 +229,5 @@ public class Etat {
 		double b = x - a*800.0;
 		return (int) Math.round(a * y + b);
 	}
-	
-	public boolean isGameOver() {
-		return facteurVitesse > 100;
-	}
-	
-	public int getVitesse() {
-		return (int) (VITESSE_BASE * (1.0 / facteurVitesse));
-	}
-	
+
 }

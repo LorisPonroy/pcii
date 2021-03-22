@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import kozlov_ponroy.model.Etat;
-import kozlov_ponroy.view.Affichage;
 
 /**
  * Création de la route
@@ -14,32 +13,24 @@ import kozlov_ponroy.view.Affichage;
  */
 public class Route {
 
-	public static final int ESPACEMENT = 400;
-
 	private ArrayList<Point> points;
 
 	private ArrayList<Obstacle> obstacles;
-	private final int MARGE_RANDOM = 600;
-	private int position;
-	private final int X_MAX, Y_MAX, LARGEUR_ROUTE;
-	public final int PX_PAS = 5;
+	private final int X_MAX, Y_MAX;
 	private Random random;
 	private Point cp;
 	final Etat etat;
 
-	public Route(Etat etat, int largeurRoute){
+	public Route(Etat etat){
 		this.etat = etat;
-		X_MAX = Affichage.LARGEUR;
-		Y_MAX = Affichage.HAUTEUR;
-		LARGEUR_ROUTE = largeurRoute;
+		X_MAX = Etat.LARGEUR;
+		Y_MAX = Etat.HAUTEUR;
 		points = new ArrayList<>();
 		obstacles = new ArrayList<>();
 		random = new Random();
-		position = 0;
-		points.add(new Point(random.nextInt(X_MAX), -400));
-		while(lastY() <= Y_MAX) {
-			ajouterPoint();
-		}
+		//On genere les premiers points de la route :
+		points.add(new Point(400, Etat.HORIZON));
+		points.add(new Point(400, Etat.HORIZON+800));
 		cp = (Point) lastPoint().clone();
 	}
 
@@ -48,14 +39,11 @@ public class Route {
 	 */
 	private void ajouterPoint() {
 		//La variable x est genere aleatoirement en fonction du dernier point en x
-		int x = lastX() + random.nextInt(MARGE_RANDOM) - MARGE_RANDOM / 2;
-		if(x < LARGEUR_ROUTE){ //si x passe en dessous de largeur route alors on genere un nombre strictement positif
-			x = random.nextInt(MARGE_RANDOM);
+		int x = lastX() + random.nextInt(75) - 75 / 2;
+		if(x>X_MAX || x<0) {
+			x = 400;
 		}
-		else if(x > X_MAX - LARGEUR_ROUTE) {
-			x = X_MAX - random.nextInt(MARGE_RANDOM);
-		}
-		Point p = new Point(x, lastY() + ESPACEMENT);
+		Point p = new Point(x, Etat.HORIZON);
 		points.add(p);
 	}
 
@@ -64,33 +52,35 @@ public class Route {
 	 * Ajoute un point et supprime le dernier lorsque la position est modulo espacement
 	 */
 	public void avancer() {
-		if(position > 0 && position % ESPACEMENT == 0) {
-			//System.out.println("position =" + position);
+		if(points.get(points.size()-1).getY()>Etat.HORIZON+100) {
 			ajouterPoint();
-			if(points.get(0).y - position < -ESPACEMENT) {
-				points.remove(0);
-				//System.out.println("Point supprimé");
-			}
 		}
-		position += PX_PAS;
+		if(points.get(1).getY()>800) {
+			points.remove(0);
+		}
+
+		for (int i = 0;i<points.size();i++) {
+			points.get(i).y+=5;
+		}
+		//avancer le checkpoint
 		avancerCP();
+		//avancer les obstacles
 		for(Obstacle o : obstacles) {
-			o.setY(o.getY() + PX_PAS);
+			o.setY(o.getY() + 1);
 		}
 	}
 
 	private void avancerCP() {
-		cp.y -= PX_PAS;
-		//System.out.println(cp.y);
+		cp.y-=5;
 		if(cp.y <= -5000) {
 			cp = (Point) lastPoint().clone();
-			cp.y -= position;
+			cp.y-=5;
 			etat.nouveauCP();
 		}
 	}
 
 	public void genererObstacle() {
-		int x = lastX() + (int) (Math.random() * MARGE_RANDOM) - MARGE_RANDOM / 2;
+		int x = lastX() + (int) (Math.random() * 600) - 600 / 2;
 		int y = 0;
 		obstacles.add(new Obstacle(x, y));
 	}
@@ -119,13 +109,9 @@ public class Route {
 		ArrayList<Point> temp = new ArrayList<>();
 		for (int i=0;i<points.size();i++) {
 			Point p = points.get(i);
-			temp.add(new Point(p.x, p.y - position));
+			temp.add(new Point(p.x, p.y));
 		}
 		return temp;
-	}
-
-	public int getPosition() {
-		return position;
 	}
 
 	private Point lastPoint() {

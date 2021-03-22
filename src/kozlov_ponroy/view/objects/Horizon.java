@@ -5,7 +5,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 import kozlov_ponroy.model.Etat;
-import kozlov_ponroy.view.Affichage;
 import kozlov_ponroy.view.IAffichage;
 
 public class Horizon implements IAffichage {
@@ -19,7 +18,7 @@ public class Horizon implements IAffichage {
 	@Override
 	public void paint(Graphics g) {
 		g.setColor(Color.BLACK);
-		g.fillRect(0, etat.getHorizon(), Affichage.LARGEUR, 1);
+		g.fillRect(0, etat.getHorizon(), Etat.LARGEUR, 1);
 	}
 
 	@Override
