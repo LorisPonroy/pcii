@@ -1,36 +1,32 @@
 package kozlov_ponroy.view.objects;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Toolkit;
 
 import kozlov_ponroy.model.Etat;
+import kozlov_ponroy.model.decor.DecorPreview;
 import kozlov_ponroy.view.IAffichage;
 
 public class Decor implements IAffichage {
 
-	final private Image montagneImage;
-	final private Image nuage1;
-	final private Image nuage2;
 	private Graphics2D graphics2D;
 	final Etat etat;
+	final Color sky;
 
 	public Decor(Etat etat) {
 		this.etat = etat;
-		montagneImage = Toolkit.getDefaultToolkit().getImage("./ressources/montagne.png");
-		nuage1 = Toolkit.getDefaultToolkit().getImage("./ressources/nuage_1.png");
-		nuage2 = Toolkit.getDefaultToolkit().getImage("./ressources/nuage_2.png");
+		sky = new Color(135,206,235);
 	}
 
 	@Override
 	public void paint(Graphics g) {
 		g.clearRect(0, 0, Etat.LARGEUR, etat.getHorizon());
-		graphics2D.drawImage(montagneImage, Etat.LARGEUR / 2 + etat.getPositionDecor(), etat.getHorizon() - 130, 500, 130, null);
-		graphics2D.drawImage(montagneImage, Etat.LARGEUR + etat.getPositionDecor(), etat.getHorizon() - 130, 500, 130, null);
-		graphics2D.drawImage(montagneImage, -50 + etat.getPositionDecor(), etat.getHorizon() - 130, 500, 130, null);
-		graphics2D.drawImage(nuage1, 300 + etat.getPositionDecor(), etat.getHorizon() - 260, 400, 130, null);
-		graphics2D.drawImage(nuage2, -50 + etat.getPositionDecor(), etat.getHorizon() - 260, 300, 130, null);
+		g.setColor(sky);
+		g.fillRect(0, 0, Etat.LARGEUR, etat.getHorizon());
+		for(DecorPreview decor: etat.getDecors()) {
+			graphics2D.drawImage(decor.img, decor.x, decor.y, decor.largeur, decor.hauteur, null);
+		}
 	}
 
 	@Override

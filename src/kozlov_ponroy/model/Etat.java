@@ -5,8 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kozlov_ponroy.control.KeyboardController;
+import kozlov_ponroy.model.decor.DecorPreview;
+import kozlov_ponroy.model.decor.GenerationDecor;
 import kozlov_ponroy.model.route.Route;
-import kozlov_ponroy.model.route.RoutePreview;
 import kozlov_ponroy.model.state.Move;
 import kozlov_ponroy.model.state.Player;
 import kozlov_ponroy.model.threads.MouvementRoute;
@@ -34,11 +35,10 @@ public class Etat {
 	public static final int LARGEUR = 800;
 
 	public final static int HORIZON = 200;
-	public final static int LARGEUR_ROUTE = 300;
+	public final static int LARGEUR_ROUTE = 500;
 
 	private final Affichage affichage;
 	private Route route;
-	private int positionDecor;
 	private final Player player;
 	private final Move move;
 	private double facteurVitesse = 1.0;
@@ -48,7 +48,9 @@ public class Etat {
 
 	private int time = 30000;
 	private boolean cpCross = false, nvCP = true;
-	final RoutePreview routePreview;
+	final GenerationDecor generationDecor;
+
+	private int posDecor = 0;
 
 	public Etat(Affichage affichage, KeyboardController controller) {
 		this.affichage = affichage;
@@ -57,13 +59,13 @@ public class Etat {
 		move = new Move(player, this);
 		this.controller = controller;
 		controller.setMove(move);
-		routePreview = new RoutePreview(this);
 		initAffichage();
+		generationDecor = new GenerationDecor();
 
 		new MouvementVehicule(this).start();
 		new MouvementRoute(this).start();
 		new Temps(this).start();
-		positionDecor = 0;
+
 	}
 
 	public void avancerRoute() {
@@ -82,6 +84,10 @@ public class Etat {
 	public Point getCheckPoint() {
 		Point tmp = route.getCheckPoint();
 		return new Point(tmp.x, HAUTEUR - tmp.y);
+	}
+
+	public List<DecorPreview> getDecors() {
+		return generationDecor.getDecors();
 	}
 
 	public int getFacteurElargissement(int y) {
@@ -108,8 +114,8 @@ public class Etat {
 		return player.getY();
 	}
 
-	public int getPositionDecor() {
-		return positionDecor;
+	public int getPosDecor() {
+		return posDecor;
 	}
 
 	public Route getRoute() {
@@ -129,6 +135,10 @@ public class Etat {
 	}
 
 	/*
+	 * FIN Joueur
+	 */
+
+	/*
 	 * Joueur
 	 */
 	public int getTailleJoueur() {
@@ -138,10 +148,6 @@ public class Etat {
 	public int getVitesse() {
 		return (int) (VITESSE_BASE * (1.0 / facteurVitesse));
 	}
-
-	/*
-	 * FIN Joueur
-	 */
 
 	public void initAffichage() {
 		List<IAffichage> views = new ArrayList<>();
@@ -199,10 +205,6 @@ public class Etat {
 		nvCP = true;
 	}
 
-	public RoutePreview route() {
-		return routePreview;
-	}
-
 	public int tailleCP() {
 		return -getFacteurElargissement(getCheckPoint().y);
 	}
@@ -221,6 +223,7 @@ public class Etat {
 			cpCross = false;
 			time += 30000;
 		}
+		generationDecor.move();
 	}
 
 	public int transformePositionToPerspective(int x,int y) {
@@ -229,5 +232,4 @@ public class Etat {
 		double b = x - a*800.0;
 		return (int) Math.round(a * y + b);
 	}
-
 }

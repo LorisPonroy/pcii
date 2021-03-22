@@ -21,6 +21,7 @@ public class Affichage extends JPanel{
 
 	List<IAffichage> views;
 	private Graphics2D graphics2D;
+	final Color sand;
 
 	public Affichage(){
 		/**
@@ -31,6 +32,7 @@ public class Affichage extends JPanel{
 		setFocusable(true);
 
 		views = new ArrayList<>();
+		sand = new Color(242,209,107);
 	}
 
 	public void addViews(List<IAffichage> list) {
@@ -52,8 +54,8 @@ public class Affichage extends JPanel{
 				RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
 
-		g.setColor(Color.YELLOW);
-		g.fillRect(0, 0, Etat.LARGEUR, Etat.HAUTEUR);
+		g.setColor(sand);
+		g.fillRect(0, Etat.HORIZON, Etat.LARGEUR, Etat.HAUTEUR);
 
 		for(IAffichage view : views) {
 			view.setGraphics2D(graphics2D);
