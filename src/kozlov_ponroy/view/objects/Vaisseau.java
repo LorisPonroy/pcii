@@ -8,9 +8,9 @@ import java.awt.Toolkit;
 
 import kozlov_ponroy.model.Etat;
 import kozlov_ponroy.view.Affichage;
-import kozlov_ponroy.view.IAffichage;
+import kozlov_ponroy.view.IView;
 
-public class Vaisseau implements IAffichage {
+public class Vaisseau implements IView {
 
 
 	final private Image playerLeftImage;

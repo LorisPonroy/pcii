@@ -11,6 +11,8 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import kozlov_ponroy.model.Etat;
+import kozlov_ponroy.view.objects.PlayerView;
+import kozlov_ponroy.view.objects.PlayerView.PlayerState;
 
 /**
  * Gère l'affichage dans le MVC
@@ -19,7 +21,7 @@ import kozlov_ponroy.model.Etat;
  */
 public class Affichage extends JPanel{
 
-	List<IAffichage> views;
+	List<IView> views;
 	private Graphics2D graphics2D;
 	final Color sand;
 
@@ -28,15 +30,29 @@ public class Affichage extends JPanel{
 		 *  Initialise la taille de la fenetre au lancement
 		 */
 		setPreferredSize(new Dimension(Etat.LARGEUR, Etat.HAUTEUR));
-		//addKeyListener(listener);
 		setFocusable(true);
 
 		views = new ArrayList<>();
 		sand = new Color(242,209,107);
 	}
 
-	public void addViews(List<IAffichage> list) {
+	public void addViews(List<IView> list) {
 		views.addAll(list);
+	}
+
+	public void doABarrelRoll() {
+		Thread thread = new Thread(() -> {
+			PlayerView.state = PlayerState.ROLL_LEFT;
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {System.err.println(e);}
+			PlayerView.state = PlayerState.ROLL_RIGTH;
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {System.err.println(e);}
+			PlayerView.state = PlayerState.NORMAL;
+		});
+		thread.start();
 	}
 
 	/**
@@ -57,7 +73,7 @@ public class Affichage extends JPanel{
 		g.setColor(sand);
 		g.fillRect(0, Etat.HORIZON, Etat.LARGEUR, Etat.HAUTEUR);
 
-		for(IAffichage view : views) {
+		for(IView view : views) {
 			view.setGraphics2D(graphics2D);
 			view.paint(g);
 		}

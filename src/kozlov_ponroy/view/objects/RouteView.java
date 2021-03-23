@@ -9,9 +9,9 @@ import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
 import kozlov_ponroy.model.Etat;
-import kozlov_ponroy.view.IAffichage;
+import kozlov_ponroy.view.IView;
 
-public class RouteView implements IAffichage {
+public class RouteView implements IView {
 
 	final Etat etat;
 	final private float dash1[] = {20.0f};
@@ -29,7 +29,7 @@ public class RouteView implements IAffichage {
 	public void paint(Graphics g) {
 		graphics2D.setStroke(defaultStroke);
 		g.setColor(Color.gray);
-		ArrayList<Point> points = etat.getRoutePoints();
+		ArrayList<Point> points = (ArrayList<Point>) etat.getRoutePoints();
 
 		Point p;
 		int nbPointsPolygoneRoute = (points.size()+2)* 2;

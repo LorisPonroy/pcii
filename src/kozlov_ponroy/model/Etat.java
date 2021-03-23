@@ -3,6 +3,7 @@ package kozlov_ponroy.model;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import kozlov_ponroy.control.KeyboardController;
 import kozlov_ponroy.model.decor.DecorPreview;
@@ -14,13 +15,13 @@ import kozlov_ponroy.model.threads.MouvementRoute;
 import kozlov_ponroy.model.threads.MouvementVehicule;
 import kozlov_ponroy.model.threads.Temps;
 import kozlov_ponroy.view.Affichage;
-import kozlov_ponroy.view.IAffichage;
+import kozlov_ponroy.view.IView;
 import kozlov_ponroy.view.objects.Decor;
 import kozlov_ponroy.view.objects.GameInfoView;
 import kozlov_ponroy.view.objects.Horizon;
-import kozlov_ponroy.view.objects.ObstacleView;
+import kozlov_ponroy.view.objects.OilView;
+import kozlov_ponroy.view.objects.PlayerView;
 import kozlov_ponroy.view.objects.RouteView;
-import kozlov_ponroy.view.objects.Vaisseau;
 
 /**
  * Gère l'état de notre MVC
@@ -30,24 +31,37 @@ import kozlov_ponroy.view.objects.Vaisseau;
  */
 
 public class Etat {
-	//Taille de l'ecran
+	private static final int CONSTANT_SPEED = 100;
+
+	public static final Random RANDOM = new Random();
+
 	public static final int HAUTEUR = 500;
+
 	public static final int LARGEUR = 800;
 
 	public final static int HORIZON = 200;
 	public final static int LARGEUR_ROUTE = 500;
 
+	public static int getRandom(int i) {
+		return RANDOM.nextInt(i);
+	}
+	public static int transformePositionToPerspective(int x,int y) {
+		double centre = 400;
+		double a = (x - centre) / (800.0 - HORIZON);
+		double b = x - a*800.0;
+		return (int) Math.round(a * y + b);
+	}
 	private final Affichage affichage;
 	private Route route;
 	private final Player player;
 	private final Move move;
+
 	private double facteurVitesse = 1.0;
-	private final int VITESSE_BASE = 100;
-
 	private KeyboardController controller;
-
 	private int time = 30000;
+
 	private boolean cpCross = false, nvCP = true;
+
 	final GenerationDecor generationDecor;
 
 	private int posDecor = 0;
@@ -55,12 +69,13 @@ public class Etat {
 	public Etat(Affichage affichage, KeyboardController controller) {
 		this.affichage = affichage;
 		route = new Route(this);
-		player = new Player(new Point(route.getFirstPosXPlayer(), HAUTEUR - 50));
+		player = new Player(new Point(LARGEUR/2, HAUTEUR - 50));
 		move = new Move(player, this);
 		this.controller = controller;
 		controller.setMove(move);
 		initAffichage();
 		generationDecor = new GenerationDecor();
+
 
 		new MouvementVehicule(this).start();
 		new MouvementRoute(this).start();
@@ -77,8 +92,9 @@ public class Etat {
 		}
 	}
 
-	public void genererObstacle() {
-		route.genererObstacle();
+	public void doABarrelRoll() {
+		facteurVitesse *= 1.01;
+		affichage.doABarrelRoll();
 	}
 
 	public Point getCheckPoint() {
@@ -122,21 +138,21 @@ public class Etat {
 		return route;
 	}
 
+	/*
+	 * FIN Joueur
+	 */
+
 	/**
 	 * Renvoie les points de la route dans le sens inversé
 	 * @return
 	 */
-	public ArrayList<Point> getRoutePoints(){
+	public List<Point> getRoutePoints(){
 		return route.getPoints();
 	}
 
 	public String getScore() {
 		return "Score : ";
 	}
-
-	/*
-	 * FIN Joueur
-	 */
 
 	/*
 	 * Joueur
@@ -146,23 +162,23 @@ public class Etat {
 	}
 
 	public int getVitesse() {
-		return (int) (VITESSE_BASE * (1.0 / facteurVitesse));
+		return (int) (CONSTANT_SPEED * (1.0 / facteurVitesse));
 	}
 
 	public void initAffichage() {
-		List<IAffichage> views = new ArrayList<>();
-		Vaisseau vaisseau = new Vaisseau(this);
+		List<IView> views = new ArrayList<>();
+		PlayerView playerView = new PlayerView(this);
 		Horizon horizon = new Horizon(this);
 		RouteView routeView = new RouteView(this);
 		Decor decor = new Decor(this);
 		GameInfoView gameInfo = new GameInfoView(this);
-		ObstacleView obstacleView = new ObstacleView(this);
+		OilView obstacleView = new OilView(this);
 		views.add(routeView);
-		views.add(vaisseau);
-		//views.add(obstacleView);
+		views.add(obstacleView);
 		views.add(decor);
 		views.add(horizon);
 		views.add(gameInfo);
+		views.add(playerView);
 		affichage.addViews(views);
 		affichage.addKeyListener(controller);
 	}
@@ -224,12 +240,5 @@ public class Etat {
 			time += 30000;
 		}
 		generationDecor.move();
-	}
-
-	public int transformePositionToPerspective(int x,int y) {
-		double centre = 400;
-		double a = (x - centre) / (800.0 - HORIZON);
-		double b = x - a*800.0;
-		return (int) Math.round(a * y + b);
 	}
 }
