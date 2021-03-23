@@ -23,7 +23,9 @@ public class GenerationDecor {
 	
 	public void move() {
 		ArrayList<DecorPreview> toDelete = new ArrayList<>();
+		System.out.println("----------------------------");
 		for(DecorPreview d: liste) {
+			System.out.println(d.toString());
 			d.x += d.speed;
 			if(estEnDehors(d))
 				toDelete.add(d);
@@ -60,7 +62,7 @@ public class GenerationDecor {
 			} else decor = new OiseauDroite();
 		}
 		liste.add(decor);
-		System.out.println(decor.toString());
+		//System.out.println(decor.toString());
 	}
 
 }

@@ -4,7 +4,7 @@ import java.awt.Point;
 
 public class Player {
 
-	public final int TAILLE = 80;
+	public final int TAILLE = 100;
 	public final int HAUTEUR = 750;
 
 	private Point position;

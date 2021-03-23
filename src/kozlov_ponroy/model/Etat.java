@@ -36,6 +36,7 @@ public class Etat {
 	public static final Random RANDOM = new Random();
 
 	public static final int HAUTEUR = 400;
+
 	public static final int LARGEUR = 800;
 
 	public final static int HORIZON = 200;

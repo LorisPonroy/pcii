@@ -22,14 +22,14 @@ public abstract class DecorPreview {
 		this.y = r.nextInt(Etat.HORIZON) - hauteur;
 		if(isGoingLeft) {
 			this.x = Etat.LARGEUR;
-			this.speed = - r.nextInt(5);
+			this.speed = - r.nextInt(5) + 1;
 		} else {
 			this.x = -largeur;
-			this.speed = r.nextInt(5);
+			this.speed = r.nextInt(5) + 1;
 		}
 	}
 
 	public String toString() {
-		return getClass().descriptorString() + " x: " + x + " ; y : " + y;
+		return getClass().getName() + " x: " + x + " ; y : " + y;
 	}
 }
