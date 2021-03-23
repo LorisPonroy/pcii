@@ -39,7 +39,7 @@ public class Vaisseau implements IAffichage {
 		} else graphics2D.drawImage(playerCenterImage, etat.getPlayerX() - etat.getTailleJoueur() / 4, etat.getPlayerY() - etat.getTailleJoueur(), etat.getTailleJoueur() / 2, etat.getTailleJoueur(), null);	
 		graphics2D.setColor(Color.red);
 		//Hitbox
-		graphics2D.drawRect(etat.getPlayerX(), etat.getPlayerY(), 2, 2);
+		graphics2D.drawRect(etat.getPlayerX(), etat.getPlayerY(), 1, 1);
 	}
 
 	@Override
