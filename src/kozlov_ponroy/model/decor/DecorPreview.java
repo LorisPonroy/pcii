@@ -3,25 +3,33 @@ package kozlov_ponroy.model.decor;
 import java.awt.Image;
 import java.util.Random;
 
-public class DecorPreview {
+import kozlov_ponroy.model.Etat;
+
+public abstract class DecorPreview {
 	
 	public int x, y;
 	public final int speed;
 	public final Image img;
 	public final int hauteur, largeur;
-	public final boolean isLeft;
+	public final boolean isGoingLeft;
 	
-	public DecorPreview(Image img, int x, int y, int largeur, int hauteur, int speed) {
+	public DecorPreview(Image img, int largeur, int hauteur, boolean isGoingLeft) {
 		this.img = img;
-		this.x = x;
-		this.y = y;
 		this.largeur = largeur;
 		this.hauteur = hauteur;
-		this.speed = speed;
-		isLeft = new Random().nextBoolean();
+		this.isGoingLeft = isGoingLeft;
+		Random r = new Random();
+		this.y = r.nextInt(Etat.HORIZON) - hauteur;
+		if(isGoingLeft) {
+			this.x = Etat.LARGEUR;
+			this.speed = - r.nextInt(5);
+		} else {
+			this.x = -largeur;
+			this.speed = r.nextInt(5);
+		}
 	}
 
 	public String toString() {
-		return "x: " + x + " ; y : " + y;
+		return getClass().descriptorString() + " x: " + x + " ; y : " + y;
 	}
 }
