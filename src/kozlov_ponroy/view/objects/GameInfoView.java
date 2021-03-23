@@ -5,9 +5,9 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 import kozlov_ponroy.model.Etat;
-import kozlov_ponroy.view.IAffichage;
+import kozlov_ponroy.view.IView;
 
-public class GameInfoView implements IAffichage {
+public class GameInfoView implements IView {
 	
 	final Etat etat;
 	

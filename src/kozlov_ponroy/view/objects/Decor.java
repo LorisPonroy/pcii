@@ -6,9 +6,9 @@ import java.awt.Graphics2D;
 
 import kozlov_ponroy.model.Etat;
 import kozlov_ponroy.model.decor.DecorPreview;
-import kozlov_ponroy.view.IAffichage;
+import kozlov_ponroy.view.IView;
 
-public class Decor implements IAffichage {
+public class Decor implements IView {
 
 	private Graphics2D graphics2D;
 	final Etat etat;

@@ -2,7 +2,7 @@ package kozlov_ponroy.model.route;
 
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.Random;
+import java.util.List;
 
 import kozlov_ponroy.model.Etat;
 
@@ -14,20 +14,15 @@ import kozlov_ponroy.model.Etat;
 public class Route {
 
 	private ArrayList<Point> points;
-
-	private ArrayList<Obstacle> obstacles;
-	private final int X_MAX, Y_MAX;
-	private Random random;
+	private ArrayList<Oil> oils;
 	private Point cp;
 	final Etat etat;
 
 	public Route(Etat etat){
 		this.etat = etat;
-		X_MAX = Etat.LARGEUR;
-		Y_MAX = Etat.HAUTEUR;
 		points = new ArrayList<>();
-		obstacles = new ArrayList<>();
-		random = new Random();
+		oils = new ArrayList<>();
+
 		//On genere les premiers points de la route :
 		points.add(new Point(400, Etat.HORIZON));
 		points.add(new Point(400, Etat.HORIZON+800));
@@ -39,12 +34,17 @@ public class Route {
 	 */
 	private void ajouterPoint() {
 		//La variable x est genere aleatoirement en fonction du dernier point en x
-		int x = lastX() + random.nextInt(75) - 75 / 2;
-		if(x>X_MAX || x<0) {
-			x = 400;
+		int x = lastX() + Etat.getRandom(100) - 100 / 2;
+		if(x>Etat.LARGEUR || x<0) {
+			x = lastX();
 		}
 		Point p = new Point(x, Etat.HORIZON);
 		points.add(p);
+
+		//Il y a une faible chance de générer également une flaque d'huile à ce point
+		if(Etat.getRandom(100)<5) {
+			generateOil();
+		}
 	}
 
 	/**
@@ -65,8 +65,17 @@ public class Route {
 		//avancer le checkpoint
 		avancerCP();
 		//avancer les obstacles
-		for(Obstacle o : obstacles) {
+		for(Oil o : oils) {
 			o.setY(o.getY() + 1);
+		}
+
+		//détection des collisions
+		boolean isInCollision = false;
+		for(Oil o : oils) {
+			isInCollision = isInCollision || o.isInCollision(etat.getPlayerX(), etat.getPlayerY());
+		}
+		if(isInCollision) {
+			etat.doABarrelRoll();
 		}
 	}
 
@@ -79,10 +88,10 @@ public class Route {
 		}
 	}
 
-	public void genererObstacle() {
-		int x = lastX() + (int) (Math.random() * 600) - 600 / 2;
+	public void generateOil() {
+		int x = lastX() + Etat.getRandom(Etat.LARGEUR_ROUTE) - Etat.LARGEUR_ROUTE/2;
 		int y = 0;
-		obstacles.add(new Obstacle(x, y));
+		oils.add(new Oil(x, y));
 	}
 
 	public Point getCheckPoint() {
@@ -93,25 +102,25 @@ public class Route {
 	 * Renvoie la position du joueur au départ
 	 * @return
 	 */
-	public int getFirstPosXPlayer() {
-		return points.get(1).x;
-	}
+	//public int getFirstPosXPlayer() {
+	//return points.get(1).x;
+	//}
 
-	public ArrayList<Obstacle> getObstacles() {
-		return obstacles;
+	public ArrayList<Oil> getOils() {
+		return oils;
 	}
 
 	/**
-	 * Renvoie tous les points qui constitue la route
-	 * @return
+	 * Renvoie la liste des points qui forment la route
+	 * @return List<Point>
 	 */
-	public ArrayList<Point> getPoints() {
+	public List<Point> getPoints() {
 		ArrayList<Point> temp = new ArrayList<>();
 		for (int i=0;i<points.size();i++) {
 			Point p = points.get(i);
 			temp.add(new Point(p.x, p.y));
 		}
-		return temp;
+		return points;
 	}
 
 	private Point lastPoint() {
@@ -120,9 +129,5 @@ public class Route {
 
 	private int lastX() {
 		return lastPoint().x;
-	}
-
-	private int lastY() {
-		return lastPoint().y;
 	}
 }
