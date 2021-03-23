@@ -31,7 +31,7 @@ import kozlov_ponroy.view.objects.Vaisseau;
 
 public class Etat {
 	//Taille de l'ecran
-	public static final int HAUTEUR = 400;
+	public static final int HAUTEUR = 500;
 	public static final int LARGEUR = 800;
 
 	public final static int HORIZON = 200;
