@@ -19,7 +19,7 @@ import kozlov_ponroy.view.IView;
 import kozlov_ponroy.view.objects.Decor;
 import kozlov_ponroy.view.objects.GameInfoView;
 import kozlov_ponroy.view.objects.Horizon;
-import kozlov_ponroy.view.objects.OilView;
+import kozlov_ponroy.view.objects.ObstacleView;
 import kozlov_ponroy.view.objects.PlayerView;
 import kozlov_ponroy.view.objects.RouteView;
 
@@ -32,9 +32,7 @@ import kozlov_ponroy.view.objects.RouteView;
 
 public class Etat {
 	private static final int CONSTANT_SPEED = 100;
-
-	public static final Random RANDOM = new Random();
-
+	
 	public static final int HAUTEUR = 500;
 
 	public static final int LARGEUR = 800;
@@ -42,15 +40,6 @@ public class Etat {
 	public final static int HORIZON = 200;
 	public final static int LARGEUR_ROUTE = 500;
 
-	public static int getRandom(int i) {
-		return RANDOM.nextInt(i);
-	}
-	public static int transformePositionToPerspective(int x,int y) {
-		double centre = 400;
-		double a = (x - centre) / (800.0 - HORIZON);
-		double b = x - a*800.0;
-		return (int) Math.round(a * y + b);
-	}
 	private final Affichage affichage;
 	private Route route;
 	private final Player player;
@@ -114,10 +103,6 @@ public class Etat {
 		return facteurVitesse;
 	}
 
-	public int getHauteurJoueur() {
-		return player.HAUTEUR;
-	}
-
 	public int getHorizon() {
 		return HORIZON;
 	}
@@ -158,7 +143,7 @@ public class Etat {
 	 * Joueur
 	 */
 	public int getTailleJoueur() {
-		return player.TAILLE;
+		return player.HAUTEUR;
 	}
 
 	public int getVitesse() {
@@ -172,7 +157,7 @@ public class Etat {
 		RouteView routeView = new RouteView(this);
 		Decor decor = new Decor(this);
 		GameInfoView gameInfo = new GameInfoView(this);
-		OilView obstacleView = new OilView(this);
+		ObstacleView obstacleView = new ObstacleView(this);
 		views.add(routeView);
 		views.add(obstacleView);
 		views.add(decor);
@@ -240,5 +225,20 @@ public class Etat {
 			time += 30000;
 		}
 		generationDecor.move();
+	}
+	
+	public int getRandom(int i) {
+		return new Random().nextInt(i);
+	}
+	
+	public int transformePositionToPerspective(int x,int y) {
+		double centre = 400;
+		double a = (x - centre) / (800.0 - HORIZON);
+		double b = x - a*800.0;
+		return (int) Math.round(a * y + b);
+	}
+	
+	public Player getPlayer() {
+		return player;
 	}
 }

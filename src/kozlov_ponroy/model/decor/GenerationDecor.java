@@ -11,21 +11,35 @@ import kozlov_ponroy.model.decor.objects.OiseauGauche;
 
 public class GenerationDecor {
 	
+	private enum EDecor {
+		OISEAU_GAUCHE, OISEAU_DROITE, NUAGE;
+		
+		public DecorPreview getDecor() {
+			switch(this) {
+				case OISEAU_GAUCHE:
+					return new OiseauGauche();
+				case OISEAU_DROITE:
+					return new OiseauDroite();
+				case NUAGE:
+					return new Nuage();
+			}
+			return null;
+		}
+	}
+	
 	ArrayList<DecorPreview> liste;
-	final int yMax;
 	final int DECOR_MAX = 5;
 	
 	public GenerationDecor() {
 		liste = new ArrayList<>();
-		this.yMax = Etat.HORIZON;
 		init();
 	}
 	
 	public void move() {
 		ArrayList<DecorPreview> toDelete = new ArrayList<>();
-		System.out.println("----------------------------");
+		//System.out.println("----------------------------");
 		for(DecorPreview d: liste) {
-			System.out.println(d.toString());
+			//System.out.println(d.toString());
 			d.x += d.speed;
 			if(estEnDehors(d))
 				toDelete.add(d);
@@ -51,18 +65,7 @@ public class GenerationDecor {
 	}
 	
 	private void addRandomDecor() {
-		Random r = new Random();
-		DecorPreview decor = null;
-		int tmp = r.nextInt(2);
-		if(tmp == 0) {
-			decor = new Nuage();
-		} else {
-			if(r.nextBoolean()) {
-				decor = new OiseauGauche();
-			} else decor = new OiseauDroite();
-		}
-		liste.add(decor);
-		//System.out.println(decor.toString());
+		liste.add(EDecor.values()[new Random().nextInt(EDecor.values().length)].getDecor());
 	}
 
 }

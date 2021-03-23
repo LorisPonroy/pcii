@@ -7,11 +7,12 @@ import java.awt.Image;
 import java.awt.Toolkit;
 
 import kozlov_ponroy.model.Etat;
+import kozlov_ponroy.model.state.Player;
 import kozlov_ponroy.view.IView;
 
 public class PlayerView implements IView {
 	public enum PlayerState{
-		NORMAL(50,100),ROLL_LEFT(100,100),ROLL_RIGTH(100,100);
+		NORMAL(Player.LARGEUR,Player.HAUTEUR),ROLL_LEFT(Player.HAUTEUR,Player.HAUTEUR),ROLL_RIGTH(Player.HAUTEUR,Player.HAUTEUR);
 		public int imageWidth;
 		public int imageHeigth;
 
@@ -25,44 +26,39 @@ public class PlayerView implements IView {
 	final Etat etat;
 	final Color ombre;
 	private Graphics2D graphics2D;
+	final Image left, right, normal, roll_1, roll_2;
 
 	public PlayerView(Etat etat) {
 		this.etat = etat;
 		ombre = new Color(0,0,0,170);
+		left = Toolkit.getDefaultToolkit().getImage("./ressources/playertleft.png");
+		right = Toolkit.getDefaultToolkit().getImage("./ressources/playertright.png");
+		normal = Toolkit.getDefaultToolkit().getImage("./ressources/playert.png");
+		roll_1 = Toolkit.getDefaultToolkit().getImage("./ressources/player_roll.png");
+		roll_2 = Toolkit.getDefaultToolkit().getImage("./ressources/player_roll_2.png");
 	}
 
 	@Override
 	public void paint(Graphics g) {
-		graphics2D.setColor(ombre);
-		graphics2D.fillOval(etat.getPlayerX(), etat.getHauteurJoueur() + 100, etat.getTailleJoueur(), 20);
+		//TODO: Faire l'ombre de la moto
 		switch (state) {
 		case NORMAL:
 			if(etat.isLeft()) {
-				Image playerImage = Toolkit.getDefaultToolkit().getImage("./ressources/playertleft.png");
-				graphics2D.drawImage(playerImage, etat.getPlayerX() - etat.getTailleJoueur() / 4, etat.getPlayerY() - etat.getTailleJoueur(), state.imageWidth, state.imageHeigth, null);
+				graphics2D.drawImage(left, etat.getPlayerX() - Player.LARGEUR / 2, etat.getPlayerY() - Player.HAUTEUR, state.imageWidth, state.imageHeigth, null);
 			} else if(etat.isRight()) {
-				Image playerImage = Toolkit.getDefaultToolkit().getImage("./ressources/playertright.png");
-				graphics2D.drawImage(playerImage, etat.getPlayerX() - etat.getTailleJoueur() / 4, etat.getPlayerY() - etat.getTailleJoueur(), state.imageWidth, state.imageHeigth, null);
+				graphics2D.drawImage(right, etat.getPlayerX() - Player.LARGEUR / 2, etat.getPlayerY() - Player.HAUTEUR, state.imageWidth, state.imageHeigth, null);
 			} else {
-				Image playerImage = Toolkit.getDefaultToolkit().getImage("./ressources/playert.png");
-				graphics2D.drawImage(playerImage, etat.getPlayerX() - etat.getTailleJoueur() / 4, etat.getPlayerY() - etat.getTailleJoueur(), state.imageWidth, state.imageHeigth, null);
+				graphics2D.drawImage(normal, etat.getPlayerX() - Player.LARGEUR / 2, etat.getPlayerY() - Player.HAUTEUR, state.imageWidth, state.imageHeigth, null);
 			}
 			break;
 		case ROLL_LEFT:
-			Image playerImage = Toolkit.getDefaultToolkit().getImage("./ressources/player_roll.png");
-			graphics2D.drawImage(playerImage, etat.getPlayerX() - etat.getTailleJoueur() / 4, etat.getPlayerY() - etat.getTailleJoueur(), state.imageWidth, state.imageHeigth, null);
+			graphics2D.drawImage(roll_1, etat.getPlayerX() - etat.getTailleJoueur() / 4, etat.getPlayerY() - etat.getTailleJoueur(), state.imageWidth, state.imageHeigth, null);
 			break;
-		case ROLL_RIGTH:
-			Image playerImage2 = Toolkit.getDefaultToolkit().getImage("./ressources/player_roll_2.png");
-			graphics2D.drawImage(playerImage2, etat.getPlayerX() - etat.getTailleJoueur() / 4, etat.getPlayerY() - etat.getTailleJoueur(), state.imageWidth, state.imageHeigth, null);
+		case ROLL_RIGTH: 
+			graphics2D.drawImage(roll_2, etat.getPlayerX() - etat.getTailleJoueur() / 4, etat.getPlayerY() - etat.getTailleJoueur(), state.imageWidth, state.imageHeigth, null);
 			break;
-		default:
-			break;
-		}
-
-		//Hitbox
-		graphics2D.setColor(Color.red);
-		graphics2D.drawRect(etat.getPlayerX(), etat.getPlayerY(), 2, 2);
+		}		
+		graphics2D.drawRect(etat.getPlayerX() - Player.LARGEUR / 2, etat.getPlayerY() - Player.HAUTEUR / 4, Player.LARGEUR, Player.HAUTEUR / 4);
 	}
 
 	@Override

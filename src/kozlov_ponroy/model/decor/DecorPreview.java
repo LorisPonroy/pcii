@@ -11,13 +11,11 @@ public abstract class DecorPreview {
 	public final int speed;
 	public final Image img;
 	public final int hauteur, largeur;
-	public final boolean isGoingLeft;
 	
 	public DecorPreview(Image img, int largeur, int hauteur, boolean isGoingLeft) {
 		this.img = img;
 		this.largeur = largeur;
 		this.hauteur = hauteur;
-		this.isGoingLeft = isGoingLeft;
 		Random r = new Random();
 		this.y = r.nextInt(Etat.HORIZON) - hauteur;
 		if(isGoingLeft) {

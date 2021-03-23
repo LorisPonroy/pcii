@@ -4,8 +4,8 @@ import java.awt.Point;
 
 public class Player {
 
-	public final int TAILLE = 100;
-	public final int HAUTEUR = 750;
+	public final static int HAUTEUR = 100;
+	public final static int LARGEUR = 50;
 
 	private Point position;
 
@@ -17,9 +17,9 @@ public class Player {
 		position.x += deltaX;
 	}
 
-	public void addY(int deltaY) {
+	/*public void addY(int deltaY) {
 		position.y += deltaY;
-	}
+	}*/
 
 	public Point getPosition() {
 		return position;

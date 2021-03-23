@@ -23,7 +23,7 @@ public class Move {
 	 * @param deltaX
 	 */
 	private void addPositionX(int deltaX) {
-		if(player.getX() + deltaX < Etat.LARGEUR && player.getX() + deltaX > - player.TAILLE / 2) {
+		if(player.getX() + deltaX < Etat.LARGEUR && player.getX() + deltaX > - player.HAUTEUR / 2) {
 			player.addX((int) (deltaX * (1.0 / etat.getFacteurVitesse())) + 1);
 		}
 	}
@@ -32,11 +32,11 @@ public class Move {
 	 * Vérifie la position du joueur sur l'axe vertical et ajoute deltaY à sa position Y
 	 * @param deltaY
 	 */
-	private void addPositionY(int deltaY) {
+	/*private void addPositionY(int deltaY) {
 		if(player.getY() + deltaY < Etat.HAUTEUR && player.getY() + deltaY > Etat.HORIZON + player.TAILLE / 2) {
 			player.addY(deltaY);
 		}
-	}
+	}*/
 
 	public void doMove() {
 		if(left ^ right) {
@@ -70,7 +70,7 @@ public class Move {
 	}
 
 	private void minusPositionX(int deltaX) {
-		if(player.getX() + deltaX < Etat.LARGEUR && player.getX() + deltaX > - player.TAILLE / 2) {
+		if(player.getX() + deltaX < Etat.LARGEUR && player.getX() + deltaX > - player.HAUTEUR / 2) {
 			player.addX((int) (deltaX * (1.0 / etat.getFacteurVitesse())) - 1);
 		}
 	}
