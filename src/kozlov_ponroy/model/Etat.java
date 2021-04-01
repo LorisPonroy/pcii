@@ -8,6 +8,8 @@ import java.util.Random;
 import kozlov_ponroy.control.KeyboardController;
 import kozlov_ponroy.model.decor.DecorPreview;
 import kozlov_ponroy.model.decor.GenerationDecor;
+import kozlov_ponroy.model.obstacle.GenerationObstacle;
+import kozlov_ponroy.model.obstacle.ObstaclePreview;
 import kozlov_ponroy.model.route.Route;
 import kozlov_ponroy.model.state.Move;
 import kozlov_ponroy.model.state.Player;
@@ -24,7 +26,7 @@ import kozlov_ponroy.view.objects.PlayerView;
 import kozlov_ponroy.view.objects.RouteView;
 
 /**
- * Gère l'état de notre MVC
+ * Gï¿½re l'ï¿½tat de notre MVC
  *
  * @author Asey
  *
@@ -52,6 +54,7 @@ public class Etat {
 	private boolean cpCross = false, nvCP = true;
 
 	final GenerationDecor generationDecor;
+	final GenerationObstacle generationObstacles;
 
 	private int posDecor = 0;
 
@@ -64,7 +67,7 @@ public class Etat {
 		controller.setMove(move);
 		initAffichage();
 		generationDecor = new GenerationDecor();
-
+		generationObstacles = new GenerationObstacle(this);
 
 		new MouvementVehicule(this).start();
 		new MouvementRoute(this).start();
@@ -74,6 +77,7 @@ public class Etat {
 
 	public void avancerRoute() {
 		route.avancer();
+		generationObstacles.move();
 		if(getCheckPoint().y > player.getY()) {
 			cpCross = true;
 		} else {
@@ -128,7 +132,7 @@ public class Etat {
 	 */
 
 	/**
-	 * Renvoie les points de la route dans le sens inversé
+	 * Renvoie les points de la route dans le sens inversï¿½
 	 * @return
 	 */
 	public List<Point> getRoutePoints(){
@@ -240,5 +244,17 @@ public class Etat {
 	
 	public Player getPlayer() {
 		return player;
+	}
+	
+	public ArrayList<ObstaclePreview> getObstacles(){
+		return generationObstacles.getObstacles();
+	}
+	
+	/**
+	 * Fonction appeler lorsque le joueur fait une collision avec un obstacle
+	 */
+	public void collide() {
+		System.out.println("Collide");
+		facteurVitesse += 0.1;
 	}
 }

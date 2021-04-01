@@ -27,16 +27,18 @@ public class GenerationDecor {
 		}
 	}
 	
-	ArrayList<DecorPreview> liste;
+	private ArrayList<DecorPreview> liste;
+	private ArrayList<DecorPreview> toDelete;
 	final int DECOR_MAX = 5;
 	
 	public GenerationDecor() {
 		liste = new ArrayList<>();
+		toDelete = new ArrayList<>();
 		init();
 	}
 	
 	public void move() {
-		ArrayList<DecorPreview> toDelete = new ArrayList<>();
+		toDelete.clear();
 		//System.out.println("----------------------------");
 		for(DecorPreview d: liste) {
 			//System.out.println(d.toString());
