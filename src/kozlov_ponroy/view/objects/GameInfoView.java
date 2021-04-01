@@ -1,16 +1,23 @@
 package kozlov_ponroy.view.objects;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Toolkit;
 
 import kozlov_ponroy.model.Etat;
 import kozlov_ponroy.view.IView;
 
 public class GameInfoView implements IView {
-	
+
+	private final static Image compteur = Toolkit.getDefaultToolkit().getImage("./ressources/compteur.png");
+	private final static int TAILLE_COMPTEUR = 100;
+
+	private Graphics2D graphics2D;
 	final Etat etat;
-	
+
 	public GameInfoView(Etat etat) {
 		this.etat = etat;
 	}
@@ -18,12 +25,23 @@ public class GameInfoView implements IView {
 	@Override
 	public void paint(Graphics g) {
 		g.setColor(Color.black);
+		graphics2D.drawImage(compteur, Etat.LARGEUR-TAILLE_COMPTEUR, Etat.HAUTEUR-TAILLE_COMPTEUR, TAILLE_COMPTEUR, TAILLE_COMPTEUR, null);
 		g.drawString(etat.getScore(), 20, 20);
-		g.drawString("Vitesse : " + etat.getVitesse() + " km/h", 20, 60);
+		g.setFont(new Font("TimesRoman", Font.PLAIN, 25));
+		if(etat.getVitesse()<100) {
+			g.setColor(Color.GREEN);
+		} else if(etat.getVitesse()<200) {
+			g.setColor(Color.ORANGE);
+		} else {
+			g.setColor(Color.RED);
+		}
+		g.drawString(etat.getVitesse() + "",Etat.LARGEUR-TAILLE_COMPTEUR+30, Etat.HAUTEUR-TAILLE_COMPTEUR/2 + 5);
 		g.drawString(etat.tempsRestant(), 20, 100);
 	}
-	
+
 	@Override
-	public void setGraphics2D(Graphics2D g2d) {}
+	public void setGraphics2D(Graphics2D g2d) {
+		graphics2D = g2d;
+	}
 
 }

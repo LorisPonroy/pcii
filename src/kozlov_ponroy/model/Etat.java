@@ -34,7 +34,7 @@ import kozlov_ponroy.view.objects.RouteView;
 
 public class Etat {
 	private static final int CONSTANT_SPEED = 100;
-	
+
 	public static final int HAUTEUR = 500;
 
 	public static final int LARGEUR = 800;
@@ -85,6 +85,14 @@ public class Etat {
 		}
 	}
 
+	/**
+	 * Fonction appeler lorsque le joueur fait une collision avec un obstacle
+	 */
+	public void collide() {
+		System.out.println("Collide");
+		facteurVitesse += 0.1;
+	}
+
 	public void doABarrelRoll() {
 		facteurVitesse *= 1.01;
 		affichage.doABarrelRoll();
@@ -111,9 +119,21 @@ public class Etat {
 		return HORIZON;
 	}
 
+	public ArrayList<ObstaclePreview> getObstacles(){
+		return generationObstacles.getObstacles();
+	}
+
+	public Player getPlayer() {
+		return player;
+	}
+
 	public int getPlayerX() {
 		return player.getX();
 	}
+
+	/*
+	 * FIN Joueur
+	 */
 
 	public int getPlayerY() {
 		return player.getY();
@@ -123,13 +143,13 @@ public class Etat {
 		return posDecor;
 	}
 
+	public int getRandom(int i) {
+		return new Random().nextInt(i);
+	}
+
 	public Route getRoute() {
 		return route;
 	}
-
-	/*
-	 * FIN Joueur
-	 */
 
 	/**
 	 * Renvoie les points de la route dans le sens invers�
@@ -147,7 +167,7 @@ public class Etat {
 	 * Joueur
 	 */
 	public int getTailleJoueur() {
-		return player.HAUTEUR;
+		return Player.HAUTEUR;
 	}
 
 	public int getVitesse() {
@@ -230,31 +250,11 @@ public class Etat {
 		}
 		generationDecor.move();
 	}
-	
-	public int getRandom(int i) {
-		return new Random().nextInt(i);
-	}
-	
+
 	public int transformePositionToPerspective(int x,int y) {
 		double centre = 400;
 		double a = (x - centre) / (800.0 - HORIZON);
 		double b = x - a*800.0;
 		return (int) Math.round(a * y + b);
-	}
-	
-	public Player getPlayer() {
-		return player;
-	}
-	
-	public ArrayList<ObstaclePreview> getObstacles(){
-		return generationObstacles.getObstacles();
-	}
-	
-	/**
-	 * Fonction appeler lorsque le joueur fait une collision avec un obstacle
-	 */
-	public void collide() {
-		System.out.println("Collide");
-		facteurVitesse += 0.1;
 	}
 }

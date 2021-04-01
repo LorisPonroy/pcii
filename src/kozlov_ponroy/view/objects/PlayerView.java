@@ -33,7 +33,7 @@ public class PlayerView implements IView {
 		ombre = new Color(0,0,0,170);
 		left = Toolkit.getDefaultToolkit().getImage("./ressources/playertleft.png");
 		right = Toolkit.getDefaultToolkit().getImage("./ressources/playertright.png");
-		normal = Toolkit.getDefaultToolkit().getImage("./ressources/playert.png");
+		normal = Toolkit.getDefaultToolkit().getImage("./ressources/player.png");
 		roll_1 = Toolkit.getDefaultToolkit().getImage("./ressources/player_roll.png");
 		roll_2 = Toolkit.getDefaultToolkit().getImage("./ressources/player_roll_2.png");
 	}
@@ -54,10 +54,10 @@ public class PlayerView implements IView {
 		case ROLL_LEFT:
 			graphics2D.drawImage(roll_1, etat.getPlayerX() - etat.getTailleJoueur() / 4, etat.getPlayerY() - etat.getTailleJoueur(), state.imageWidth, state.imageHeigth, null);
 			break;
-		case ROLL_RIGTH: 
+		case ROLL_RIGTH:
 			graphics2D.drawImage(roll_2, etat.getPlayerX() - etat.getTailleJoueur() / 4, etat.getPlayerY() - etat.getTailleJoueur(), state.imageWidth, state.imageHeigth, null);
 			break;
-		}		
+		}
 		graphics2D.drawRect(etat.getPlayerX() - Player.LARGEUR / 2, etat.getPlayerY() - Player.HAUTEUR / 4, Player.LARGEUR, Player.HAUTEUR / 4);
 	}
 
