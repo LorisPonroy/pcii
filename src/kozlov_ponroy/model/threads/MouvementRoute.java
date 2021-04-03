@@ -12,7 +12,7 @@ public class MouvementRoute extends Thread {
 
 	@Override
 	public void run() {
-		while(true) {
+		while(!etat.isGameOver()) {
 			etat.avancerRoute();
 			try {
 				Thread.sleep((long)(20 * etat.getFacteurVitesse()));

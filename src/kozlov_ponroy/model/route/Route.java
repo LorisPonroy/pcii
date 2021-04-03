@@ -8,7 +8,7 @@ import java.util.Random;
 import kozlov_ponroy.model.Etat;
 
 /**
- * Création de la route
+ * Crï¿½ation de la route
  * @author Asey
  *
  */
@@ -17,6 +17,7 @@ public class Route {
 	private ArrayList<Point> points;
 	private Point cp;
 	final Etat etat;
+	public static final int MOVE = 3;
 
 	public Route(Etat etat){
 		this.etat = etat;
@@ -40,7 +41,7 @@ public class Route {
 		Point p = new Point(x, Etat.HORIZON);
 		points.add(p);
 
-		//Il y a une faible chance de générer également une flaque d'huile à ce point
+		//Il y a une faible chance de gï¿½nï¿½rer ï¿½galement une flaque d'huile ï¿½ ce point
 		/*if(Etat.getRandom(100)<5) {
 			generateOil();
 		}*/
@@ -59,7 +60,7 @@ public class Route {
 		}
 
 		for (int i = 0;i<points.size();i++) {
-			points.get(i).y+=5;
+			points.get(i).y+=MOVE;
 		}
 		//avancer le checkpoint
 		avancerCP();
@@ -79,7 +80,7 @@ public class Route {
 	}
 
 	/** TODO: refaire la fonction pour renvoyer la position X pour le joueur
-	 * Renvoie la position du joueur au départ
+	 * Renvoie la position du joueur au dï¿½part
 	 * @return
 	 */
 	//public int getFirstPosXPlayer() {

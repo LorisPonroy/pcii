@@ -4,8 +4,8 @@ import kozlov_ponroy.model.Etat;
 
 public class Temps extends Thread {
 
-	private final Etat etat;
 	public static int TIME = 100;
+	private final Etat etat;
 
 	public Temps(Etat etat) {
 		this.etat = etat;
@@ -13,7 +13,7 @@ public class Temps extends Thread {
 
 	@Override
 	public void run() {
-		while(true) {
+		while(!etat.isGameOver()) {
 			etat.time();
 			try {
 				Thread.sleep(TIME);

@@ -13,5 +13,11 @@ public class Oil extends ObstaclePreview {
 	public Oil() {
 		super(img, LARGEUR);
 	}
+	
+	@Override
+	public boolean isMoto() {
+		return false;
+	}
+
 
 }
