@@ -103,8 +103,7 @@ public class Etat {
 	}
 
 	public Point getCheckPoint() {
-		Point tmp = route.getCheckPoint();
-		return new Point(tmp.x, HAUTEUR - tmp.y);
+		return route.getCheckPoint();
 	}
 
 	public List<DecorPreview> getDecors() {

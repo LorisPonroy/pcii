@@ -60,8 +60,6 @@ public class RouteView implements IView {
 
 		g.setColor(Color.DARK_GRAY);
 		g.fillPolygon(pointsX, pointsY, compteur);
-
-		Graphics2D g2 = (Graphics2D) g;
 		graphics2D.setStroke(dashed);
 		graphics2D.setColor(Color.white);
 		for(int i =0;i<points.size()-1;i++) {
@@ -69,12 +67,14 @@ public class RouteView implements IView {
 			Point p2 = points.get(i+1);
 			int p1X = etat.transformePositionToPerspective(p1.x, p1.y);
 			int p2X = etat.transformePositionToPerspective(p2.x, p2.y);
-			g2.draw(new Line2D.Float(p1X, p1.y, p2X, p2.y));
+			graphics2D.draw(new Line2D.Float(p1X, p1.y, p2X, p2.y));
 		}
 		Point p1 = points.get(points.size()-1);
 		int p1X = etat.transformePositionToPerspective(p1.x, p1.y);
-		g2.draw(new Line2D.Float(p1X, p1.y, 400, Etat.HORIZON));
-
+		graphics2D.draw(new Line2D.Float(p1X, p1.y, 400, Etat.HORIZON));
+		
+		Point cp = etat.getCheckPoint();
+		graphics2D.fillRect(cp.x, cp.y, 100, 10); //trouver les points avec la route jsp lequel
 	}
 
 	@Override

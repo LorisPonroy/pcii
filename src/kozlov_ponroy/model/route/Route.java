@@ -18,6 +18,7 @@ public class Route {
 	private Point cp;
 	final Etat etat;
 	public static final int MOVE = 3;
+	private int initialYCheckPoint;
 
 	public Route(Etat etat){
 		this.etat = etat;
@@ -26,7 +27,8 @@ public class Route {
 		//On genere les premiers points de la route :
 		points.add(new Point(400, Etat.HORIZON));
 		points.add(new Point(400, Etat.HORIZON+800));
-		cp = (Point) lastPoint().clone();
+		initialYCheckPoint = -500;
+		cp = new Point(Etat.LARGEUR/2, initialYCheckPoint);
 	}
 
 	/**
@@ -67,10 +69,11 @@ public class Route {
 	}
 
 	private void avancerCP() {
-		cp.y-=5;
-		if(cp.y <= -5000) {
-			cp = (Point) lastPoint().clone();
-			cp.y-=5;
+		cp.y+=MOVE;
+		if(cp.y > Etat.HAUTEUR) {
+			initialYCheckPoint -= 500; //a chaque fois le cp met plus de temps à apparaitre
+			System.out.println("Initial checkout: " + initialYCheckPoint);
+			cp = new Point(cp.x, initialYCheckPoint);
 			etat.nouveauCP();
 		}
 	}
