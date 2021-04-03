@@ -193,7 +193,7 @@ public class Etat {
 	}
 
 	public boolean isGameOver() {
-		return facteurVitesse > 100;
+		return time < 0;
 	}
 
 	public boolean isLeft() {

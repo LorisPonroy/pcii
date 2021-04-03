@@ -37,6 +37,9 @@ public class GameInfoView implements IView {
 		}
 		g.drawString(etat.getVitesse() + "",Etat.LARGEUR-TAILLE_COMPTEUR+30, Etat.HAUTEUR-TAILLE_COMPTEUR/2 + 5);
 		g.drawString(etat.tempsRestant(), 20, 100);
+		if (etat.isGameOver()) {
+			g.drawString("GAME OVER", Etat.LARGEUR/2, Etat.HAUTEUR/2);
+		}
 	}
 
 	@Override
