@@ -1,6 +1,7 @@
 package kozlov_ponroy.model.obstacle;
 
 import java.awt.Image;
+import java.util.Random;
 
 import kozlov_ponroy.model.Etat;
 import kozlov_ponroy.model.state.Player;
@@ -11,11 +12,14 @@ public abstract class ObstaclePreview {
 	public final Image img;
 	public final int speed = 3;
 	public final int largeur;
+	final Random random;
+	final int MARGE_RANDOM = 300;
 	
 	public ObstaclePreview(Image img, int largeur) {
 		this.img = img;
-		this.y1 = y2 = 0;
-		this.x1 = x2 = x = Etat.LARGEUR / 2;
+		this.random = new Random();
+		this.y1 = y2 = -random.nextInt(500);
+		this.x = Etat.LARGEUR / 2 + random.nextInt(MARGE_RANDOM) - MARGE_RANDOM / 2;
 		this.largeur = largeur;
 	}
 	
@@ -23,7 +27,7 @@ public abstract class ObstaclePreview {
 		y1 += speed;
 		x1 = etat.transformePositionToPerspective(x,y1);
 		x2 = etat.transformePositionToPerspective(x + largeur,y1);
-		y2 = x2 - x + y1;
+		y2 = x2 - x1 + y1;
 		collide(etat, etat.getPlayer());
 	}
 	
