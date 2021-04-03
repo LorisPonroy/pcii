@@ -2,6 +2,7 @@ package kozlov_ponroy.model.obstacle.objects;
 
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.util.Random;
 
 import kozlov_ponroy.model.obstacle.ObstaclePreview;
 
@@ -13,7 +14,7 @@ public class Adversaire extends ObstaclePreview {
 
 	public Adversaire() {
 		super(img, LARGEUR);
-		switch((int)Math.random()*4) {
+		switch(new Random().nextInt(3)) {
 		case 0:
 			img = Toolkit.getDefaultToolkit().getImage("./ressources/player_red.png");
 			break;
@@ -23,9 +24,8 @@ public class Adversaire extends ObstaclePreview {
 		case 2:
 			img = Toolkit.getDefaultToolkit().getImage("./ressources/player_green.png");
 			break;
-		case 3:
-			break;
 		default:
+			System.err.println("Moto inconnu !");
 			break;
 		}
 
