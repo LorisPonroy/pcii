@@ -3,6 +3,7 @@ package kozlov_ponroy.view;
 import java.awt.Button;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -20,21 +21,16 @@ import kozlov_ponroy.model.Etat;
 
 public class AffichageMenu extends JPanel{
 
-	public static final int HAUTEUR = 200;
-	public static final int LARGEUR = 200;
+	public static final int HAUTEUR = 500;
+	public static final int LARGEUR = 800;
 
 	private JFrame fenetre;
-
-	private final Image titre;
 
 	public AffichageMenu(JFrame fenetre) {
 		this.fenetre = fenetre;
 		setPreferredSize(new Dimension(LARGEUR, HAUTEUR));
 		setFocusable(true);
-
-		titre = Toolkit.getDefaultToolkit().getImage("./ressources/nuage_1.png");
 		addButtons();
-
 		fenetre.addWindowListener( new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent we) {
@@ -46,7 +42,8 @@ public class AffichageMenu extends JPanel{
 	public void addButtons() {
 		Button playButton = new Button();
 		playButton.setLabel("Play");
-		playButton.setBackground(Color.red);
+		playButton.setBackground(Color.WHITE);
+		playButton.setFont(new Font("TimesRoman", Font.PLAIN, 25));
 		playButton.addMouseListener(new MouseListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -67,7 +64,6 @@ public class AffichageMenu extends JPanel{
 						fenetre.setVisible(true);
 					}
 				} );
-				System.out.println("start");
 			}
 
 			@Override
@@ -86,6 +82,8 @@ public class AffichageMenu extends JPanel{
 
 		Button exitButton = new Button();
 		exitButton.setLabel("Exit");
+		exitButton.setFont(new Font("TimesRoman", Font.PLAIN, 25));
+		exitButton.setBackground(Color.RED);
 		exitButton.addMouseListener(new MouseListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -110,6 +108,10 @@ public class AffichageMenu extends JPanel{
 	@Override
 	public void paint(Graphics g){
 		super.paint(g);
-
+		g.setColor(Color.white);
+		g.fillRect(0, 0, getWidth(), getHeight());
+		Image fond = Toolkit.getDefaultToolkit().getImage("./ressources/fond_menu.png");
+		g.drawImage(fond, 0, 0,LARGEUR,HAUTEUR,null);
+		System.out.println("PAINT");
 	}
 }

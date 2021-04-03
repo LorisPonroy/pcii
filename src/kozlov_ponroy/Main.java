@@ -15,16 +15,15 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		JFrame fenetre = new JFrame("Course planétaire");
-		fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+		JFrame fenetre = new JFrame("Course");
+		fenetre.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		AffichageMenu affMenu = new AffichageMenu(fenetre);
-
 		fenetre.add(affMenu);
 		fenetre.pack();
 		fenetre.setLocationRelativeTo(null);
 		fenetre.setVisible(true);
 		fenetre.setResizable(false);
+		fenetre.repaint();
 	}
 
 }
