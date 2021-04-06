@@ -39,14 +39,10 @@ public abstract class ObstaclePreview {
 	public boolean collide(Etat etat, Player player) {
 		int x1p = etat.getPlayerX() - Player.LARGEUR / 2;
 		int y1p = etat.getPlayerY() - Player.HAUTEUR / 4;
-		int x2p = etat.getPlayerX() + Player.LARGEUR;
+		int x2p = etat.getPlayerX() + Player.LARGEUR / 2;
 		int y2p = etat.getPlayerY();
-		/*System.out.println("---------------------------------------------");
-		System.out.println("player x: " + x1p + ":" + x2p + " ; y:" + y1p + ":" + y2p);
-		System.out.println("oil x: " + x1 + ":" + x2 + " ; y:" + y1 + ":" + y2);*/
 		if(x1 < x1p && x1p < x2 || x1 < x2p && x2p < x2) {
 			if(y1 < y1p && y1p < y2 || y1 < y2p && y2p < y2) {
-				//System.out.println("COLLISION");
 				etat.collide(isMoto());
 			}
 		}

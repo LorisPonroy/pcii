@@ -25,13 +25,12 @@ public class GenerationObstacle {
 
 	private void generateObstacle() {
 		if(liste.size() < OBSTACLES_MAX) {
-			liste.add(new Adversaire());
-			/*if(random.nextInt(6) == 1) {
+			if(random.nextInt(6) == 1) {
 				liste.add(new Adversaire());
 			}
 			else{
 				liste.add(new Oil());
-			}*/
+			}
 		}
 	}
 

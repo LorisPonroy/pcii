@@ -74,7 +74,8 @@ public class RouteView implements IView {
 		graphics2D.draw(new Line2D.Float(p1X, p1.y, 400, Etat.HORIZON));
 		
 		Point cp = etat.getCheckPoint();
-		graphics2D.fillRect(cp.x, cp.y, 100, 10); //trouver les points avec la route jsp lequel
+		int largeurCp = etat.transformePositionToPerspective(cp.x, cp.y);
+		graphics2D.fillRect(cp.x - largeurCp, cp.y, largeurCp * 2, 10); //trouver les points avec la route jsp lequel
 	}
 
 	@Override

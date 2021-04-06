@@ -49,6 +49,7 @@ public class PlayerView implements IView {
 				graphics2D.drawImage(right, etat.getPlayerX() - Player.LARGEUR / 2, etat.getPlayerY() - Player.HAUTEUR, state.imageWidth, state.imageHeigth, null);
 			} else {
 				graphics2D.drawImage(normal, etat.getPlayerX() - Player.LARGEUR / 2, etat.getPlayerY() - Player.HAUTEUR, state.imageWidth, state.imageHeigth, null);
+				//System.out.println("VIEW player x: " + (etat.getPlayerX() - Player.LARGEUR / 2) + ":" + (etat.getPlayerX() - Player.LARGEUR / 2 + state.imageWidth) + " ; y:" + (etat.getPlayerY() - Player.HAUTEUR) + ":" + (etat.getPlayerY() - Player.HAUTEUR + state.imageHeigth));
 			}
 			break;
 		case ROLL_LEFT:
@@ -58,7 +59,7 @@ public class PlayerView implements IView {
 			graphics2D.drawImage(roll_2, etat.getPlayerX() - etat.getTailleJoueur() / 4, etat.getPlayerY() - etat.getTailleJoueur(), state.imageWidth, state.imageHeigth, null);
 			break;
 		}
-		graphics2D.drawRect(etat.getPlayerX() - Player.LARGEUR / 2, etat.getPlayerY() - Player.HAUTEUR / 4, Player.LARGEUR, Player.HAUTEUR / 4);
+		//graphics2D.drawRect(etat.getPlayerX() - Player.LARGEUR / 2, etat.getPlayerY() - Player.HAUTEUR / 4, Player.LARGEUR, Player.HAUTEUR / 4);
 	}
 
 	@Override

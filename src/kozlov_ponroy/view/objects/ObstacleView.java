@@ -21,7 +21,8 @@ public class ObstacleView implements IView {
 		for(ObstaclePreview ob: etat.getObstacles()) {
 			if(ob.isMoto()) {
 				graphics2D.drawImage(ob.img, ob.x1, ob.y1, ob.x2 - ob.x1, ob.y2 - ob.y1, null);
-				graphics2D.drawRect(ob.x1, ob.y1, ob.x2 - ob.x1, ob.y2 - ob.y1);
+				//System.out.println("Moto view : x1 :" + ob.x1 + " y1 : " + ob.y1 + " x2 : " + ob.x2 + " y2 : " + ob.y2);
+				//graphics2D.drawRect(ob.x1, ob.y1, ob.x2 - ob.x1, ob.y2 - ob.y1);
 			}
 			else
 				graphics2D.drawImage(ob.img, ob.x1, ob.y1, ob.x2 - ob.x1, ob.y2 - ob.y1, null);

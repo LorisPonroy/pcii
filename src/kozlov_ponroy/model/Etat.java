@@ -57,6 +57,8 @@ public class Etat {
 	final GenerationObstacle generationObstacles;
 
 	private int posDecor = 0;
+	
+	private boolean stop = false;
 
 	public Etat(Affichage affichage, KeyboardController controller) {
 		this.affichage = affichage;
@@ -93,7 +95,7 @@ public class Etat {
 		facteurVitesse += 0.1;
 		if(isMoto) {
 			//On arrete le jeu car la moto s'est crashé
-			System.out.println("Crash moto");
+			stop = true;
 		}
 	}
 
@@ -196,7 +198,7 @@ public class Etat {
 	}
 
 	public boolean isGameOver() {
-		return time < 0;
+		return time < 0 || stop;
 	}
 
 	public boolean isLeft() {
@@ -220,7 +222,7 @@ public class Etat {
 		if(move.isDown()) { //freine
 			facteurVitesse *= 1.01;
 		}
-		else if(move.isUp() && getVitesse() < 250) { //accelere
+		else if(move.isUp() && getVitesse() < 250 && getVitesse() >= 100) { //accelere
 			facteurVitesse *= 0.998;
 		} else if(facteurVitesse > 1) {
 			facteurVitesse *= 0.99;
