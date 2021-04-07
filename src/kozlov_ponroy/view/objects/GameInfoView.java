@@ -26,7 +26,9 @@ public class GameInfoView extends IView {
 	public void paint(Graphics g) {
 		g.setColor(Color.black);
 		graphics2D.drawImage(compteur, Etat.LARGEUR-TAILLE_COMPTEUR, Etat.HAUTEUR-TAILLE_COMPTEUR, TAILLE_COMPTEUR, TAILLE_COMPTEUR, null);
+		g.setFont(new Font("TimesRoman", Font.PLAIN, 15));
 		g.drawString(etat.getScore(), 20, 20);
+		g.drawString("Prochain CP : " + (Etat.HAUTEUR - etat.getCheckPoint().y) + "m", 20, 40);
 		g.setFont(new Font("TimesRoman", Font.PLAIN, 25));
 		if(etat.getVitesse()<100) {
 			g.setColor(Color.GREEN);
@@ -40,7 +42,7 @@ public class GameInfoView extends IView {
 		graphics2D.drawImage(chronometer, 0, Etat.HAUTEUR-TAILLE_COMPTEUR, TAILLE_COMPTEUR, TAILLE_COMPTEUR, null);
 		g.setFont(new Font("TimesRoman", Font.PLAIN, 25));
 		g.drawString(etat.tempsRestant(), 27, Etat.HAUTEUR-TAILLE_COMPTEUR + 52);
-
+		
 		if (etat.isGameOver()) {
 			g.setColor(Color.RED);
 			g.drawString("GAME OVER", Etat.LARGEUR/2, Etat.HAUTEUR/2);
