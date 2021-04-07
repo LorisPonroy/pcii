@@ -7,12 +7,10 @@ import java.awt.Graphics2D;
 import kozlov_ponroy.model.Etat;
 import kozlov_ponroy.view.IView;
 
-public class Horizon implements IView {
-
-	final Etat etat;
+public class Horizon extends IView {
 
 	public Horizon(Etat etat) {
-		this.etat = etat;
+		super(etat);
 	}
 
 	@Override

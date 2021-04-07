@@ -10,17 +10,16 @@ import java.awt.Toolkit;
 import kozlov_ponroy.model.Etat;
 import kozlov_ponroy.view.IView;
 
-public class GameInfoView implements IView {
+public class GameInfoView extends IView {
 
 	private final static Image compteur = Toolkit.getDefaultToolkit().getImage("./ressources/compteur.png");
 	private final static Image chronometer = Toolkit.getDefaultToolkit().getImage("./ressources/chronometer.png");
 	private final static int TAILLE_COMPTEUR = 100;
 
 	private Graphics2D graphics2D;
-	final Etat etat;
 
 	public GameInfoView(Etat etat) {
-		this.etat = etat;
+		super(etat);
 	}
 
 	@Override
@@ -41,9 +40,6 @@ public class GameInfoView implements IView {
 		graphics2D.drawImage(chronometer, 0, Etat.HAUTEUR-TAILLE_COMPTEUR, TAILLE_COMPTEUR, TAILLE_COMPTEUR, null);
 		g.setFont(new Font("TimesRoman", Font.PLAIN, 25));
 		g.drawString(etat.tempsRestant(), 27, Etat.HAUTEUR-TAILLE_COMPTEUR + 52);
-		if (etat.isGameOver()) {
-			g.drawString("GAME OVER", Etat.LARGEUR/2, Etat.HAUTEUR/2);
-		}
 	}
 
 	@Override

@@ -7,13 +7,12 @@ import kozlov_ponroy.model.Etat;
 import kozlov_ponroy.model.obstacle.ObstaclePreview;
 import kozlov_ponroy.view.IView;
 
-public class ObstacleView implements IView {
+public class ObstacleView extends IView {
 
 	private Graphics2D graphics2D;
-	final Etat etat;
 
 	public ObstacleView(Etat etat) {
-		this.etat = etat;
+		super(etat);
 	}
 
 	@Override

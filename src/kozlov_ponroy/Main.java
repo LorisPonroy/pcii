@@ -25,5 +25,4 @@ public class Main {
 		fenetre.setResizable(false);
 		fenetre.repaint();
 	}
-
 }

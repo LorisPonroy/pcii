@@ -19,6 +19,7 @@ public class Route {
 	final Etat etat;
 	public static final int MOVE = 3;
 	private int initialYCheckPoint;
+	private int position = 0;
 
 	public Route(Etat etat){
 		this.etat = etat;
@@ -65,6 +66,7 @@ public class Route {
 			points.get(i).y+=MOVE;
 		}
 		//avancer le checkpoint
+		position++;
 		avancerCP();
 	}
 
@@ -81,14 +83,6 @@ public class Route {
 	public Point getCheckPoint() {
 		return cp;
 	}
-
-	/** TODO: refaire la fonction pour renvoyer la position X pour le joueur
-	 * Renvoie la position du joueur au d�part
-	 * @return
-	 */
-	//public int getFirstPosXPlayer() {
-	//return points.get(1).x;
-	//}
 
 	/**
 	 * Renvoie la liste des points qui forment la route
@@ -109,5 +103,9 @@ public class Route {
 
 	private int lastX() {
 		return lastPoint().x;
+	}
+	
+	public int getPosition() {
+		return position;
 	}
 }

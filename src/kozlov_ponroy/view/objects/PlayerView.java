@@ -10,7 +10,7 @@ import kozlov_ponroy.model.Etat;
 import kozlov_ponroy.model.state.Player;
 import kozlov_ponroy.view.IView;
 
-public class PlayerView implements IView {
+public class PlayerView extends IView {
 	public enum PlayerState{
 		NORMAL(Player.LARGEUR,Player.HAUTEUR),ROLL_LEFT(Player.HAUTEUR,Player.HAUTEUR),ROLL_RIGTH(Player.HAUTEUR,Player.HAUTEUR);
 		public int imageWidth;
@@ -23,13 +23,12 @@ public class PlayerView implements IView {
 	}
 
 	public static PlayerState state = PlayerState.NORMAL;
-	final Etat etat;
 	final Color ombre;
 	private Graphics2D graphics2D;
 	final Image left, right, normal, roll_1, roll_2;
 
 	public PlayerView(Etat etat) {
-		this.etat = etat;
+		super(etat);
 		ombre = new Color(0,0,0,170);
 		left = Toolkit.getDefaultToolkit().getImage("./ressources/playertleft.png");
 		right = Toolkit.getDefaultToolkit().getImage("./ressources/playertright.png");
