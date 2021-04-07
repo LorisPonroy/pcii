@@ -13,6 +13,7 @@ import kozlov_ponroy.view.IView;
 public class GameInfoView implements IView {
 
 	private final static Image compteur = Toolkit.getDefaultToolkit().getImage("./ressources/compteur.png");
+	private final static Image chronometer = Toolkit.getDefaultToolkit().getImage("./ressources/chronometer.png");
 	private final static int TAILLE_COMPTEUR = 100;
 
 	private Graphics2D graphics2D;
@@ -36,7 +37,10 @@ public class GameInfoView implements IView {
 			g.setColor(Color.RED);
 		}
 		g.drawString(etat.getVitesse() + "",Etat.LARGEUR-TAILLE_COMPTEUR+30, Etat.HAUTEUR-TAILLE_COMPTEUR/2 + 5);
-		g.drawString(etat.tempsRestant(), 20, 100);
+		g.setColor(Color.BLACK);
+		graphics2D.drawImage(chronometer, 0, Etat.HAUTEUR-TAILLE_COMPTEUR, TAILLE_COMPTEUR, TAILLE_COMPTEUR, null);
+		g.setFont(new Font("TimesRoman", Font.PLAIN, 25));
+		g.drawString(etat.tempsRestant(), 27, Etat.HAUTEUR-TAILLE_COMPTEUR + 52);
 		if (etat.isGameOver()) {
 			g.drawString("GAME OVER", Etat.LARGEUR/2, Etat.HAUTEUR/2);
 		}

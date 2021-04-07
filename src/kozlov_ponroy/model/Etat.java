@@ -57,7 +57,7 @@ public class Etat {
 	final GenerationObstacle generationObstacles;
 
 	private int posDecor = 0;
-	
+
 	private boolean stop = false;
 
 	public Etat(Affichage affichage, KeyboardController controller) {
@@ -243,7 +243,7 @@ public class Etat {
 		int sec = time / 1000;
 		int min = sec / 60;
 		sec = sec % 60;
-		return "Temps restant : " + min + ":" + String.format("%02d", sec);
+		return "" + min + ":" + String.format("%02d", sec);
 	}
 
 	public void time() {
