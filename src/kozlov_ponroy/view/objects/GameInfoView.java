@@ -42,6 +42,7 @@ public class GameInfoView implements IView {
 		g.setFont(new Font("TimesRoman", Font.PLAIN, 25));
 		g.drawString(etat.tempsRestant(), 27, Etat.HAUTEUR-TAILLE_COMPTEUR + 52);
 		if (etat.isGameOver()) {
+			g.setColor(Color.RED);
 			g.drawString("GAME OVER", Etat.LARGEUR/2, Etat.HAUTEUR/2);
 		}
 	}
