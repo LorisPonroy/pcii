@@ -1,6 +1,7 @@
 package kozlov_ponroy.model;
 
 import java.awt.Point;
+import java.awt.Polygon;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -165,7 +166,7 @@ public class Etat {
 	}
 
 	public String getScore() {
-		return "Score : ";
+		return "Score : " + route.getPosition();
 	}
 
 	/*
@@ -198,7 +199,7 @@ public class Etat {
 	}
 
 	public boolean isGameOver() {
-		return time < 0 || stop;
+		return time < 0 || stop || getVitesse() <= 0;
 	}
 
 	public boolean isLeft() {
@@ -211,14 +212,6 @@ public class Etat {
 
 	public void move() {
 		move.doMove();
-
-		/*
-		 * On check si le joueur est sur la route ou en dehors
-		 */
-		//if(!routePreview.routeGeneralPath(null).contains(getPlayerX(), getPlayerY())) {
-		//ralentissement
-		//facteurVitesse *= 1.01;
-		//} else { //vitesse de base
 		if(move.isDown()) { //freine
 			facteurVitesse *= 1.01;
 		}
@@ -227,7 +220,6 @@ public class Etat {
 		} else if(facteurVitesse > 1) {
 			facteurVitesse *= 0.99;
 		}
-		//}
 		affichage.repaint();
 	}
 
@@ -261,5 +253,44 @@ public class Etat {
 		double a = (x - centre) / (800.0 - HORIZON);
 		double b = x - a*800.0;
 		return (int) Math.round(a * y + b);
+	}
+	
+	public Polygon getPolygonRoute() {
+		List<Point> points = getRoutePoints();
+		Point p;
+		int nbPointsPolygoneRoute = (points.size()+2)* 2;
+		int[] pointsX = new int[nbPointsPolygoneRoute];
+		int[] pointsY = new int[nbPointsPolygoneRoute];
+		int compteur = 0;
+		for(int i = 0 ; i < points.size(); i++)
+		{
+			p = points.get(i);
+			pointsX[compteur] = transformePositionToPerspective(p.x - Etat.LARGEUR_ROUTE,p.y);
+			pointsY[compteur] = p.y;
+			compteur++;
+
+		}
+		pointsX[compteur] = transformePositionToPerspective(400 + Etat.LARGEUR_ROUTE,Etat.HORIZON);
+		pointsY[compteur] = Etat.HORIZON;
+		compteur++;
+		pointsX[compteur] = transformePositionToPerspective(400 - Etat.LARGEUR_ROUTE,Etat.HORIZON);
+		pointsY[compteur] = Etat.HORIZON;
+		compteur++;
+		for(int i = points.size()-1 ; i>=0  ; i--)
+		{
+			p = points.get(i);
+			pointsX[compteur] = transformePositionToPerspective(p.x + Etat.LARGEUR_ROUTE,p.y);
+			pointsY[compteur] = p.y;
+			compteur++;
+		}
+		Polygon poly = new Polygon(pointsX, pointsY, compteur);
+		if(!poly.contains(player.getPosition())) {
+			ralentissement();
+		}
+		return poly;
+	}
+	
+	private void ralentissement() {
+		facteurVitesse *= 1.02;
 	}
 }
