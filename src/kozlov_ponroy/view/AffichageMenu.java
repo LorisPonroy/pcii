@@ -51,7 +51,8 @@ public class AffichageMenu extends JPanel{
 				frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 				KeyboardController controller = new KeyboardController();
 				Affichage aff = new Affichage();
-				new Etat(aff, controller);
+				Etat etat = new Etat(aff, controller);
+				aff.setEtat(etat);
 				frame.getContentPane().add(aff);
 				frame.pack();
 				frame.setLocationRelativeTo(null);
@@ -61,6 +62,12 @@ public class AffichageMenu extends JPanel{
 					@Override
 					public void windowClosing(WindowEvent we) {
 						frame.dispose();
+						fenetre.setVisible(true);
+					}
+					
+					@Override
+					public void windowClosed(WindowEvent e) {
+						super.windowClosed(e);
 						fenetre.setVisible(true);
 					}
 				} );
